@@ -1,6 +1,21 @@
 # EpubSplit
 
-`EpubSplit` calibre 外掛的原始碼目錄，已支援 EPUB2 與 EPUB3 的 TOC 解析與拆分輸出。
+`EpubSplit` 是把一本 EPUB 拆成多本新書的 calibre 外掛。
+它特別適合處理合集、雜誌、連載或長篇作品，讓你可以把同一本 EPUB 依章節或 TOC 節點拆成獨立條目。
+
+## 功能
+
+- 依目錄或章節節點拆分 EPUB
+- 產生新的獨立書籍與中繼資料
+- 支援 EPUB2 與 EPUB3 的結構
+- 保留必要資源與內部連結修正
+
+## 使用方式
+
+1. 在 calibre 書庫中選取要拆分的 EPUB。
+2. 開啟 `EpubSplit` 外掛。
+3. 選擇拆分位置與輸出方式。
+4. 讓外掛建立新的書籍條目。
 
 ## 原始 GitHub
 

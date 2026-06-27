@@ -17,7 +17,7 @@ class ActionCountPages(InterfaceActionBase):
     calibre utilities to run without needing to load the GUI libraries.
     '''
     name                    = 'Count Pages'
-    description             = 'Count number of pages/words in an ePub/Mobi to store in custom columns'
+    description             = 'Count pages, words, and reading statistics for ePub/Mobi books and store them in custom columns.'
     supported_platforms     = ['windows', 'osx', 'linux']
     author                  = 'Grant Drake'
     version                 = (1, 15, 2)

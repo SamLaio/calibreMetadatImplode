@@ -17,7 +17,7 @@ class ActionFindDuplicates(InterfaceActionBase):
     calibre utilities to run without needing to load the GUI libraries.
     '''
     name                    = 'Find Duplicates'
-    description             = 'Find possible duplicate books based on their metadata'
+    description             = 'Find likely duplicate books by comparing configured metadata rules.'
     supported_platforms     = ['windows', 'osx', 'linux']
     author                  = 'Grant Drake'
     version                 = (1, 10, 10)

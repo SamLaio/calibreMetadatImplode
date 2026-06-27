@@ -17,7 +17,7 @@ class ActionModifyEpub(InterfaceActionBase):
     calibre utilities to run without needing to load the GUI libraries.
     '''
     name                    = 'Modify ePub'
-    description             = 'Apply cleanup tasks and updates to an ePub without doing a conversion'
+    description             = 'Directly clean up and update EPUB contents without doing a conversion.'
     supported_platforms     = ['windows', 'osx', 'linux']
     author                  = 'Grant Drake, with additions by Robert L. Hood, Leigh Parry, & Charles Haley'
     version                 = (1, 8, 9)

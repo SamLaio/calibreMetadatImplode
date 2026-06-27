@@ -38,3 +38,12 @@ Please see the README.md and CONTRIBUTING.md at the above site for more informat
 [calibre-url]: https://www.calibre-ebook.com/
 
 [status-image]: https://img.shields.io/badge/Status-Stable-green
+
+## 中文摘要
+
+`Modify ePub` 是直接修改 EPUB 內容的 calibre 外掛，適合在不轉檔的前提下做局部修補與清理。
+
+- 直接對選取的 EPUB 套用修改
+- 避免 ePub->ePub 轉檔帶來的額外重寫
+- 保留原始書檔結構，適合做內容與資源修補
+- 介面與設定都能在 calibre 裡直接完成

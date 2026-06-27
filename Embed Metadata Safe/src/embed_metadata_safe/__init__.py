@@ -4,8 +4,8 @@ from calibre.customize import InterfaceActionBase
 class EmbedMetadataSafePlugin(InterfaceActionBase):
     name = 'Embed Metadata Safe'
     description = (
-        'Safely embed metadata into selected books after repairing malformed '
-        'EPUB calibre:user_metadata entries.'
+        'Repair malformed EPUB calibre:user_metadata entries before safely '
+        'embedding metadata into selected books.'
     )
     supported_platforms = ['windows', 'osx', 'linux']
     author = 'Codex'

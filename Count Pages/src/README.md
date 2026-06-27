@@ -39,3 +39,12 @@ kiwidude 的所有 calibre 外掛目前都在 GitHub 上開發與維護：
 [calibre-url]: https://www.calibre-ebook.com/
 
 [status-image]: https://img.shields.io/badge/Status-Stable-green
+
+## 中文摘要
+
+`Count Pages` 是用來計算頁數、字數與可讀性統計的 calibre 外掛，常用來把結果寫入自訂欄位。
+
+- 可依書籍內容估算頁數，或從外部來源下載資料
+- 可把頁數、字數與可讀性統計寫回書庫
+- 適合做 Kindle APNX、閱讀統計或書庫整理流程
+- 內建正體中文介面語系

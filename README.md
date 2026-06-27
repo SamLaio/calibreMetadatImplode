@@ -2,11 +2,11 @@
 
 這個倉庫並排管理五個 calibre 外掛：
 
-- [`Embed Metadata Safe`](./Embed%20Metadata%20Safe): 在寫入 EPUB metadata 前先清理壞掉的 `calibre:user_metadata`。
-- [`Modify ePub`](./Modify%20ePub): 不經轉檔直接修改 EPUB 內容與結構。原始 GitHub: [kiwidude68/calibre_plugins](https://github.com/kiwidude68/calibre_plugins/tree/main/modify_epub)
-- [`Find Duplicates`](./Find%20Duplicates): 依照中繼資料與檔案內容找出重複書籍。原始 GitHub: [JimmXinu/kiwidude68_calibre_plugins](https://github.com/JimmXinu/kiwidude68_calibre_plugins/tree/main/find_duplicates)
-- [`EpubSplit`](./EpubSplit): 把 EPUB 切成新的獨立書籍。原始 GitHub: [JimmXinu/EpubSplit](https://github.com/JimmXinu/EpubSplit)
-- [`Count Pages`](./Count%20Pages): 計算頁數、字數與可讀性統計，已加入正體中文介面語系。原始 GitHub: [kiwidude68/calibre_plugins](https://github.com/kiwidude68/calibre_plugins/tree/main/count_pages)
+- [`Embed Metadata Safe`](./Embed%20Metadata%20Safe): 先修復 EPUB 內壞掉的 `calibre:user_metadata`，再安全地把 metadata 寫回選取的書籍。
+- [`Modify ePub`](./Modify%20ePub): 直接對 EPUB 做清理與小幅修改，不必先跑轉檔流程。原始 GitHub: [kiwidude68/calibre_plugins](https://github.com/kiwidude68/calibre_plugins/tree/main/modify_epub)
+- [`Find Duplicates`](./Find%20Duplicates): 依照 metadata 比對規則找出可能重複的書籍，方便人工複核。原始 GitHub: [JimmXinu/kiwidude68_calibre_plugins](https://github.com/JimmXinu/kiwidude68_calibre_plugins/tree/main/find_duplicates)
+- [`EpubSplit`](./EpubSplit): 依 TOC 或章節把一本 EPUB 拆成多本新書。原始 GitHub: [JimmXinu/EpubSplit](https://github.com/JimmXinu/EpubSplit)
+- [`Count Pages`](./Count%20Pages): 計算頁數、字數與可讀性統計，並寫入自訂欄位。原始 GitHub: [kiwidude68/calibre_plugins](https://github.com/kiwidude68/calibre_plugins/tree/main/count_pages)
 
 各外掛的完整說明請看對應資料夾內的 README：
 

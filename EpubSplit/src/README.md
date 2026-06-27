@@ -2,6 +2,15 @@
 
 This is a repository for the EpubSplit Calibre Plugin.
 
+## 中文摘要
+
+`EpubSplit` 是把一本 EPUB 拆成多本新書的 calibre 外掛，適合把合集、連載或長篇作品切成獨立條目。
+
+- 依 TOC 或章節節點拆分 EPUB
+- 產生新的獨立書籍與中繼資料
+- 支援 EPUB2 與 EPUB3 結構
+- 會整理拆分後所需的資源與連結
+
 Most discussion of this plugin takes place in the [EpubSplit Calibre Plugin forum].
 
 Splitting omnibus eBooks into multiple eBooks seems to be a common request, but there haven't been many tools to do so without a lot of hand editing.

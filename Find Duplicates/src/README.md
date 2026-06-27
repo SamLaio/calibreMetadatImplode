@@ -35,3 +35,12 @@ Please see the README.md and CONTRIBUTING.md at the above site for more informat
 [calibre-url]: https://www.calibre-ebook.com/
 
 [status-image]: https://img.shields.io/badge/Status-Stable-green
+
+## 中文摘要
+
+`Find Duplicates` 是用來找出可能重複書籍的 calibre 外掛，會依照 metadata 與你設定的規則整理候選結果。
+
+- 幫你找出可能重複的作者、標題、格式與其他條目
+- 先彙整候選書目，再由你人工判斷要保留哪一本
+- 適合用來清理書庫、避免重複收藏
+- 可依照需要調整比對條件與顯示方式
