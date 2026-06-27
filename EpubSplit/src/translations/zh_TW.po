@@ -1,0 +1,462 @@
+# Traditional Chinese translation for EpubSplit
+
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2024-03-24 17:59+1000\n"
+"PO-Revision-Date: 2026-06-28 00:00+0800\n"
+"Last-Translator: Codex\n"
+"Language-Team: Chinese (Taiwan)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"Language: zh_TW\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "UI plugin to split off parts of an epub into a new book."
+msgstr "將epub的拆分為新書的外掛。"
+
+msgid "Title for each new book will be taken from the first included section in the Table of Contents above, which you can edit here first."
+msgstr "每本新書的標題都將取自上述目錄中包含的第一個章節，您可以在此先編輯它。"
+
+msgid "New Book per Section"
+msgstr "每個章節一本書"
+
+msgid "Make a new book for <i>each</i> of the sections selected above."
+msgstr "所選部分的 <i>每個</i> 章節生成一本書."
+
+msgid "New Book per N Sections"
+msgstr "每N個章節一本書"
+
+msgid "Make new books, each containing N sections from those selected above."
+msgstr "製作新書，每本包含上面所選內容中的 N 個章節。"
+
+msgid "N New Books"
+msgstr "N本新書"
+
+msgid "Make N new books by evenly dividing the sections selected above."
+msgstr "透過均勻劃分上面選定的部分的章節數來製作 N 本新書。"
+
+msgid "Basic"
+msgstr "基礎設定"
+
+msgid "Custom Columns"
+msgstr "自定義欄目"
+
+msgid "New Book Per"
+msgstr "自動拆分"
+
+msgid "Edit Metadata for New Book(s)"
+msgstr "編輯新書籍的後設資料"
+
+msgid "Show Edit Metadata Dialog after creating each new book entry, but <i>before</i> EPUB is created.<br>Allows for downloading metadata and ensures EPUB has updated metadata."
+msgstr "在建立每個新書條目之後, 但在建立EPUB <i>之前</i> ，顯示“編輯後設資料”對話方塊。<br>允許下載後設資料，並確保EPUB具有更新的後設資料。"
+
+msgid "Show 'Always Include' Checkboxes"
+msgstr "顯示“始終包含”核取方塊"
+
+msgid "If enabled, a checkbox will appear for each section."
+msgstr "如果啟用，每個章節都會出現一個核取方塊。"
+
+msgid "Checked sections will be included in <i>all</i> split books.<br>Default title will still be taken from the first <i>selected</i> section, and section order will remain as shown."
+msgstr "選中的部分將包括在<i>all </i>拆分的書籍中。<br>預設標題仍將取自第一個<i>選定的</i>部分，並且部分順序將保持如圖所示。"
+
+msgid "When making a new Epub, the metadata from the source book will be copied or not as you choose below."
+msgstr "製作新的Epub時，源書中的後設資料將被複制或不被複制，如下所示。"
+
+msgid "Title from First Included TOC"
+msgstr "從首個內建目錄中獲取標題"
+
+msgid "Copy Title from the the first Table of Contents entry included in the Split Epub.\nSupersedes Copy Title below."
+msgstr "從Split Epub中包含的第一個目錄條目複製標題。取代下面的複製標題。"
+
+msgid "Copy Title"
+msgstr "複製書名"
+
+msgid "Copy Title from the source Epub to the Split Epub.  Adds \"Split\" to the title."
+msgstr "將書名從源Epub複製到拆分的Epub。 新增 \"拆分\" 到書名中. "
+
+msgid "Copy Authors"
+msgstr "復製作者"
+
+msgid "Copy Authors from the source Epub to the Split Epub."
+msgstr "將作者從源Epub複製到拆分的Epub。"
+
+msgid "Copy Series"
+msgstr "複製叢書"
+
+msgid "Copy Series from the source Epub to the Split Epub."
+msgstr "將叢書從源Epub複製到拆分的Epub。"
+
+msgid "Copy Cover"
+msgstr "複製封面"
+
+msgid "Copy Cover from the source Epub to the Split Epub."
+msgstr "將封面從源Epub複製到拆分的Epub。"
+
+msgid "Copy Rating"
+msgstr "複製評分"
+
+msgid "Copy Rating from the source Epub to the Split Epub."
+msgstr "將評分從源Epub複製到拆分的Epub。"
+
+msgid "Copy Tags"
+msgstr "複製標籤"
+
+msgid "Copy Tags from the source Epub to the Split Epub."
+msgstr "將標籤從源Epub複製到拆分的Epub。"
+
+msgid "Copy Identifiers"
+msgstr "複製書號"
+
+msgid "Copy Identifiers from the source Epub to the Split Epub."
+msgstr "將識別符號從源Epub複製到拆分的Epub。"
+
+msgid "Copy Date"
+msgstr "複製建立日期"
+
+msgid "Copy Date from the source Epub to the Split Epub."
+msgstr "將建立日期從源Epub複製到拆分的Epub。"
+
+msgid "Copy Published Date"
+msgstr "複製出版日期"
+
+msgid "Copy Published Date from the source Epub to the Split Epub."
+msgstr "將出版日期從源Epub複製到拆分的Epub。"
+
+msgid "Copy Publisher"
+msgstr "複製出版商"
+
+msgid "Copy Publisher from the source Epub to the Split Epub."
+msgstr "將出版商從源Epub複製到拆分的Epub。"
+
+msgid "Copy Languages"
+msgstr "複製語言"
+
+msgid "Copy Languages from the source Epub to the Split Epub."
+msgstr "將語言從源Epub複製到拆分的Epub。"
+
+msgid "Copy Source Title to Comments"
+msgstr "複製源標題到簡介"
+
+msgid "Copy Title from the source Epub to the Split Epub Comments."
+msgstr "將標題從源Epub複製到拆分的Epub的簡介中。"
+
+msgid "Link to Source book in Calibre in Comments"
+msgstr "在書籍簡介中顯示源書籍在Calibre中的連結"
+
+msgid "Include a Calibre link to the source Epub in the Split Epub Comments."
+msgstr "在拆分後的書籍的簡介中包含源書籍在Calibre中的連結"
+
+msgid "Link to Source URL Identifier in Comments"
+msgstr "在書籍簡介中包含源書籍的識別符號的連結"
+
+msgid "Include a link to the source Epub's URL Identifier(if present) in the Split Epub Comments."
+msgstr "在拆分後的書籍簡介中包含源書籍的識別符號的連結(如果有的話)"
+
+msgid "Copy Comments"
+msgstr "複製簡介"
+
+msgid "Copy Comments from the source Epub to the Split Epub.  Adds \"Split from:\" to the comments."
+msgstr "將簡介從源Epub複製到拆分的Epub。 新增 \"拆分自:\"到簡介中. "
+
+msgid "These controls aren't plugin settings as such, but convenience buttons for setting Keyboard shortcuts and getting all the EpubSplit confirmation dialogs back again."
+msgstr "下述設定本身不屬於外掛設定，而是用於設定鍵盤快捷鍵和再次返回所有 Epub拆分 確認對話方塊的快捷按鈕。"
+
+msgid "Keyboard shortcuts..."
+msgstr "快捷鍵..."
+
+msgid "Edit the keyboard shortcuts associated with this plugin"
+msgstr "編輯與此外掛關聯的鍵盤快捷鍵"
+
+msgid "Reset disabled &confirmation dialogs"
+msgstr "重置禁用的確認對話方塊（&C）"
+
+msgid "Reset all show me again dialogs for the EpubSplit plugin"
+msgstr "重置 Epub拆分 外掛的所有“再次顯示”對話方塊"
+
+msgid "View library preferences..."
+msgstr "檢視書庫首選項..."
+
+msgid "View data stored in the library database for this plugin"
+msgstr "檢視儲存在書庫資料庫中的此外掛的資料"
+
+msgid "Done"
+msgstr "完成"
+
+msgid "Confirmation dialogs have all been reset"
+msgstr "確認對話方塊已全部重置"
+
+msgid "Save Source column:"
+msgstr "保留原欄目"
+
+msgid "If set, the column below will be populated with the template below to record the source of the split file."
+msgstr "如果設定，下述欄目的內容將使用下述模板來填充，以記錄拆分的檔案的原始資訊。"
+
+msgid "Choose a column to populate with template on split."
+msgstr "選擇在拆分時要根據模板填充資料的欄目。"
+
+msgid "Template from source book. Example: {title} by {authors}"
+msgstr "根據源書籍建立的模板。例如: {title} 作者 {authors} "
+
+msgid "If you have custom columns defined, they will be listed below.  Choose if you would like these columns copied to new split books."
+msgstr "如果你有自定義欄目，他們將顯示在下面。選擇你希望複製到拆分後的新書中的欄目。"
+
+msgid "Copy this %s column to new split books..."
+msgstr "複製該 %s 欄目到拆分後的新書..."
+
+msgid "Only one automatic Multiple Split mode can be active a time.  Select which and configure settings below."
+msgstr "一次只能啟用一種自動拆分模式。選擇並配置下面的設定。"
+
+msgid "The title for each new book will be taken from the first included section in the Table of Contents."
+msgstr "每本新書的標題都將取自目錄中包含的第一個章節。"
+
+msgid "Sections that do not have a Table of Contents entry will be included in the previous section."
+msgstr "沒在目錄條目中的章節將包含在前一章節中。"
+
+msgid "You may edit the Table of Contents entries before splitting."
+msgstr "你可以在拆分前編輯目錄條目。"
+
+msgid "Create a new book for each selected section."
+msgstr "為每個選定的章節建立一本新書。"
+
+msgid "Create new books every N selected sections."
+msgstr "為選定的每N個章節建立一本新書。"
+
+msgid "Number of Sections"
+msgstr "章節數"
+
+msgid "Sections per new book"
+msgstr "每本新書的章節數"
+
+msgid "If the last book would contain fewer than sections than the Orphan Limit, include them in the previous book instead.  Last book will have more than N sections when that happens."
+msgstr "如果最後一本書包含的章節數少於“最小章節數”，則將其包含在上一本書中。發生這種情況時，最後一本書將包含 N個 以上的章節。"
+
+msgid "Orphan Limit"
+msgstr "最小章節數"
+
+msgid "Limit for orphan sections"
+msgstr "限制生成一本書時需要的最小章節數"
+
+msgid "Create N new books, dividing the selected sections between them as evenly as possible."
+msgstr "建立 N 本新書，儘可保證每本書的章節數接近。"
+
+msgid "Note that 'evenly' means the number of sections with entries in the Table of Contents, not files or size by bytes or words."
+msgstr "請注意，“接近”指包含的目錄中的章節數，而不是檔案數或位元組數或字數。"
+
+msgid "Number of books"
+msgstr "書籍數"
+
+msgid "Split all selected sections into this many new books, dividing the sections evenly between them."
+msgstr "將選定的章節拆分成這麼多本新書，並儘量保證章節數接近。"
+
+msgid "<p><b><i>Double click to copy from sample.</i></b></p>"
+msgstr "<p><b><i>雙擊從樣本複製。</i></b></p>"
+
+msgid "Search for string in Table of Contents Entries."
+msgstr "在目錄條目中搜尋字串。"
+
+msgid "Find:"
+msgstr "搜尋:"
+
+msgid "Find"
+msgstr "搜尋"
+
+msgid "Choose how found entries will be treated."
+msgstr "選擇如何處理找到的條目。"
+
+msgid "Case sensitive"
+msgstr "區分大小寫"
+
+msgid "Search for case sensitive string; don't treat Harry, HARRY and harry all the same."
+msgstr "區分大小寫地搜尋字串；不要將 \"Harry\"、\"HARRY\" 和 \"harry\" 視為相同。"
+
+msgid "Configure"
+msgstr "配置"
+
+msgid "Configure Plugin"
+msgstr "設定外掛"
+
+msgid "New Book"
+msgstr "新書"
+
+msgid "Make <i>one</i> new book containing the sections selected above and then edit its Metadata."
+msgstr "製作<i>一本</i>包含上述選定部分的新書，然後編輯其後設資料。"
+
+msgid "Get Size"
+msgstr "獲取大小"
+
+msgid "Calculate the size of the new book from the currently selected sections."
+msgstr "根據當前選定的章節計算新書的大小。"
+
+msgid "Highlight"
+msgstr "高亮"
+
+msgid "Select"
+msgstr "選中"
+
+msgid "Check"
+msgstr ""
+
+msgid "Missing Title(s)"
+msgstr "缺失標題"
+
+msgid "Some selected sections don't have a Table of Contents text."
+msgstr "部分選定的章節沒有對應的目錄條目。"
+
+msgid "If you continue, those sections will be included with the last prior section that did have a Table of Contents text."
+msgstr "如果繼續，這些部分將包括在上一節中，該節具有目錄文字。"
+
+msgid "If you cancel, you can go back and add Table of Contents entries."
+msgstr "如果取消，您將返回並可新增目錄條目。"
+
+msgid "Double click to edit the Table of Contents entry for a section."
+msgstr "雙擊以編輯章節對應的目錄條目。"
+
+msgid "Guide"
+msgstr "型別"
+
+msgid "HREF"
+msgstr "源內容"
+
+msgid "Table of Contents"
+msgstr "目錄項"
+
+msgid "Use Context Menu (right-click) on selected sections to check or uncheck all selected sections."
+msgstr "在所選部分上使用上下文選單（右鍵單擊）來勾選或取消勾選所有所選部分。"
+
+msgid "Indicates 'special' pages: copyright, titlepage, etc."
+msgstr "表示“特殊”頁面：版權、標題頁等"
+
+msgid "Click and copy hotkey to copy text.\nDouble-click to edit ToC entry.\nPipes(|) divide different ToC entries to the same place."
+msgstr "單擊並複製熱鍵以複製文字。\n單擊可編輯目錄條目。\n管道（|）將不同的目錄條目劃分到同一位置。"
+
+msgid "Section Sample"
+msgstr "章節示例"
+
+msgid "Check Selected"
+msgstr "選擇所選項"
+
+msgid "Uncheck Selected"
+msgstr "不選所選項"
+
+msgid "Splitting Sections..."
+msgstr "分拆章節中..."
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid " - %s estimated until done"
+msgstr " - %s 預計直至完成"
+
+msgid "%d day"
+msgstr "%d 天"
+
+msgid "%d days"
+msgstr "%d 天"
+
+msgid "%d hour"
+msgstr "%d 小時"
+
+msgid "%d hours"
+msgstr "%d 小時"
+
+msgid "%d minute"
+msgstr "%d 分鐘"
+
+msgid "%d minutes"
+msgstr "%d 分鐘"
+
+msgid "%d second"
+msgstr "%d 秒"
+
+msgid "%d seconds"
+msgstr "%d 秒"
+
+msgid "less than 1 second"
+msgstr "少於1秒"
+
+msgid "EpubSplit"
+msgstr "Epub拆分"
+
+msgid "Split off part of an EPUB into a new book."
+msgstr "將epub的拆分為新書"
+
+msgid "Select One Book"
+msgstr "選取一本書"
+
+msgid "Please select exactly one book to split."
+msgstr "請只選擇一本書"
+
+msgid "EPUB3 Detected"
+msgstr "檔案為EPUB3格式"
+
+msgid "This plugin only works on EPUB2 format ebooks."
+msgstr "該外掛僅用於EPUB2格式的電子書."
+
+msgid "No EPUB"
+msgstr "無EPUB"
+
+msgid "This plugin only works on EPUB format ebooks."
+msgstr "該外掛僅用於EPUB格式的電子書."
+
+msgid "Select Sections to Split Off"
+msgstr "選擇需拆分的章節"
+
+msgid "No Sections Selected"
+msgstr "未選擇章節"
+
+msgid "Book(s) not split.\n\nYou must select at least one section to split."
+msgstr "書籍未拆分.\n\n你至少需選擇一本用於拆分的書."
+
+msgid "New Books Created"
+msgstr "新書籍已建立"
+
+msgid "%s New Books Created."
+msgstr "%s 本新書已建立."
+
+msgid "Computing size of EPUB..."
+msgstr "正在計算EPUB的大小..."
+
+msgid "Finished computing size of EPUB."
+msgstr "完成計算EPUB的大小。"
+
+msgid "Size of New Book"
+msgstr "新書的大小"
+
+msgid "New EPUB File Size:"
+msgstr "新EPUB檔案大小:"
+
+msgid "%s Split"
+msgstr "%s 分拆"
+
+msgid "Calibre Library Link"
+msgstr "Calibre 書庫連結"
+
+msgid "Source URL"
+msgstr "源URL"
+
+msgid "Split from:"
+msgstr "分拆自:"
+
+msgid "You can enable or disable Edit Metadata in Preferences > Plugins > EpubSplit."
+msgstr "你可以在首選項 >外掛 > Epub拆分 啟用或禁用後設資料編輯 ."
+
+msgid "The book for the new Split EPUB has been created and default metadata filled in.\n\nHowever, the EPUB will *not* be created until after you've reviewed, edited, and closed the metadata dialog that follows.\n\nYou can fill in the metadata yourself, or use download metadata for known books.\n\nIf you download or add a cover image, it will be included in the generated EPUB."
+msgstr "新Split EPub的書籍已經建立，並填寫了預設後設資料。\n\n然而，在您檢視、編輯和關閉隨後的後設資料對話方塊之前，才會 ** 建立EPub。\n\n您可以自己填寫後設資料，也可以使用已知書籍的下載後設資料。\n\n如果您下載或新增封面影象，它將包含在生成的EPub中。"
+
+msgid "Splitting off from EPUB..."
+msgstr "拆分自EPUB..."
+
+msgid "Finished splitting off EPUB."
+msgstr "完成EPUB拆分"
+
+msgid "<b><u>%s</u> by %s</b> has been created and default metadata filled in."
+msgstr "<b><u>%s</u> 作者 %s</b> 已建立並生成了預設後設資料."
+
+msgid "EpubSplit now skips the Edit Metadata step by default."
+msgstr "Epub拆分 現在預設跳過“編輯後設資料”步驟。"
+
+msgid "Restart calibre now"
+msgstr "現在重新啟動 calibre"

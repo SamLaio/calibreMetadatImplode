@@ -22,6 +22,11 @@ PROJECTS = [
         "source": ROOT / "Find Duplicates" / "src",
         "output": ROOT / "dist" / "Find Duplicates-zh_TW-release.zip",
     },
+    {
+        "name": "EpubSplit",
+        "source": ROOT / "EpubSplit" / "src",
+        "output": ROOT / "dist" / "EpubSplit-zh_TW-release.zip",
+    },
 ]
 
 
