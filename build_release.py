@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import shutil
 import zipfile
 
 
@@ -22,6 +23,17 @@ PROJECTS = [
         "output": ROOT / "dist" / "Find Duplicates-zh_TW-release.zip",
     },
 ]
+
+
+def clean_dist() -> None:
+    dist_dir = ROOT / "dist"
+    if not dist_dir.exists():
+        return
+    for path in dist_dir.iterdir():
+        if path.is_dir():
+            shutil.rmtree(path)
+        else:
+            path.unlink()
 
 
 def build_zip(source_dir: Path, output_zip: Path) -> None:
@@ -53,6 +65,7 @@ def build_zip(source_dir: Path, output_zip: Path) -> None:
 
 
 def main() -> None:
+    clean_dist()
     for project in PROJECTS:
         build_zip(project["source"], project["output"])
         print(f"Built {project['name']}: {project['output']}")
