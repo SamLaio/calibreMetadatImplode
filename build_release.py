@@ -8,6 +8,11 @@ import zipfile
 ROOT = Path(__file__).resolve().parent
 PROJECTS = [
     {
+        "name": "AZW6 Image Merge",
+        "source": ROOT / "AZW6 Image Merge" / "src",
+        "output": ROOT / "dist" / "AZW6 Image Merge-zh_TW-release.zip",
+    },
+    {
         "name": "Embed Metadata Safe",
         "source": ROOT / "Embed Metadata Safe" / "src",
         "output": ROOT / "dist" / "embed-metadata-safe.zip",
