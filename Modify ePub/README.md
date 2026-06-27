@@ -2,6 +2,10 @@
 
 `Modify ePub` calibre 外掛的原始碼目錄。
 
+## 原始 GitHub
+
+- [kiwidude68/calibre_plugins](https://github.com/kiwidude68/calibre_plugins/tree/main/modify_epub)
+
 ## 結構
 
 - `src/`：解開後的外掛原始碼

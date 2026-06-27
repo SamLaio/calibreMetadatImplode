@@ -2,6 +2,10 @@
 
 `Find Duplicates` calibre 外掛的原始碼目錄。
 
+## 原始 GitHub
+
+- [JimmXinu/kiwidude68_calibre_plugins](https://github.com/JimmXinu/kiwidude68_calibre_plugins/tree/main/find_duplicates)
+
 ## 結構
 
 - `src/`：外掛原始碼
