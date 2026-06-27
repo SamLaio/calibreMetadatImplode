@@ -1,0 +1,2 @@
+# calibreMetadatImplode
+Calibre原程式的metadata有可能失效，所以需要他
