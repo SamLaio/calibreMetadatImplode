@@ -1,35 +1,37 @@
 # calibreMetadatImplode
 
-`Embed Metadata Safe` for calibre.
+這個倉庫現在並排管理三個 calibre 外掛：
 
-這個 plugin 的目標是保留 calibre 內建 `Embed Metadata` 的核心流程，但先替 EPUB 做一層保護：
+- [`Embed Metadata Safe`](./Embed%20Metadata%20Safe)
+- [`Modify ePub`](./Modify%20ePub)
+- [`Find Duplicates`](./Find%20Duplicates)
 
-- 選取書籍
-- 先掃掉 EPUB 內壞掉的 `calibre:user_metadata`
-- 再呼叫 calibre 自己的 `db.new_api.embed_metadata()`
-- 界面會自動偵測正體中文環境，切換成正體中文；其他情況使用英文
-- 按鈕已附上圖示
-- 有一個設定頁可以切換成「只處理 EPUB」或「可選格式」
-- 當選擇「可選格式」時，執行時會跳出格式選擇對話框
+每個外掛都有自己的 `src/` 原始碼樹，發布時會分別打包到 `dist/`。
 
-相關實作放在：
+## 目錄結構
 
-- [`embed_metadata_safe/__init__.py`](./embed_metadata_safe/__init__.py)
-- [`embed_metadata_safe/ui.py`](./embed_metadata_safe/ui.py)
-- [`embed_metadata_safe/main.py`](./embed_metadata_safe/main.py)
-- [`embed_metadata_safe/safe_epub.py`](./embed_metadata_safe/safe_epub.py)
+- [`Embed Metadata Safe/src/embed_metadata_safe`](./Embed%20Metadata%20Safe/src/embed_metadata_safe)
+- [`Modify ePub/src`](./Modify%20ePub/src)
+- [`Find Duplicates/src`](./Find%20Duplicates/src)
+- [`build_release.py`](./build_release.py)
+- [`dist/`](./dist)
 
-如果要在 calibre 內安裝，這個資料夾就是 plugin source。
+## 發布打包
 
-安裝方式：
+執行：
 
-1. 打開 calibre 的 plugin 安裝流程，選這個 `embed_metadata_safe` 資料夾
-2. 或在這個 repo 根目錄執行 `calibre-customize -b .`
-3. 重啟 calibre 後，就會看到 `Embed Metadata Safe`
+```powershell
+python build_release.py
+```
 
-這個版本的策略是保守的：
+會產生：
 
-- 只在選取的書籍上執行
-- 只有真的缺 `datatype` 的 `calibre:user_metadata` 才會被清理
-- `EPUB` 才會先做 `calibre:user_metadata` 清理
-- 實際寫回 metadata 仍然交給 calibre 原生 API
+- `dist/embed-metadata-safe.zip`
+- `dist/Modify ePub-zh_TW-release.zip`
+- `dist/Find Duplicates-zh_TW-release.zip`
+
+## 備註
+
+- `Embed Metadata Safe` 會保留 Python 套件名稱 `embed_metadata_safe`，方便 calibre 匯入。
+- `Modify ePub` 以解開後的外掛原始碼形式保存，包含正體中文翻譯檔。
+- `Find Duplicates` 以解開後的外掛原始碼形式保存，並附上正體中文翻譯檔。
