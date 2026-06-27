@@ -27,6 +27,11 @@ PROJECTS = [
         "source": ROOT / "EpubSplit" / "src",
         "output": ROOT / "dist" / "EpubSplit-zh_TW-release.zip",
     },
+    {
+        "name": "Count Pages",
+        "source": ROOT / "Count Pages" / "src",
+        "output": ROOT / "dist" / "Count Pages-zh_TW-release.zip",
+    },
 ]
 
 

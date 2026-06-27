@@ -1,0 +1,334 @@
+# Count Pages 正體中文翻譯
+msgid ""
+msgstr ""
+"Project-Id-Version: Count Pages\n"
+"POT-Creation-Date: 2026-02-25 21:04+1000\n"
+"PO-Revision-Date: 2026-06-28 00:00+0800\n"
+"Last-Translator: Codex\n"
+"Language-Team: Chinese (Traditional)\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Keyboard shortcuts"
+msgstr "鍵盤快捷鍵"
+
+msgid "Restart calibre now"
+msgstr "立即重新啟動 calibre"
+
+msgid "Preferences for:"
+msgstr "偏好設定："
+
+msgid "Clear"
+msgstr "清除"
+
+msgid "Clear all settings for this plugin"
+msgstr "清除這個外掛的所有設定"
+
+msgid "Are you sure you want to change your settings in this library for this plugin?"
+msgstr "你確定要變更這個資料庫中此外掛的設定嗎？"
+
+msgid "Any settings in other libraries or stored in a JSON file in your calibre plugins folder will not be touched."
+msgstr "其他資料庫中的設定，或儲存在 calibre 外掛資料夾 JSON 檔中的設定，都不會被影響。"
+
+msgid "You must restart calibre afterwards."
+msgstr "完成後你必須重新啟動 calibre。"
+
+msgid "Settings changed"
+msgstr "設定已變更"
+
+msgid "Settings for this plugin in this library have been changed."
+msgstr "這個資料庫中的外掛設定已變更。"
+
+msgid "Please restart calibre now."
+msgstr "請立即重新啟動 calibre。"
+
+msgid "Are you sure you want to clear your settings in this library for this plugin?"
+msgstr "你確定要清除這個資料庫中此外掛的設定嗎？"
+
+msgid "Settings deleted"
+msgstr "設定已刪除"
+
+msgid "All settings for this plugin in this library have been cleared."
+msgstr "這個資料庫中此外掛的所有設定都已清除。"
+
+msgid "Copy to clipboard"
+msgstr "複製到剪貼簿"
+
+msgid "Undefined"
+msgstr "未定義"
+
+msgid "Restart required"
+msgstr "需要重新啟動"
+
+msgid "Title image not found - you must restart Calibre before using this plugin!"
+msgstr "找不到標題圖片，使用此外掛前必須先重新啟動 calibre！"
+
+msgid "Create new column"
+msgstr "建立新欄位"
+
+msgid "Count Pages"
+msgstr "頁數統計"
+
+msgid "&Estimate page/word counts"
+msgstr "&估算頁數/字數"
+
+msgid "&Download page/word counts - all sources"
+msgstr "&從所有來源下載頁數/字數"
+
+msgid "&Statistic totals for selected books"
+msgstr "&選取書籍的統計總計"
+
+msgid "&Customize plugin"
+msgstr "&自訂外掛"
+
+msgid "&Help"
+msgstr "&說明"
+
+msgid "Configure plugin"
+msgstr "設定外掛"
+
+msgid "You must specify custom column(s) first. Do you want to configure this now?"
+msgstr "你必須先指定自訂欄位。要現在設定嗎？"
+
+msgid "Count Page/Word Statistics"
+msgstr "計算頁數/字數統計"
+
+msgid "Counting statistics in %d books"
+msgstr "正在計算 %d 本書的統計資料"
+
+msgid "Failed to count statistics"
+msgstr "統計資料計算失敗"
+
+msgid "Counting statistics batch completed"
+msgstr "這批統計資料計算完成"
+
+msgid "Failed to generate any statistics. <b>View Log</b> for details"
+msgstr "無法產生任何統計資料。請查看 <b>檢視記錄</b> 以取得詳細資訊"
+
+msgid "Count Pages failed"
+msgstr "頁數統計失敗"
+
+msgid "Count log"
+msgstr "計算記錄"
+
+msgid "<p>Count Pages plugin found <b>%d statistics(s)</b>. "
+msgstr "<p>Count Pages 外掛找到 <b>%d 筆統計資料</b>。 "
+
+msgid "Proceed with updating columns in your library?"
+msgstr "要更新資料庫中的欄位嗎？"
+
+msgid "Count complete"
+msgstr "計算完成"
+
+msgid "Updating statistics"
+msgstr "正在更新統計資料"
+
+msgid "Updating"
+msgstr "正在更新"
+
+msgid "Selected"
+msgstr "已選取"
+
+msgid "Paragraphs (APNX accurate)"
+msgstr "段落數（APNX 精準）"
+
+msgid "E-book Viewer (calibre)"
+msgstr "calibre 電子書檢視器"
+
+msgid "Adobe Digital Editions (ADE)"
+msgstr "Adobe Digital Editions（ADE）"
+
+msgid "Custom (Chars Per Page)"
+msgstr "自訂（每頁字元數）"
+
+msgid "Download page/word counts"
+msgstr "下載頁數/字數"
+
+msgid "Estimate page/word counts"
+msgstr "估算頁數/字數"
+
+msgid " - all sources"
+msgstr " - 所有來源"
+
+msgid "Selected Books"
+msgstr "已選取書籍"
+
+msgid "Page Count"
+msgstr "頁數"
+
+msgid "Word Count"
+msgstr "字數"
+
+msgid "Flesch Reading Ease"
+msgstr "Flesch 閱讀易讀度"
+
+msgid "Flesch-Kincaid Grade Level"
+msgstr "Flesch-Kincaid 年級程度"
+
+msgid "Gunning Fog Index"
+msgstr "Gunning Fog 指數"
+
+msgid "Statistics"
+msgstr "統計資料"
+
+msgid "Other"
+msgstr "其他"
+
+msgid "Download options:"
+msgstr "下載選項："
+
+msgid "Move source up (Alt+Up)"
+msgstr "將來源上移（Alt+Up）"
+
+msgid "Alt+Up"
+msgstr "Alt+Up"
+
+msgid "Move source down (Alt+Down)"
+msgstr "將來源下移（Alt+Down）"
+
+msgid "Alt+Down"
+msgstr "Alt+Down"
+
+msgid "Show download from all sources menu item"
+msgstr "顯示「從所有來源下載」選單項目"
+
+msgid "Try to download page count from each source"
+msgstr "嘗試從每個來源下載頁數"
+
+msgid "Other options:"
+msgstr "其他選項："
+
+msgid "&Button default:"
+msgstr "&按鈕預設動作："
+
+msgid "If plugin is placed as a toolbar button, choose a default action when clicked on"
+msgstr "如果外掛被放在工具列按鈕上，請選擇點擊時的預設動作"
+
+msgid "Batch size:"
+msgstr "批次大小："
+
+msgid "Always overwrite an existing word/page count"
+msgstr "一律覆寫現有的字數/頁數"
+
+msgid "Update the statistics even if they have not changed"
+msgstr "即使統計資料沒有變更也要更新"
+
+msgid "Use Preferred Output Format if available"
+msgstr "若可用則使用偏好的輸出格式"
+
+msgid "Prompt to save counts"
+msgstr "儲存統計時提示確認"
+
+msgid "Edit the keyboard shortcuts associated with this plugin"
+msgstr "編輯這個外掛的鍵盤快捷鍵"
+
+msgid "&Library preferences"
+msgstr "&資料庫偏好設定"
+
+msgid "View data stored in the library database for this plugin"
+msgstr "檢視儲存在資料庫中的這個外掛資料"
+
+msgid "Done"
+msgstr "完成"
+
+msgid "Confirmation dialogs have all been reset"
+msgstr "確認對話框已全部重設"
+
+msgid "Source"
+msgstr "來源"
+
+msgid "Identifier"
+msgstr "識別碼"
+
+msgid "On Menu"
+msgstr "顯示於選單"
+
+msgid "Page count options:"
+msgstr "頁數選項："
+
+msgid "&Custom column:"
+msgstr "&自訂欄位："
+
+msgid "Column must be of type float or int. Leave this blank if you do not want to count pages"
+msgstr "欄位必須為 float 或 int 類型。如果不想計算頁數，請留白。"
+
+msgid "&Algorithm:"
+msgstr "&演算法："
+
+msgid "Choose which algorithm to use if you have specified a page count column"
+msgstr "如果你已指定頁數欄位，請選擇要使用的演算法"
+
+msgid "C&hars per page:"
+msgstr "&每頁字元數："
+
+msgid "If using the Custom algorithm, specify how many characters per page including spaces."
+msgstr "如果使用自訂演算法，請指定每頁字元數，包含空白字元。"
+
+msgid "Word count options:"
+msgstr "字數選項："
+
+msgid "C&ustom column:"
+msgstr "&自訂欄位："
+
+msgid "Column must be of type float or int. Leave this blank if you do not want to count words"
+msgstr "欄位必須為 float 或 int 類型。如果不想計算字數，請留白。"
+
+msgid "Use ICU algorithm"
+msgstr "使用 ICU 演算法"
+
+msgid "Readability options:"
+msgstr "可讀性選項："
+
+msgid "Readability statistics available are <a href=\"https://en.wikipedia.org/wiki/Flesch-Kincaid_readability_test\">Flesch-Kincaid</a> or <a href=\"https://en.wikipedia.org/wiki/Gunning_fog_index\">Gunning Fog Index</a>."
+msgstr "可用的可讀性統計有 <a href=\"https://en.wikipedia.org/wiki/Flesch-Kincaid_readability_test\">Flesch-Kincaid</a> 或 <a href=\"https://en.wikipedia.org/wiki/Gunning_fog_index\">Gunning Fog 指數</a>。"
+
+msgid "Working"
+msgstr "處理中"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Queueing books for counting statistics"
+msgstr "正在將書籍加入統計計算佇列"
+
+msgid "ADOBE page count requires EPUB format"
+msgstr "ADOBE 頁數計算需要 EPUB 格式"
+
+msgid "Book already has all statistics and overwrite is turned off"
+msgstr "此書已經有所有統計資料，而且已關閉覆寫。"
+
+msgid "No identifiers for selected download sources"
+msgstr "所選下載來源沒有識別碼"
+
+msgid "Queueing "
+msgstr "正在排入佇列 "
+
+msgid "No format found for word count, but page count download will be attempted"
+msgstr "找不到可用格式來計算字數，但仍會嘗試下載頁數"
+
+msgid "No convertible format found"
+msgstr "找不到可轉換的格式"
+
+msgid "Could not analyse some statistics in %d of %d books, for reasons shown in details below."
+msgstr "無法分析 %d 本中的 %d 本書的部分統計資料，原因如以下詳細資訊所示。"
+
+msgid "Page/word/statistics warnings"
+msgstr "頁數/字數/統計資料警告"
+
+msgid "Statistic Totals"
+msgstr "統計總計"
+
+msgid "Statistic"
+msgstr "統計項目"
+
+msgid "Total"
+msgstr "總計"
+
+msgid "Average"
+msgstr "平均"
+
+msgid "Some books were skipped due to missing statistic values."
+msgstr "有些書籍因缺少統計值而被略過。"

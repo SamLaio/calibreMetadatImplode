@@ -1,11 +1,12 @@
 # calibreMetadatImplode
 
-這個倉庫並排管理四個 calibre 外掛：
+這個倉庫並排管理五個 calibre 外掛：
 
 - [`Embed Metadata Safe`](./Embed%20Metadata%20Safe): 在寫入 EPUB metadata 前先清理壞掉的 `calibre:user_metadata`。
 - [`Modify ePub`](./Modify%20ePub): 不經轉檔直接修改 EPUB 內容與結構。原始 GitHub: [kiwidude68/calibre_plugins](https://github.com/kiwidude68/calibre_plugins/tree/main/modify_epub)
 - [`Find Duplicates`](./Find%20Duplicates): 依照中繼資料與檔案內容找出重複書籍。原始 GitHub: [JimmXinu/kiwidude68_calibre_plugins](https://github.com/JimmXinu/kiwidude68_calibre_plugins/tree/main/find_duplicates)
 - [`EpubSplit`](./EpubSplit): 把 EPUB 切成新的獨立書籍。原始 GitHub: [JimmXinu/EpubSplit](https://github.com/JimmXinu/EpubSplit)
+- [`Count Pages`](./Count%20Pages): 計算頁數、字數與可讀性統計，已加入正體中文介面語系。原始 GitHub: [kiwidude68/calibre_plugins](https://github.com/kiwidude68/calibre_plugins/tree/main/count_pages)
 
 各外掛的完整說明請看對應資料夾內的 README：
 
@@ -13,6 +14,7 @@
 - [`Modify ePub/README.md`](./Modify%20ePub/README.md)
 - [`Find Duplicates/README.md`](./Find%20Duplicates/README.md)
 - [`EpubSplit/README.md`](./EpubSplit/README.md)
+- [`Count Pages/README.md`](./Count%20Pages/README.md)
 
 ## 打包方式
 
@@ -22,9 +24,10 @@
 python build_release.py
 ```
 
-會先清空 `dist/`，再分別輸出四個 zip：
+會先清空 `dist/`，再分別輸出五個 zip：
 
 - `dist/embed-metadata-safe.zip`
 - `dist/Modify ePub-zh_TW-release.zip`
 - `dist/Find Duplicates-zh_TW-release.zip`
 - `dist/EpubSplit-zh_TW-release.zip`
+- `dist/Count Pages-zh_TW-release.zip`
