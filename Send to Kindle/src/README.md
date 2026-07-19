@@ -39,6 +39,9 @@ git archive --format zip --output ../Send-to-Kindle-Calibre-Plugin.zip master</c
 - 這個外掛會使用 Calibre 已設定好的寄信資訊。
 - 需要先在 Calibre 的電子郵件分享設定中，填好可用的寄送信箱與 Kindle 收件地址。
 - 若你有設定多個 Kindle 信箱，可以在外掛設定頁面勾選要使用的收件人。
+- 附件檔名會直接沿用 Calibre 的 `Preferences → Import/export → Sending books to devices` 檔名模板，並用書庫中的 metadata 來代入欄位。
+- 如果你把模板設成 `書名 - 作者`，實際寄出的檔名就會是你送出前輸入的書名加上作者。
+- 如果你把模板設成 `id - 書名`，實際寄出的檔名也會照這個規則組出來，不會轉成拼音或 ASCII。
 
 ---
 

@@ -6,6 +6,7 @@ from calibre.utils.localization import get_lang
 from calibre.gui2.preferences import show_config_widget
 from calibre.gui2.threaded_jobs import ThreadedJob
 from calibre.gui2.email import gui_sendmail
+from calibre.customize.ui import available_output_formats
 from calibre.devices.utils import create_upload_path
 from calibre.utils.smtp import config as email_config
 from calibre.utils.short_uuid import uuid4
@@ -338,7 +339,7 @@ class ProcessDialog(QDialog):
 
         destinations = self.get_destinations()
         ids = [ebook[0] for ebook in self.ebooks.values()]
-        preferred_format = get_config('preferred')
+        preferred_format = get_config('preferred_format')
         for email in emails:
             destination = destinations.get(email)
             formats = destination.get('formats')

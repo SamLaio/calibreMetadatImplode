@@ -16,7 +16,7 @@ class SendToKindle(InterfaceActionBase):
     supported_platforms = ['windows', 'osx', 'linux']
     author = 'bookfere.com'
     version = (1, 1, 1)
-    __version__ = 'v' + '.'.join(map(str, version))
+    __version__ = 'v1.1.1_r.1'
     minimum_calibre_version = (2, 0, 0)
 
     actual_plugin = 'calibre_plugins.send_to_kindle.ui:InterfacePlugin'
