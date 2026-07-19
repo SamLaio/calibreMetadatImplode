@@ -37,6 +37,11 @@ PROJECTS = [
         "source": ROOT / "Count Pages" / "src",
         "output": ROOT / "dist" / "Count Pages-zh_TW-release.zip",
     },
+    {
+        "name": "Send to Kindle",
+        "source": ROOT / "Send to Kindle" / "src",
+        "output": ROOT / "dist" / "Send to Kindle-zh_TW-release.zip",
+    },
 ]
 
 
