@@ -29,7 +29,7 @@ Please see the README.md and CONTRIBUTING.md at the above site for more informat
 [changelog-url]: CHANGELOG.md
 
 [license-image]: https://img.shields.io/badge/License-GPL-yellow.svg
-[license-url]: ../LICENSE.md
+[license-url]: https://www.gnu.org/licenses/gpl-3.0.en.html
 
 [calibre-image]: https://img.shields.io/badge/calibre-2.0.0-green
 [calibre-url]: https://www.calibre-ebook.com/
@@ -37,6 +37,10 @@ Please see the README.md and CONTRIBUTING.md at the above site for more informat
 [status-image]: https://img.shields.io/badge/Status-Stable-green
 
 ## 中文摘要
+
+最低 calibre：**2.0.0**。從 [本倉庫發行頁](https://github.com/SamLaio/calibreMetadatImplode/releases) 下載 `Find Duplicates-zh_TW-release.zip` 安裝。
+
+目前為 **1.10.11 正體中文整合版（2026-10-23）**：整合官方語系更新，保留本倉庫原有正體中文、中文說明與外掛描述。正體中文涵蓋全部 179 個介面字串；重複書籍比對演算法沒有變更。
 
 `Find Duplicates` 是用來找出可能重複書籍的 calibre 外掛，會依照 metadata 與你設定的規則整理候選結果。
 

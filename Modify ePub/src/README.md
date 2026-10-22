@@ -32,16 +32,20 @@ Please see the README.md and CONTRIBUTING.md at the above site for more informat
 [changelog-url]: CHANGELOG.md
 
 [license-image]: https://img.shields.io/badge/License-GPL-yellow.svg
-[license-url]: ../LICENSE.md
+[license-url]: https://www.gnu.org/licenses/gpl-3.0.en.html
 
-[calibre-image]: https://img.shields.io/badge/calibre-2.85.1-green
+[calibre-image]: https://img.shields.io/badge/calibre-3.48.0-green
 [calibre-url]: https://www.calibre-ebook.com/
 
 [status-image]: https://img.shields.io/badge/Status-Stable-green
 
 ## 中文摘要
 
+最低 calibre：**3.48.0**。從 [本倉庫發行頁](https://github.com/SamLaio/calibreMetadatImplode/releases) 下載 `Modify ePub-zh_TW-release.zip` 安裝。
+
 `Modify ePub` 是直接修改 EPUB 內容的 calibre 外掛，適合在不轉檔的前提下做局部修補與清理。
+
+目前為 **1.8.11 正體中文整合版（2026-10-23）**：整合官方 1.8.11 的非數值 CSS 邊距解析修正與 1.8.10 語系更新，並保留本倉庫原有正體中文翻譯、中文說明及外掛描述。正體中文涵蓋新版全部 127 個介面字串。
 
 - 直接對選取的 EPUB 套用修改
 - 避免 ePub->ePub 轉檔帶來的額外重寫

@@ -1,7 +1,20 @@
 # Find Duplicates
 
+最低 calibre：**2.0.0**；目前外掛版本為 **1.10.11**。
+
 `Find Duplicates` 是用來找出 calibre 書庫中可能重複書籍的外掛。
 它會依照你設定的比對規則整理候選項目，讓你再人工確認哪些書應該合併、保留或刪除。
+
+## 目前版本與官方比對
+
+目前為 **1.10.11 正體中文整合版（2026-10-23）**，從本倉庫的 1.10.10 更新。
+比對來源為 [官方下載包](https://plugins.calibre-ebook.com/131017.zip) 與 [官方更新](https://github.com/kiwidude68/calibre_plugins/commit/91b0f23da54fa8f020ba387e1f13a1321706c0ff)。
+
+| 項目 | 整合結果 |
+| --- | --- |
+| 官方語系 | 加入捷克文、法文、日文、韓文、斯洛伐克文、塞爾維亞文（拉丁字母）及瑞典文，並納入官方發行包中的其他已編譯語系。 |
+| 本倉庫正體中文 | 保留 `zh_TW`、`zh_Hant`、`zh_Hant_TW` 與翻譯來源，確認涵蓋全部 179 個介面字串。 |
+| 既有修改 | 保留中文說明與外掛描述。重複書籍比對演算法與新版相同；同步刪除一行無效註解。 |
 
 ## 功能
 
@@ -17,9 +30,14 @@
 3. 檢視外掛整理出的候選結果。
 4. 手動處理重複書目。
 
+## 安裝
+
+從 [本倉庫發行頁](https://github.com/SamLaio/calibreMetadatImplode/releases) 下載 `Find Duplicates-zh_TW-release.zip`，於 calibre「偏好設定 → 外掛 → 從檔案載入外掛」安裝並重新啟動。
+
 ## 原始 GitHub
 
-- [JimmXinu/kiwidude68_calibre_plugins](https://github.com/JimmXinu/kiwidude68_calibre_plugins/tree/main/find_duplicates)
+- [kiwidude68/calibre_plugins](https://github.com/kiwidude68/calibre_plugins/tree/main/find_duplicates)：目前官方維護來源。
+- [JimmXinu/kiwidude68_calibre_plugins](https://github.com/JimmXinu/kiwidude68_calibre_plugins/tree/main/find_duplicates)：先前匯入來源，仍停留在 1.10.10。
 
 ## 結構
 

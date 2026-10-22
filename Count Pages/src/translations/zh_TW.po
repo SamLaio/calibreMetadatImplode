@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Count Pages\n"
 "POT-Creation-Date: 2026-02-25 21:04+1000\n"
-"PO-Revision-Date: 2026-06-28 00:00+0800\n"
+"PO-Revision-Date: 2026-10-23 00:00+0800\n"
 "Last-Translator: Codex\n"
 "Language-Team: Chinese (Traditional)\n"
 "Language: zh_TW\n"
@@ -332,3 +332,39 @@ msgstr "平均"
 
 msgid "Some books were skipped due to missing statistic values."
 msgstr "有些書籍因缺少統計值而被略過。"
+
+msgid "Count the number of pages and/or words in a book\nto store in custom column(s)"
+msgstr "計算書籍的頁數及／或字數，\n並儲存到自訂欄位"
+
+msgid "Show a menu item to attempt to download the page\ncount from all active sources. Only sources for which\nthe book has an id will be tried.\n"
+msgstr "顯示從所有啟用來源下載頁數的選單項目。\n只會嘗試書籍具有對應識別碼的來源。\n"
+
+msgid "If this option is checked, each download source is\ntried until a page count is successfully\nfetched.\n"
+msgstr "勾選後會逐一嘗試各個下載來源，\n直到成功取得頁數為止。\n"
+
+msgid "When calculating statistics for a large number of books,\nthe plugin will process the books in batches per calibre job."
+msgstr "計算大量書籍的統計資料時，\n外掛會將書籍分批交給各個 calibre 工作處理。"
+
+msgid "Uncheck this option if you have manually populated values in\neither of your page/word custom columns, and never want the\nplugin to overwrite it. Acts as a convenience option for users\nwho have the toolbar button configured to populate both page\nand word count, but for some books have already assigned values\ninto a column and just want the zero/blank column populated."
+msgstr "如果你已手動填入頁數或字數自訂欄位，\n而且不希望外掛覆寫，請取消勾選。\n若工具列按鈕設定為同時計算頁數與字數，\n但部分書籍已有其中一個欄位的值，\n此選項可讓外掛只填入值為零或空白的欄位。"
+
+msgid "Check this option if you want the statistics to be updated in\nthe books metadata even if they have not changed. Using this\noption will always update the modified timestamp for the book\neven when the statistics have not changed."
+msgstr "勾選後，即使統計資料沒有變更，\n仍會更新書籍中繼資料中的統計值。\n此選項一律會更新書籍的修改時間，\n即使統計資料維持不變。"
+
+msgid "Check this option to calculate the statistics using the format selected\nas the Preferred Output Format. If this format is not found, or the\noption is not checked, the first format found in the Preferred Input\nFormat list will be used. The Preferred Output and Input settings\nare specified in Behavior page of the calibre Preferences.\nNote: ePub will always be used if the ADE page count algorithm is selected."
+msgstr "勾選後會使用「偏好的輸出格式」計算統計資料。\n如果找不到此格式或未勾選此選項，\n會使用「偏好的輸入格式」清單中第一個可用格式。\n你可以在 calibre 偏好設定的「行為」頁面\n設定偏好的輸出與輸入格式。\n注意：選用 ADE 頁數演算法時，一律使用 EPUB。"
+
+msgid "Uncheck this option if you want changes applied without\na confirmation dialog. There is a small risk with this\noption unchecked that if you are making other changes to\nthis book record at the same time they will be lost."
+msgstr "若要直接套用變更而不顯示確認對話框，\n請取消勾選。如果同時對同一筆書籍記錄\n進行其他修改，取消勾選可能會使\n那些同時進行的修改遺失。"
+
+msgid "The ICU algorithm is a more complete word count and supports multiple locales.\nUncheck this to use the original word count algorithm."
+msgstr "ICU 演算法提供較完整的字數計算，並支援多種語系。\n取消勾選可改用原本的字數計算演算法。"
+
+msgid "Specify the custom column to store a computed Flesch Reading Ease score.\nLeave this blank if you do not want to calculate it"
+msgstr "指定儲存 Flesch 閱讀易讀度分數的自訂欄位。\n如果不想計算，請留白"
+
+msgid "Specify the custom column to store a computed Flesch-Kincaid Grade Level score.\nLeave this blank if you do not want to calculate it"
+msgstr "指定儲存 Flesch-Kincaid 年級程度分數的自訂欄位。\n如果不想計算，請留白"
+
+msgid "Specify the custom column to store a computed Gunning Fog Index score.\nLeave this blank if you do not want to calculate it"
+msgstr "指定儲存 Gunning Fog 指數分數的自訂欄位。\n如果不想計算，請留白"

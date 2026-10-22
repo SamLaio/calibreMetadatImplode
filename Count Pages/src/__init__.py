@@ -20,7 +20,7 @@ class ActionCountPages(InterfaceActionBase):
     description             = 'Count pages, words, and reading statistics for ePub/Mobi books and store them in custom columns.'
     supported_platforms     = ['windows', 'osx', 'linux']
     author                  = 'Grant Drake'
-    version                 = (1, 15, 2)
+    version                 = (1, 15, 3)
     minimum_calibre_version = (3, 48, 0)
 
     #: This field defines the GUI plugin class that contains all the code

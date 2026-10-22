@@ -1,33 +1,28 @@
-##  Running Modify ePub from the command line
+## 從命令列執行 Modify ePub
 
-### INTRODUCTION
+`me.py` 可直接修改磁碟上的 EPUB，無需先加入書庫。請先安裝 calibre 與本倉庫的 Modify ePub **1.8.11**；最低 calibre 為 **3.48.0**。腳本會載入已安裝的外掛。
 
-The `me.py` script file is a Python script designed for calibre users
-to allow running the Modify ePub plugin from the command line rather
-than using the calibre gui.
+### 查看選項
 
-It still requires calibre to be installed along with the Modify Plugin.
+在本倉庫根目錄執行：
 
-The intent is to allow this plugin to be used in a scenario where the user
-does not want to add the books to calibre to use a feature of the plugin.
-For instance you may just want to use the `smarten_punctuation` feature.
-
-### INSTALLATION INSTRUCTIONS
-
-1. Extract the `me.py` from this zip file into a folder of your choice
-2. To see the options available to run the script, run the following:
-```
-calibre-debug -e me.py --help
+```powershell
+calibre-debug -e "Modify ePub/src/commandline/me.py" -- --help
 ```
 
-### OTHER NOTES
+若使用發行 ZIP，可將 `commandline/me.py` 解開，再把命令中的腳本路徑改為實際位置。
 
-- If you have a particular set of options you want to repeatedly run, you
-  may want to wrap this script with your own batch file that just takes
-  in the variable argument such as the path to the file. A very simple
-  example can be found in `example.cmd` in the Modify ePub zip file.
-- Two features of the GUI version of the plugin are not supported as they
-  require calibre metadata which is unavailable from the command line:
-    - add_replace_jacket
-    - update_metadata
+### 修改書檔
+
+```powershell
+calibre-debug -e "Modify ePub/src/commandline/me.py" -- "input.epub" "output.epub" --smarten_punctuation --remove_javascript
+```
+
+第一個路徑是來源 EPUB，第二個是輸出 EPUB。省略輸出路徑時會覆寫來源；執行前請備份，並避免指定已有重要檔案的輸出路徑。
+
+### 限制
+
+- 命令列不支援 `--add_replace_jacket` 與 `--update_metadata`，因為缺少圖形介面提供的書庫中繼資料。
+- 其他可用選項以腳本的 `--help` 為準。
+- 可參考同資料夾的 [example.cmd](example.cmd) 建立批次命令。
 

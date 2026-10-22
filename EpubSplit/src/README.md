@@ -2,14 +2,19 @@
 
 This is a repository for the EpubSplit Calibre Plugin.
 
+本倉庫修訂版：**3.12.0**；最低 calibre：**3.48.0**。安裝包為 `EpubSplit-zh_TW-release.zip`，由 [本倉庫發行頁](https://github.com/SamLaio/calibreMetadatImplode/releases) 下載。官方 3.12.0 不含下述 EPUB3 修改。
+
 ## 中文摘要
 
 `EpubSplit` 是把一本 EPUB 拆成多本新書的 calibre 外掛，適合把合集、連載或長篇作品切成獨立條目。
 
 - 依 TOC 或章節節點拆分 EPUB
 - 產生新的獨立書籍與中繼資料
-- 支援 EPUB2 與 EPUB3 結構
+- 支援 EPUB2 NCX 與 EPUB3 導覽目錄，依來源版本輸出 EPUB2 或 EPUB3
 - 會整理拆分後所需的資源與連結
+- HTML 解析器依序嘗試 `html5lib`、`lxml` 與 `html.parser`
+
+於 calibre 中一次選取一本未受 DRM 保護的 EPUB，再選擇要拆出的段落。原有正體中文翻譯與上述本倉庫修改均保留。
 
 Most discussion of this plugin takes place in the [EpubSplit Calibre Plugin forum].
 

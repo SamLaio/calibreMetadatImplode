@@ -7,6 +7,10 @@
 
 ## 總覽
 
+最低 calibre：**3.48.0**。從 [本倉庫發行頁](https://github.com/SamLaio/calibreMetadatImplode/releases) 下載 `Count Pages-zh_TW-release.zip` 安裝。
+
+目前為 **1.15.3 正體中文整合版（2026-10-23）**：整合官方 Goodreads `.xml` 下載修正與語系更新，保留本倉庫修改，補齊正體中文提示，並修復英文斷句模型的 Windows 換行問題。正體中文涵蓋全部 119 個介面字串。
+
 這個外掛可以計算書籍的頁數和/或字數，並把結果存到自訂欄位中。除了日常的資料庫瀏覽用途之外，Kindle 使用者還可以用頁數欄位的值產生 APNX 檔。也就是說，當你從 calibre 把電子書送到 Kindle 裝置時，就能像 Amazon 書籍一樣看到頁碼。
 
 這個外掛有兩種計算頁數的方法：
@@ -33,9 +37,9 @@ kiwidude 的所有 calibre 外掛目前都在 GitHub 上開發與維護：
 [changelog-url]: CHANGELOG.md
 
 [license-image]: https://img.shields.io/badge/License-GPL-yellow.svg
-[license-url]: ../LICENSE.md
+[license-url]: https://www.gnu.org/licenses/gpl-3.0.en.html
 
-[calibre-image]: https://img.shields.io/badge/calibre-2.0.0-green
+[calibre-image]: https://img.shields.io/badge/calibre-3.48.0-green
 [calibre-url]: https://www.calibre-ebook.com/
 
 [status-image]: https://img.shields.io/badge/Status-Stable-green
