@@ -1,0 +1,648 @@
+msgid ""
+msgstr "Project-Id-Version: Generate Cover 2.4.2.1\nLanguage: zh_TW\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\n"
+
+msgid " Customize... "
+msgstr " 自訂… "
+
+msgid " Revert "
+msgstr " 還原 "
+
+msgid " Save "
+msgstr " 儲存 "
+
+msgid "%d°"
+msgstr "%d°"
+
+msgid "&Help"
+msgstr "說明(&H)"
+
+msgid "<p>Your configuration file was corrupted (see Details).</p>)<p>Please report your exact recent actions which led to this on the MobileRead forum thread for this plugin so it can be fixed.</p><p>The configuration has been fixed automatically.</p>"
+msgstr "<p>設定檔部分內容損壞，詳細資料列出受影響項目。</p><p>已自動修正設定。</p>"
+
+msgid "A saved setting already exists with this name."
+msgstr "已有同名的儲存設定。"
+
+msgid "Add cover images"
+msgstr "新增封面圖片"
+
+msgid "Add image to this list"
+msgstr "新增圖片至清單"
+
+msgid "Add new setting"
+msgstr "新增設定"
+
+msgid "Add setting"
+msgstr "新增設定"
+
+msgid "After generating cover:"
+msgstr "產生封面後："
+
+msgid "Alignment:"
+msgstr "對齊："
+
+msgid "All settings for this plugin in this library have been cleared."
+msgstr "已清除此書庫中此外掛的所有設定。"
+
+msgid "Alter the order of items on the cover and\nwhether they are displayed using the checkbox"
+msgstr "調整封面項目順序，並勾選要顯示的項目"
+
+msgid "An image already exists with this name."
+msgstr "已有同名圖片。"
+
+msgid "An image file already exists with this name. Do you want to overwrite it?"
+msgstr "已有同名圖片，是否覆寫？"
+
+msgid "Any settings in other libraries or stored in a JSON file in your calibre plugins folder will not be touched."
+msgstr "不會變更其他書庫或外掛資料夾中 JSON 檔案的設定。"
+
+msgid "Are you sure you want to change your settings in this library for this plugin?"
+msgstr "確定要變更此書庫中此外掛的設定嗎？"
+
+msgid "Are you sure you want to clear your settings in this library for this plugin?"
+msgstr "確定要清除此書庫中此外掛的設定嗎？"
+
+msgid "Are you sure you want to delete the image: %s"
+msgstr "確定要刪除圖片：%s"
+
+msgid "Are you sure you want to remove the '%s' setting?"
+msgstr "確定要移除「%s」設定嗎？"
+
+msgid "Are you sure?"
+msgstr "確認操作"
+
+msgid "Author"
+msgstr "作者"
+
+msgid "Auto-reduce font size to fit on one line"
+msgstr "自動縮小字級以符合單行寬度"
+
+msgid "Autosave settings"
+msgstr "自動儲存設定"
+
+msgid "Backdrop:"
+msgstr "文字底色："
+
+msgid "Background:"
+msgstr "背景："
+
+msgid "Bold"
+msgstr "粗體"
+
+msgid "Border width:"
+msgstr "框線寬度："
+
+msgid "Border:"
+msgstr "框線："
+
+msgid "Bottom:"
+msgstr "下："
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Cancel action"
+msgstr "取消操作"
+
+msgid "Cannot add"
+msgstr "無法新增"
+
+msgid "Cannot copy"
+msgstr "無法複製"
+
+msgid "Cannot export"
+msgstr "無法匯出"
+
+msgid "Cannot generate cover"
+msgstr "無法產生封面"
+
+msgid "Cannot generate covers"
+msgstr "無法產生封面"
+
+msgid "Cannot import"
+msgstr "無法匯入"
+
+msgid "Cannot read"
+msgstr "無法讀取"
+
+msgid "Cannot remove"
+msgstr "無法移除"
+
+msgid "Cannot rename"
+msgstr "無法重新命名"
+
+msgid "Cannot write"
+msgstr "無法寫入"
+
+msgid "Centre"
+msgstr "置中"
+
+msgid "Change the way series information is displayed.\nUseful for non-English languages!"
+msgstr "自訂系列資訊的顯示格式，適用於不同語言。"
+
+msgid "Check this to automatically resize the cover based on\nthe dimensions of the currently chosen background image"
+msgstr "依目前選取的背景圖片尺寸調整封面大小"
+
+msgid "Check this to automatically resize the cover image to fit the\nthe maximum area available if it is too small"
+msgstr "圖片太小時，自動放大至可用範圍"
+
+msgid "Check this to overlay text on the image background.\nUncheck this to place text around the image."
+msgstr "將文字疊在背景圖片上；取消勾選則將文字放在圖片周圍。"
+
+msgid "Choose selected field fill color"
+msgstr "選擇目前欄位的文字顏色"
+
+msgid "Choose the background color"
+msgstr "選擇背景顏色"
+
+msgid "Choose the border color"
+msgstr "選擇框線顏色"
+
+msgid "Choose the font family for the selected field"
+msgstr "選擇目前欄位的字型"
+
+msgid "Choose the image border color (if it is not stretched to the cover edge)"
+msgstr "選擇圖片框線顏色（未延伸至封面邊緣時）"
+
+msgid "Choose this element's backdrop color, if applied"
+msgstr "選擇此項目的文字底色"
+
+msgid "Clear"
+msgstr "清除"
+
+msgid "Clear all settings for this plugin"
+msgstr "清除此外掛的所有設定"
+
+msgid "Color:"
+msgstr "顏色："
+
+msgid "Contents"
+msgstr "內容"
+
+msgid "Copy to clipboard"
+msgstr "複製到剪貼簿"
+
+msgid "Corrupted Configuration File"
+msgstr "設定檔損壞"
+
+msgid "Corrupted setting: \"%(setting_name)s\" has incorrect internal name of: \"%(internal_name)s\")"
+msgstr "設定「%(setting_name)s」的內部名稱不正確：「%(internal_name)s」"
+
+msgid "Cover Options"
+msgstr "封面選項"
+
+msgid "Cover setting exported to<br>%s"
+msgstr "封面設定已匯出至<br>%s"
+
+msgid "Cover width:"
+msgstr "封面寬度："
+
+msgid "Create new column"
+msgstr "建立新欄位"
+
+msgid "Custom"
+msgstr "自訂文字"
+
+msgid "Custom 2"
+msgstr "自訂文字 2"
+
+msgid "Custom 3"
+msgstr "自訂文字 3"
+
+msgid "Custom Text 1"
+msgstr "自訂文字 1"
+
+msgid "Custom Text 2"
+msgstr "自訂文字 2"
+
+msgid "Custom Text 3"
+msgstr "自訂文字 3"
+
+msgid "Data:"
+msgstr "資料："
+
+msgid "Delete setting from this list"
+msgstr "從清單刪除設定"
+
+msgid "Dimensions"
+msgstr "尺寸"
+
+msgid "Discard Changes"
+msgstr "捨棄變更"
+
+msgid "Do not prompt to save changes to a setting. Always save when\nswitching to another setting, clicking OK or using Import/Export."
+msgstr "切換設定、確認或匯入／匯出時直接儲存，不再詢問。"
+
+msgid "Edit the keyboard shortcuts associated with this plugin"
+msgstr "編輯此外掛的鍵盤快捷鍵"
+
+msgid "Enter a unique name for this image:"
+msgstr "請輸入不重複的圖片名稱："
+
+msgid "Enter image name"
+msgstr "輸入圖片名稱"
+
+msgid "Export completed"
+msgstr "匯出完成"
+
+msgid "Export setting"
+msgstr "匯出設定"
+
+msgid "Failed to copy image"
+msgstr "複製圖片失敗"
+
+msgid "Failed to export the cover setting."
+msgstr "匯出封面設定失敗。"
+
+msgid "Failed to rename image"
+msgstr "重新命名圖片失敗"
+
+msgid "Field Order:"
+msgstr "項目順序："
+
+msgid "File exists"
+msgstr "檔案已存在"
+
+msgid "Fill Color:"
+msgstr "文字顏色："
+
+msgid "Font size in pixels"
+msgstr "字級（像素）"
+
+msgid "Font:"
+msgstr "字型："
+
+msgid "Full width or height"
+msgstr "延伸至完整寬度或高度"
+
+msgid "GC Files"
+msgstr "封面設定檔"
+
+msgid "Generate && Revert"
+msgstr "產生並還原"
+
+msgid "Generate && Save"
+msgstr "產生並儲存"
+
+msgid "Generate Cover"
+msgstr "產生封面"
+
+msgid "Generate Custom Cover"
+msgstr "產生自訂封面"
+
+msgid "Generate a customised cover"
+msgstr "產生自訂封面"
+
+msgid "Generate cover using these settings and save for future usage"
+msgstr "使用目前設定產生封面，並儲存設定供日後使用"
+
+msgid "Generate cover using these settings then discard them"
+msgstr "使用目前設定產生封面，然後捨棄設定變更"
+
+msgid "Generating %d covers"
+msgstr "正在產生 %d 張封面"
+
+msgid "Generating: "
+msgstr "正在產生："
+
+msgid "Height:"
+msgstr "高度："
+
+msgid "Image"
+msgstr "圖片"
+
+msgid "Image border:"
+msgstr "圖片框線："
+
+msgid "Image:"
+msgstr "圖片："
+
+msgid "Import Failed"
+msgstr "匯入失敗"
+
+msgid "Import setting"
+msgstr "匯入設定"
+
+msgid "Italic"
+msgstr "斜體"
+
+msgid "Keyboard shortcuts"
+msgstr "鍵盤快捷鍵"
+
+msgid "Left"
+msgstr "靠左"
+
+msgid "Left:"
+msgstr "左："
+
+msgid "Margins:"
+msgstr "邊距："
+
+msgid "Missing metadata passed for book to generate cover"
+msgstr "未提供要產生封面的書籍資料"
+
+msgid "Move field down"
+msgstr "下移項目"
+
+msgid "Move field up"
+msgstr "上移項目"
+
+msgid "New image name:"
+msgstr "新圖片名稱："
+
+msgid "New setting name:"
+msgstr "新設定名稱："
+
+msgid "No books selected"
+msgstr "尚未選取書籍"
+
+msgid "No cover settings exist named: \"%s\""
+msgstr "沒有名為「%s」的封面設定"
+
+msgid "Opacity:"
+msgstr "不透明度："
+
+msgid "Optionally render a color backdrop for this element"
+msgstr "為此項目加上文字底色"
+
+msgid "Overwrite current profile with these changes"
+msgstr "以目前變更覆寫設定"
+
+msgid "Overwrite existing"
+msgstr "覆寫現有項目"
+
+msgid "Overwrite the '%s' setting with the current values?"
+msgstr "是否以目前值覆寫「%s」設定？"
+
+msgid "Overwrite your current saved setting"
+msgstr "覆寫目前儲存的設定"
+
+msgid "Padding Left:"
+msgstr "左內距："
+
+msgid "Padding Top:"
+msgstr "上內距："
+
+msgid "Place vertical text along the left or right edge"
+msgstr "將旋轉文字放在左側或右側"
+
+msgid "Placement:"
+msgstr "位置："
+
+msgid "Please restart calibre now."
+msgstr "請立即重新啟動 calibre。"
+
+msgid "Preferences for:"
+msgstr "偏好設定："
+
+msgid "Remove image from this list"
+msgstr "從清單移除圖片"
+
+msgid "Rename image"
+msgstr "重新命名圖片"
+
+msgid "Rename setting"
+msgstr "重新命名設定"
+
+msgid "Reset background color"
+msgstr "還原背景顏色"
+
+msgid "Reset border color"
+msgstr "還原框線顏色"
+
+msgid "Reset image border color"
+msgstr "還原圖片框線顏色"
+
+msgid "Reset selected field backdrop color"
+msgstr "還原目前欄位的文字底色"
+
+msgid "Reset selected field fill color"
+msgstr "還原目前欄位的文字顏色"
+
+msgid "Resize cover dimensions to match background image"
+msgstr "依背景圖片調整封面尺寸"
+
+msgid "Resize image to scale up if smaller than available area"
+msgstr "圖片小於可用範圍時放大"
+
+msgid "Restart calibre now"
+msgstr "立即重新啟動 calibre"
+
+msgid "Restart required"
+msgstr "需要重新啟動"
+
+msgid "Revert to your previous saved setting values"
+msgstr "還原至先前儲存的設定"
+
+msgid "Revert to your previously saved values for '%s'?"
+msgstr "是否還原「%s」先前儲存的設定？"
+
+msgid "Revert unsaved changes"
+msgstr "還原未儲存的變更"
+
+msgid "Right"
+msgstr "靠右"
+
+msgid "Right:"
+msgstr "右："
+
+msgid "Rotate the selected text field"
+msgstr "旋轉目前選取的文字項目"
+
+msgid "Rotation:"
+msgstr "旋轉："
+
+msgid "Save Changes"
+msgstr "儲存變更"
+
+msgid "Save setting as"
+msgstr "另存設定"
+
+msgid "Saved Settings:"
+msgstr "已儲存設定："
+
+msgid "Saved Settings: (*unsaved changes)"
+msgstr "已儲存設定：（有未儲存變更）"
+
+msgid "See details for the affected books."
+msgstr "請查看詳細資料中的書籍與錯誤紀錄。"
+
+msgid "Select Image:"
+msgstr "選擇圖片："
+
+msgid "Select setting file(s) to import"
+msgstr "選取要匯入的設定檔"
+
+msgid "Series"
+msgstr "系列"
+
+msgid "Series text:"
+msgstr "系列文字："
+
+msgid "Set general options for this plugin"
+msgstr "設定此外掛的一般選項"
+
+msgid "Setting exists"
+msgstr "設定已存在"
+
+msgid "Settings"
+msgstr "設定"
+
+msgid "Settings changed"
+msgstr "設定已變更"
+
+msgid "Settings deleted"
+msgstr "設定已刪除"
+
+msgid "Settings for this plugin in this library have been changed."
+msgstr "已變更此書庫中此外掛的設定。"
+
+msgid "Size:"
+msgstr "大小："
+
+msgid "Some covers could not be generated"
+msgstr "部分封面無法產生"
+
+msgid "Stretch image to use as cover background"
+msgstr "將圖片延伸為封面背景"
+
+msgid "Swap author LN,FN to FN LN"
+msgstr "將作者的「姓, 名」改為「名 姓」"
+
+msgid "Text is too long to fit on one line"
+msgstr "文字過長，無法縮小至單行"
+
+msgid "Text:"
+msgstr "文字："
+
+msgid "The height in pixels of the output .jpg file"
+msgstr "輸出 JPG 圖片的高度（像素）"
+
+msgid "The image must stay inside the plugin image folder."
+msgstr "圖片必須位於此外掛的圖片資料夾中。"
+
+msgid "The margin in pixels from the bottom of the cover\nto the last content"
+msgstr "封面底部至最後一項內容的邊距（像素）"
+
+msgid "The margin in pixels from the top of the cover\nto the first content"
+msgstr "封面頂部至第一項內容的邊距（像素）"
+
+msgid "The minimum margin in pixels from the left of the cover\nto the text content"
+msgstr "封面左側至文字內容的最小邊距（像素）"
+
+msgid "The minimum margin in pixels from the right of the cover\nto the text content"
+msgstr "封面右側至文字內容的最小邊距（像素）"
+
+msgid "The name you specified is not unique"
+msgstr "輸入的名稱已被使用"
+
+msgid "The width in pixels of a border around the edge\nof the cover. Specify 0 for no border"
+msgstr "封面外框寬度（像素）；設為 0 表示不加框線"
+
+msgid "The width in pixels of a border around the edge of the image"
+msgstr "圖片框線寬度（像素）"
+
+msgid "The width in pixels of the output .jpg file"
+msgstr "輸出 JPG 圖片的寬度（像素）"
+
+msgid "This is not a valid Generate Cover export archive"
+msgstr "這不是有效的 Generate Cover 匯出壓縮檔"
+
+msgid "Title"
+msgstr "書名"
+
+msgid "Title image not found - you must restart Calibre before using this plugin!"
+msgstr "找不到標題圖片，請重新啟動 calibre 後再使用此外掛！"
+
+msgid "Top:"
+msgstr "上："
+
+msgid "Undefined"
+msgstr "未定義"
+
+msgid "Underline"
+msgstr "底線"
+
+msgid "Unsaved Changes"
+msgstr "未儲存的變更"
+
+msgid "Update column:"
+msgstr "更新欄位："
+
+msgid "Update value:"
+msgstr "更新值："
+
+msgid "Use an image filename without a folder path."
+msgstr "請使用不含資料夾路徑的圖片檔名。"
+
+msgid "Use this backdrop for all text"
+msgstr "所有文字使用相同底色"
+
+msgid "Use this fill color for all text"
+msgstr "所有文字使用相同顏色"
+
+msgid "Use this font family for all text"
+msgstr "所有文字使用相同字型"
+
+msgid "Use this option if your authors are stored as LN, FN\nbut you prefer to see FN LN on the book cover"
+msgstr "作者以「姓, 名」儲存時，可在封面改為「名 姓」。"
+
+msgid "View data stored in the library database for this plugin"
+msgstr "檢視此外掛儲存在書庫中的資料"
+
+msgid "View library preferences"
+msgstr "檢視書庫設定"
+
+msgid "What do you want to do?"
+msgstr "要執行哪項操作？"
+
+msgid "When checked, the backdrop will extend to the full width of the cover (height if rotated).\nWhen unchecked, the backdrop will only extend to the width or height of the text."
+msgstr "勾選時底色延伸至整個封面寬度（旋轉時為高度）；取消勾選則只涵蓋文字範圍。"
+
+msgid "When checked, the current fill color is used for all text.\nWhen unchecked, you can set a different fill color for each field."
+msgstr "勾選時所有文字使用目前顏色；取消勾選可分別設定各欄位的文字顏色。"
+
+msgid "When checked, this font family is used for all text content on the cover"
+msgstr "所有封面文字使用此字型"
+
+msgid "When checked, this font size will be used as a maximum size.\nA reduced size will be used where needed to fit text on one line."
+msgstr "以此字級作為上限，必要時縮小以將文字放在同一行。"
+
+msgid "You cannot remove the default setting"
+msgstr "無法移除預設設定"
+
+msgid "You cannot remove this image"
+msgstr "無法移除此圖片"
+
+msgid "You cannot rename the default setting"
+msgstr "無法重新命名預設設定"
+
+msgid "You cannot rename this image"
+msgstr "無法重新命名此圖片"
+
+msgid "You do not have permission to delete the file"
+msgstr "沒有刪除此檔案的權限"
+
+msgid "You do not have permission to overwrite the file"
+msgstr "沒有覆寫此檔案的權限"
+
+msgid "You do not have permission to read the file."
+msgstr "沒有讀取此檔案的權限。"
+
+msgid "You have unsaved changes to the <b>%s</b> setting.<br>"
+msgstr "「<b>%s</b>」設定有未儲存的變更。<br>"
+
+msgid "You must restart calibre afterwards."
+msgstr "完成後必須重新啟動 calibre。"
+
+msgid "{Current Cover}"
+msgstr "{目前封面}"
+
+msgid "{Default Image}"
+msgstr "{預設圖片}"
+
+msgid "{Default}"
+msgstr "{預設}"
+
+
+msgid "Book {series_index} of {series}"
+msgstr "{series} 第 {series_index} 集"

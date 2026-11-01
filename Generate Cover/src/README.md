@@ -1,0 +1,46 @@
+# Generate Cover（產生封面）
+
+版本：**2.4.2.1**；作者：**Grant Drake**；授權：GPL v3。基於上游 2.4.2（新版介面測試版），本倉庫補上正體中文與修正。
+
+## 用途
+
+用書名、作者、系列及自訂文字搭配圖片，製作書庫封面。可調整字型、顏色、尺寸、框線、內距、旋轉與文字底色，儲存或分享不同封面樣式。
+
+## 安裝與使用
+
+1. 從 [v1.3.10 發行頁](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.10) 下載此外掛 ZIP；也可執行 `python -B build_release.py` 自行打包。
+2. 在 calibre「偏好設定 → 外掛 → 從檔案載入外掛」安裝下載的 ZIP（自行打包時為 `dist/Generate Cover-zh_TW-release.zip`），重新啟動 calibre。
+3. 從「偏好設定 → 工具列與選單」加入「產生封面」，選取一本或多本書後執行。
+4. 選擇圖片與樣式，在「尺寸」「內容」調整排版，檢視預覽後確認產生。
+
+要把文字疊在圖上：到「內容」選取項目清單的「圖片」，再勾選「將圖片延伸為封面背景」；文字顏色可改成白色或淡金色。背景與圖片放大模式會自動切換，不必先到其他頁面解除鎖定。
+
+產生結果會覆寫書庫封面，請先保留需要的原圖。封面不會自動嵌入 EPUB 等書檔；需要時再使用 calibre 的嵌入中繼資料功能。
+
+## 本倉庫修正
+
+- 補上 215 個正體中文翻譯，涵蓋新版選項、欄位名稱與預設系列文字；保留內部設定鍵值及既有樣式。
+- 修正長文字自動縮字可能卡住、非整數邊距造成繪圖錯誤，以及小封面配粗框線時無法輸出。
+- 修正背景與圖片放大選項互相鎖定，以及取消背景後的尺寸殘留鎖定。
+- 批次產生可取消；單本失敗會記錄錯誤並繼續，成功寫入後才更新指定欄位。
+- 匯入及圖片重新命名限制在外掛圖片目錄內；讀取壓縮圖片失敗時不先清空既有檔案。
+- 統一打包時分別編譯各語系，避免翻譯訊息互相混入。
+- 設定匯入／匯出改在記憶體處理 JSON，避免覆寫或刪除同名暫存檔；修正不同長度設定的比較錯誤。
+- 修正對外產生 API 混用輸出路徑與來源封面；設定頁加入捲動區並降低最小高度，方便較小螢幕操作。
+
+## 來源
+
+- [上游專案](https://github.com/kiwidude68/calibre_plugins/tree/2a2dbb2469ec6e68179cd71ba943db240045d097/generate_cover)，固定提交 `2a2dbb2469ec6e68179cd71ba943db240045d097`。
+- [官方功能與範例](https://github.com/kiwidude68/calibre_plugins/wiki/Generate-Cover)。
+- 最低 calibre 宣告沿用上游 2.85.1；本次在 Windows、calibre 9.17.0 驗證，未逐版測試。
+
+## 開發與驗證
+
+```powershell
+python -B build_release.py
+$env:CALIBRE_CONFIG_DIRECTORY = Join-Path $PWD 'dist/qa-config'
+$env:QT_QPA_PLATFORM = 'offscreen'
+calibre-debug -e "Generate Cover/tests/test_generate_cover.py"
+```
+
+已通過 **17 組測試**，使用獨立設定目錄，涵蓋實際 JPEG 封面、背景圖片、旋轉與底色、取消與錯誤處理、舊樣式、路徑限制、匯入／匯出及正體中文；未對使用者書庫執行批次覆寫。本版隨整合版 v1.3.10 發布。

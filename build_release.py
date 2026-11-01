@@ -10,6 +10,12 @@ import zipfile
 ROOT = Path(__file__).resolve().parent
 PROJECTS = [
     {
+        "name": "Generate Cover",
+        "source": ROOT / "Generate Cover" / "src",
+        "output": ROOT / "dist" / "Generate Cover-zh_TW-release.zip",
+        "compile_translations": True,
+    },
+    {
         "name": "Skip ASCII Text Plugin",
         "source": ROOT / "Skip ASCII Text Plugin" / "src",
         "output": ROOT / "dist" / "Skip ASCII Text Plugin-zh_TW-release.zip",
@@ -104,7 +110,7 @@ def build_zip(source_dir: Path, output_zip: Path, compile_translations: bool = F
             with tempfile.TemporaryDirectory(dir=output_zip.parent) as temp_dir:
                 script = (
                     "from pathlib import Path; import sys; "
-                    "from calibre.translations.msgfmt import make; "
+                    "from calibre.translations.msgfmt import make_with_stats as make; "
                     "[make(str(p), str(Path(sys.argv[2]) / (p.stem + '.mo'))) "
                     "for p in Path(sys.argv[1]).glob('*.po')]"
                 )
