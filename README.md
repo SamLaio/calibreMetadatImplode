@@ -1,9 +1,10 @@
 # calibreMetadatImplode
 
-目前整合發行版：**v1.3.5（2026-10-23）**。整合發行版號與各外掛程式版號分開管理。
+目前已發布的整合發行版：**v1.3.5（2026-10-23）**。目前原始碼另含 **Goodreads 1.10.1（2026-11-01）**，尚未建立新版整合發行。整合發行版號與各外掛程式版號分開管理。
 
-這個倉庫並排管理七個 calibre 外掛：
+這個倉庫並排管理八個 calibre 外掛：
 
+- [`Goodreads`](./Goodreads): 下載 Goodreads 書籍中繼資料與封面；本倉庫修正版 1.10.1 補強書籍比對、資料引用與缺值處理。原始 GitHub: [kiwidude68/calibre_plugins](https://github.com/kiwidude68/calibre_plugins/tree/main/goodreads)
 - [`AZW6 Image Merge`](./AZW6%20Image%20Merge): 在 `.azw` 匯入並經 DeDRM 轉為 AZW3 時，將同資料夾唯一一份 `.azw.res` 的高清圖片合併回主書檔。
 - [`Embed Metadata Safe`](./Embed%20Metadata%20Safe): 先移除 EPUB 中缺少 `datatype` 的 `calibre:user_metadata` JSON 物件，再嵌入書庫中繼資料；預設只處理 EPUB，也可設定為選擇格式。
 - [`Modify ePub`](./Modify%20ePub): 直接對 EPUB 做清理與小幅修改，不必先跑轉檔流程。原始 GitHub: [kiwidude68/calibre_plugins](https://github.com/kiwidude68/calibre_plugins/tree/main/modify_epub)
@@ -14,6 +15,7 @@
 
 各外掛的完整說明請看對應資料夾內的 README：
 
+- [`Goodreads/README.md`](./Goodreads/README.md)
 - [`Embed Metadata Safe/README.md`](./Embed%20Metadata%20Safe/README.md)
 - [`AZW6 Image Merge/README.md`](./AZW6%20Image%20Merge/README.md)
 - [`Modify ePub/README.md`](./Modify%20ePub/README.md)
@@ -22,12 +24,15 @@
 - [`Count Pages/README.md`](./Count%20Pages/README.md)
 - [`Send to Kindle/README.md`](./Send%20to%20Kindle/README.md)
 
-## 本版外掛與安裝
+## 目前原始碼版本與安裝
 
 從 [v1.3.5 發行頁](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.5) 下載需要的 ZIP，於 calibre「偏好設定 → 外掛 → 從檔案載入外掛」選取 ZIP，安裝後重新啟動 calibre。每個 ZIP 是獨立外掛，不需全部安裝。
 
-| 外掛 | 本版程式版號 | 最低 calibre | 安裝包 |
+下表列出目前原始碼的外掛版本。Goodreads 尚未包含於 v1.3.5 發行附件，請依下方「打包方式」產生 `dist/Goodreads.zip` 後安裝。
+
+| 外掛 | 目前程式版號 | 最低 calibre | 安裝包 |
 | --- | --- | --- | --- |
+| Goodreads | 1.10.1（本倉庫修正版） | 2.0.0 | `Goodreads.zip` |
 | AZW6 Image Merge | 1.0.0 | 5.0.0 | `AZW6 Image Merge-zh_TW-release.zip` |
 | Embed Metadata Safe | 1.0.0 | 9.8.0 | `embed-metadata-safe.zip` |
 | Modify ePub | 1.8.11 | 3.48.0 | `Modify ePub-zh_TW-release.zip` |
@@ -37,6 +42,17 @@
 | Send to Kindle | v1.1.1_r.1（calibre 顯示 1.1.1） | 2.0.0 | `Send to Kindle-zh_TW-release.zip` |
 
 最低版本取自各外掛宣告，不代表已在所有舊版 calibre 實測。會修改書庫或書檔的操作，建議先備份。
+
+## Goodreads 匯入與修正（2026-11-01）
+
+從使用者提供的 `Goodreads.zip` 1.10.0 匯入，保留上游作者、授權宣告與翻譯資源，修正版號為 1.10.1。這次沒有重新比對上游最新版。
+
+- 書名與作者比對改為符合全部有效詞，ISBN／ASIN 搜尋結果再以詳細頁核對；失敗時可改用書名與作者搜尋。
+- 書籍、系列與作品依引用關係配對，避免混用其他書籍的資料。
+- 修正封面缺少長度標頭、ISBN-13 空值、出版日期缺漏與無效評分識別碼處理。
+- 缺少書籍 JSON 時最多請求三次、每次間隔一秒，並傳遞連線逾時設定。
+
+完整說明見 [`Goodreads/README.md`](./Goodreads/README.md)。
 
 ## 官方版本檢查（2026-10-23）
 
@@ -62,8 +78,9 @@
 python build_release.py
 ```
 
-會先清空 `dist/`，再分別輸出七個 zip：
+會先清空 `dist/`，再分別輸出八個 zip：
 
+- `dist/Goodreads.zip`
 - `dist/AZW6 Image Merge-zh_TW-release.zip`
 - `dist/embed-metadata-safe.zip`
 - `dist/Modify ePub-zh_TW-release.zip`
@@ -79,6 +96,9 @@ python build_release.py
 ```powershell
 calibre-debug -e "Modify ePub/tests/test_margins.py"
 calibre-debug -e "Count Pages/tests/test_update.py"
+calibre-debug -e "Goodreads/tests/test_goodreads.py"
 ```
 
-本版已通過上述 8 組回歸測試、Python 語法與安裝包內容檢查。Goodreads 測試使用離線頁面；未涵蓋實際網站連線、SMTP 寄信或 calibre 圖形介面操作。
+v1.3.5 發行時已通過 Modify ePub 與 Count Pages 共 8 組回歸測試、Python 語法與安裝包內容檢查；Count Pages 的 Goodreads 頁數解析使用離線頁面驗證。
+
+新增 Goodreads 外掛另已通過 8 組離線回歸測試、原有搜尋輔助函式測試，以及 Python 語法與安裝包內容檢查；並以《61 Hours》（Goodreads ID：6977769）實際驗證書名、作者、ISBN、系列集數與封面解析。未涵蓋 SMTP 寄信、calibre 圖形介面安裝或所有舊版相容性；網站改版或存取限制仍可能影響下載。
