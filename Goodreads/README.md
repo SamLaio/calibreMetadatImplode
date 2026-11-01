@@ -26,6 +26,8 @@
 
 ## 安裝與驗證
 
+可從本倉庫 [v1.3.6 發行頁](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.6) 下載 `Goodreads.zip`；此安裝包為本倉庫修正版。
+
 在專案根目錄執行 `python build_release.py`，再於 calibre「偏好設定 → 外掛 → 從檔案載入外掛」選擇 `dist/Goodreads.zip`，重新啟動 calibre。
 
 離線回歸檢查：

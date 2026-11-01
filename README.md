@@ -1,6 +1,6 @@
 # calibreMetadatImplode
 
-目前已發布的整合發行版：**v1.3.5（2026-10-23）**。目前原始碼另含 **Goodreads 1.10.1（2026-11-01）**，尚未建立新版整合發行。整合發行版號與各外掛程式版號分開管理。
+目前整合發行版：**v1.3.6（2026-11-01）**，新增 **Goodreads 1.10.1 本倉庫修正版**。整合發行版號與各外掛程式版號分開管理。
 
 這個倉庫並排管理八個 calibre 外掛：
 
@@ -26,9 +26,9 @@
 
 ## 目前原始碼版本與安裝
 
-從 [v1.3.5 發行頁](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.5) 下載需要的 ZIP，於 calibre「偏好設定 → 外掛 → 從檔案載入外掛」選取 ZIP，安裝後重新啟動 calibre。每個 ZIP 是獨立外掛，不需全部安裝。
+從 [v1.3.6 發行頁](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.6) 下載需要的 ZIP，於 calibre「偏好設定 → 外掛 → 從檔案載入外掛」選取 ZIP，安裝後重新啟動 calibre。每個 ZIP 是獨立外掛，不需全部安裝。
 
-下表列出目前原始碼的外掛版本。Goodreads 尚未包含於 v1.3.5 發行附件，請依下方「打包方式」產生 `dist/Goodreads.zip` 後安裝。
+下表列出本版八個外掛的版本與安裝包；也可依下方「打包方式」自行產生 ZIP。
 
 | 外掛 | 目前程式版號 | 最低 calibre | 安裝包 |
 | --- | --- | --- | --- |
