@@ -10,6 +10,11 @@ import zipfile
 ROOT = Path(__file__).resolve().parent
 PROJECTS = [
     {
+        "name": "Toolbar Manager",
+        "source": ROOT / "Toolbar Manager" / "src",
+        "output": ROOT / "dist" / "Toolbar Manager-zh_TW-release.zip",
+    },
+    {
         "name": "Generate Cover",
         "source": ROOT / "Generate Cover" / "src",
         "output": ROOT / "dist" / "Generate Cover-zh_TW-release.zip",
