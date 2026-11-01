@@ -10,6 +10,11 @@ import zipfile
 ROOT = Path(__file__).resolve().parent
 PROJECTS = [
     {
+        "name": "Skip ASCII Text Plugin",
+        "source": ROOT / "Skip ASCII Text Plugin" / "src",
+        "output": ROOT / "dist" / "Skip ASCII Text Plugin-zh_TW-release.zip",
+    },
+    {
         "name": "Extract ISBN",
         "source": ROOT / "Extract ISBN" / "src",
         "output": ROOT / "dist" / "Extract ISBN-zh_TW-release.zip",
