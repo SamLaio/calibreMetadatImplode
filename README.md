@@ -1,9 +1,10 @@
 # calibreMetadatImplode
 
-目前整合發行版：**v1.3.6（2026-11-01）**，新增 **Goodreads 1.10.1 本倉庫修正版**。整合發行版號與各外掛程式版號分開管理。
+目前整合發行版：**v1.3.7（2026-11-01）**，新增 **Extract ISBN 1.6.6.1 本倉庫修訂版**，修正 ISBN 辨識、PDF 書尾掃描與錯誤摘要，補齊正體中文。整合發行版號與各外掛程式版號分開管理。
 
-這個倉庫並排管理八個 calibre 外掛：
+這個倉庫並排管理九個 calibre 外掛：
 
+- [`Extract ISBN`](./Extract%20ISBN)：從電子書內文擷取 ISBN，經確認後更新書庫識別碼；本倉庫修訂版 1.6.6.1。原始 GitHub：[kiwidude68/calibre_plugins](https://github.com/kiwidude68/calibre_plugins/tree/main/extract_isbn)
 - [`Goodreads`](./Goodreads): 下載 Goodreads 書籍中繼資料與封面；本倉庫修正版 1.10.1 補強書籍比對、資料引用與缺值處理。原始 GitHub: [kiwidude68/calibre_plugins](https://github.com/kiwidude68/calibre_plugins/tree/main/goodreads)
 - [`AZW6 Image Merge`](./AZW6%20Image%20Merge): 在 `.azw` 匯入並經 DeDRM 轉為 AZW3 時，將同資料夾唯一一份 `.azw.res` 的高清圖片合併回主書檔。
 - [`Embed Metadata Safe`](./Embed%20Metadata%20Safe): 先移除 EPUB 中缺少 `datatype` 的 `calibre:user_metadata` JSON 物件，再嵌入書庫中繼資料；預設只處理 EPUB，也可設定為選擇格式。
@@ -15,6 +16,7 @@
 
 各外掛的完整說明請看對應資料夾內的 README：
 
+- [`Extract ISBN/README.md`](./Extract%20ISBN/README.md)
 - [`Goodreads/README.md`](./Goodreads/README.md)
 - [`Embed Metadata Safe/README.md`](./Embed%20Metadata%20Safe/README.md)
 - [`AZW6 Image Merge/README.md`](./AZW6%20Image%20Merge/README.md)
@@ -26,12 +28,13 @@
 
 ## 目前原始碼版本與安裝
 
-從 [v1.3.6 發行頁](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.6) 下載需要的 ZIP，於 calibre「偏好設定 → 外掛 → 從檔案載入外掛」選取 ZIP，安裝後重新啟動 calibre。每個 ZIP 是獨立外掛，不需全部安裝。
+從 [v1.3.7 發行頁](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.7) 下載需要的 ZIP，於 calibre「偏好設定 → 外掛 → 從檔案載入外掛」選取 ZIP，安裝後重新啟動 calibre。每個 ZIP 是獨立外掛，不需全部安裝。
 
-下表列出本版八個外掛的版本與安裝包；也可依下方「打包方式」自行產生 ZIP。
+下表列出本版九個外掛的原始碼版本與安裝包；也可依下方「打包方式」自行產生 ZIP。
 
 | 外掛 | 目前程式版號 | 最低 calibre | 安裝包 |
 | --- | --- | --- | --- |
+| Extract ISBN | 1.6.6.1（本倉庫修訂版） | 2.0.0 | `Extract ISBN-zh_TW-release.zip` |
 | Goodreads | 1.10.1（本倉庫修正版） | 2.0.0 | `Goodreads.zip` |
 | AZW6 Image Merge | 1.0.0 | 5.0.0 | `AZW6 Image Merge-zh_TW-release.zip` |
 | Embed Metadata Safe | 1.0.0 | 9.8.0 | `embed-metadata-safe.zip` |
@@ -42,6 +45,14 @@
 | Send to Kindle | v1.1.1_r.1（calibre 顯示 1.1.1） | 2.0.0 | `Send to Kindle-zh_TW-release.zip` |
 
 最低版本取自各外掛宣告，不代表已在所有舊版 calibre 實測。會修改書庫或書檔的操作，建議先備份。
+
+## Extract ISBN 的用途與限制
+
+用於從 EPUB、PDF 等電子書內文找出 ISBN，再經確認填入或更新 calibre 書庫的 ISBN 欄位，方便後續使用中繼資料下載功能。支援批次處理；不會上網搜尋 ISBN、下載書目資料或修改原始電子書。
+
+目前只掃描內文，不讀取 EPUB 的 OPF 中繼資料。例如《書店怪問》的 ISBN 只存在 `content.opf`，內文沒有號碼，因此外掛回報找不到 ISBN；這不代表整個 EPUB 都沒有 ISBN。本版未加入讀取 OPF 的備援功能。
+
+ISBN 校驗只能確認號碼有效，無法判斷精裝、平裝或電子版是否正確。純影像 PDF 需要另外進行 OCR；長 PDF 只掃前 10 頁與後 5 頁。建議保留套用前確認。詳細操作與修正見 [`Extract ISBN/README.md`](./Extract%20ISBN/README.md)。
 
 ## Goodreads 匯入與修正（2026-11-01）
 
@@ -80,8 +91,9 @@
 python build_release.py
 ```
 
-會先清空 `dist/`，再分別輸出八個 zip：
+會先清空 `dist/`，再分別輸出九個 zip：
 
+- `dist/Extract ISBN-zh_TW-release.zip`
 - `dist/Goodreads.zip`
 - `dist/AZW6 Image Merge-zh_TW-release.zip`
 - `dist/embed-metadata-safe.zip`
@@ -91,7 +103,7 @@ python build_release.py
 - `dist/Count Pages-zh_TW-release.zip`
 - `dist/Send to Kindle-zh_TW-release.zip`
 
-請先備份 `dist/` 中需要保留的檔案。安裝包會排除隱藏檔、`__pycache__` 與 `.po` 翻譯來源；編譯後的 `.mo` 語系檔會保留。
+請先備份 `dist/` 中需要保留的檔案。安裝包會排除隱藏檔、`__pycache__` 與 `.po` 翻譯來源；編譯後的 `.mo` 語系檔會保留。Extract ISBN 的翻譯會在打包時編譯，需要 `calibre-debug` 可由執行檔搜尋路徑找到。
 
 ## 驗證
 
@@ -99,8 +111,11 @@ python build_release.py
 calibre-debug -e "Modify ePub/tests/test_margins.py"
 calibre-debug -e "Count Pages/tests/test_update.py"
 calibre-debug -e "Goodreads/tests/test_goodreads.py"
+calibre-debug -e "Extract ISBN/tests/test_extract_isbn.py"
 ```
 
 v1.3.5 發行時已通過 Modify ePub 與 Count Pages 共 8 組回歸測試、Python 語法與安裝包內容檢查；Count Pages 的 Goodreads 頁數解析使用離線頁面驗證。
 
 新增 Goodreads 外掛另已通過 8 組離線回歸測試、原有搜尋輔助函式測試，以及 Python 語法與安裝包內容檢查；並以《61 Hours》（Goodreads ID：6977769）實際驗證書名、作者、ISBN、系列集數與封面解析。未涵蓋 SMTP 寄信、calibre 圖形介面安裝或所有舊版相容性；網站改版或存取限制仍可能影響下載。
+
+Extract ISBN 1.6.6.1 已在 calibre 9.17.0 通過 9 組測試，包含實際 EPUB、PDF 擷取，並核對 65 個正體中文介面字串及安裝包內容。未測試圖形介面安裝與所有舊版相容性。

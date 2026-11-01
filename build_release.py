@@ -2,11 +2,19 @@ from __future__ import annotations
 
 from pathlib import Path
 import shutil
+import subprocess
+import tempfile
 import zipfile
 
 
 ROOT = Path(__file__).resolve().parent
 PROJECTS = [
+    {
+        "name": "Extract ISBN",
+        "source": ROOT / "Extract ISBN" / "src",
+        "output": ROOT / "dist" / "Extract ISBN-zh_TW-release.zip",
+        "compile_translations": True,
+    },
     {
         "name": "Goodreads",
         "source": ROOT / "Goodreads" / "src",
@@ -61,7 +69,7 @@ def clean_dist() -> None:
             path.unlink()
 
 
-def build_zip(source_dir: Path, output_zip: Path) -> None:
+def build_zip(source_dir: Path, output_zip: Path, compile_translations: bool = False) -> None:
     if not source_dir.exists():
         raise FileNotFoundError(f"Source directory not found: {source_dir}")
 
@@ -87,12 +95,26 @@ def build_zip(source_dir: Path, output_zip: Path) -> None:
                 continue
             arcname = rel.as_posix()
             zf.write(file_path, arcname)
+        if compile_translations:
+            with tempfile.TemporaryDirectory(dir=output_zip.parent) as temp_dir:
+                script = (
+                    "from pathlib import Path; import sys; "
+                    "from calibre.translations.msgfmt import make; "
+                    "[make(str(p), str(Path(sys.argv[2]) / (p.stem + '.mo'))) "
+                    "for p in Path(sys.argv[1]).glob('*.po')]"
+                )
+                subprocess.run(
+                    ["calibre-debug", "-c", script, str(source_dir / "translations"), temp_dir],
+                    check=True,
+                )
+                for translation in sorted(Path(temp_dir).glob("*.mo")):
+                    zf.write(translation, "translations/" + translation.name)
 
 
 def main() -> None:
     clean_dist()
     for project in PROJECTS:
-        build_zip(project["source"], project["output"])
+        build_zip(project["source"], project["output"], project.get("compile_translations", False))
         print(f"Built {project['name']}: {project['output']}")
 
 

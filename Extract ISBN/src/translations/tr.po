@@ -1,0 +1,326 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# tarakbumba <tarakbumba@gmail.com>, 2022
+# Emre Deniz, 2022
+# Çağla Turhan, 2022
+# MUSTAFA ANAR <mstf.anar@gmail.com>, 2022
+# Bora Atıcı, 2023
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2024-03-24 17:58+1000\n"
+"PO-Revision-Date: 2022-09-19 15:18+0000\n"
+"Last-Translator: Bora Atıcı, 2023\n"
+"Language-Team: Turkish (https://app.transifex.com/calibre/teams/19337/tr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"Language: tr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ..\common\common_dialogs.py:84 config.py:122
+msgid "Keyboard shortcuts"
+msgstr "Klavye kısayolları"
+
+#: ..\common\common_dialogs.py:112
+msgid "Restart calibre now"
+msgstr "Calibre'yi şimdi tekrar başlatın"
+
+#: ..\common\common_dialogs.py:128
+msgid "Preferences for:"
+msgstr "Tercihler:"
+
+#: ..\common\common_dialogs.py:160
+msgid "Clear"
+msgstr "Boş alan"
+
+#: ..\common\common_dialogs.py:162
+msgid "Clear all settings for this plugin"
+msgstr "Bu eklentinin tüm ayarlarını sıfırla"
+
+#: ..\common\common_dialogs.py:189
+msgid ""
+"Are you sure you want to change your settings in this library for this "
+"plugin?"
+msgstr ""
+"Bu eklenti için bu kitaplıktaki ayarlarınızı değiştirmek istediğinizden emin"
+" misiniz?"
+
+#: ..\common\common_dialogs.py:190 ..\common\common_dialogs.py:210
+msgid ""
+"Any settings in other libraries or stored in a JSON file in your calibre "
+"plugins folder will not be touched."
+msgstr ""
+"Calibre eklenti klasöründeki diğer kitaplıklarda veya JSON dosyasında "
+"saklanan herhangi bir ayara dokunulmayacak."
+
+#: ..\common\common_dialogs.py:192 ..\common\common_dialogs.py:212
+msgid "You must restart calibre afterwards."
+msgstr "Calibre'yi yeniden başlatmanız gerekir."
+
+#: ..\common\common_dialogs.py:200
+msgid "Settings changed"
+msgstr "Ayarlar değiştirildi"
+
+#: ..\common\common_dialogs.py:201
+msgid "Settings for this plugin in this library have been changed."
+msgstr "Bu kitaplıktaki bu eklentinin ayarları değiştirildi."
+
+#: ..\common\common_dialogs.py:202 ..\common\common_dialogs.py:223
+msgid "Please restart calibre now."
+msgstr "Lütfen Calibre'yi yeniden başlatın."
+
+#: ..\common\common_dialogs.py:209
+msgid ""
+"Are you sure you want to clear your settings in this library for this "
+"plugin?"
+msgstr "Bu eklentinin ayarlarını sıfırlama isteğinizden emin misiniz?"
+
+#: ..\common\common_dialogs.py:221
+msgid "Settings deleted"
+msgstr "Ayarlar silindi"
+
+#: ..\common\common_dialogs.py:222
+msgid "All settings for this plugin in this library have been cleared."
+msgstr "Bu eklenti için ayarlarınız sıfırlandı."
+
+#: ..\common\common_dialogs.py:297
+msgid "Copy to clipboard"
+msgstr "Panoya kopyala"
+
+#: ..\common\common_widgets.py:105
+msgid "Undefined"
+msgstr "Tanımlanmamış"
+
+#: ..\common\common_widgets.py:160
+msgid "Restart required"
+msgstr "Yeniden başlatma gerekiyor"
+
+#: ..\common\common_widgets.py:161
+msgid ""
+"Title image not found - you must restart Calibre before using this plugin!"
+msgstr ""
+"Başlık görüntüsü bulunamadı - bu eklentiyi kullanmadan önce Calibre'yi "
+"yeniden başlatmalısınız!"
+
+#: ..\common\common_widgets.py:234
+msgid "Create new column"
+msgstr "Yeni sütun oluştur"
+
+#: action.py:28
+msgid "Extract ISBN from the selected book format"
+msgstr "ISBN'yi seçilen kitap biçiminden çıkarın"
+
+#: action.py:28 action.py:74
+msgid "Extract ISBN"
+msgstr "ISBN'yi çıkar"
+
+#: action.py:43
+msgid "No rows selected"
+msgstr "Satır seçilmedi"
+
+#: action.py:44
+msgid "You must select one or more books to perform this action."
+msgstr ""
+"Bu eylemi gerçekleştirmek için bir veya daha fazla kitap seçmelisiniz."
+
+#: action.py:78
+msgid "Extracting ISBN for {0} books"
+msgstr "{0} kitap için ISBN çıkarılıyor"
+
+#: action.py:91
+msgid "Failed to extract isbns"
+msgstr "ISBN'ler çıkarılamadı"
+
+#: action.py:94
+msgid "ISBN extract completed"
+msgstr "ISBN çıkarma tamamlandı"
+
+#: action.py:99
+msgid "Extract ISBN found <b>{0} new isbn(s)</b>."
+msgstr "ISBN çıkarma <b>{0} yeni ISBN</b> buldu."
+
+#: action.py:100
+msgid "Proceed with updating your library?"
+msgstr "Kitaplığınızı güncellemeye devam edilsin mi?"
+
+#: action.py:106
+msgid ""
+"Could not find an ISBN for {0} book(s) and {1} book(s) matched their "
+"existing value."
+msgstr ""
+"{0} kitap ve {1} kitap için mevcut değerleriyle eşleşen bir ISBN bulunamadı."
+
+#: action.py:109
+msgid "Could not find an ISBN for {0} book(s)."
+msgstr "{0} kitap için ISBN bulunamadı."
+
+#: action.py:111
+msgid "Found {0} book(s) where ISBN matched the existing value."
+msgstr "ISBN'nin mevcut değerle eşleştiği {0} kitap bulundu."
+
+#: action.py:113
+msgid "Click \"Show details\" to see which books."
+msgstr "Kitapları görmek için \"Ayrıntıları göster\"i tıklayın."
+
+#: action.py:118
+msgid "Scan failed"
+msgstr "Tarama başarısız oldu"
+
+#: action.py:118 action.py:127
+msgid "Scan log"
+msgstr "Tarama günlüğü"
+
+#: action.py:127
+msgid "Scan complete"
+msgstr "Tarama tamamlandı"
+
+#: action.py:153
+msgid "Some books changed"
+msgstr "Bazı kitaplar değişti"
+
+#: action.py:154
+msgid ""
+"The metadata for some books in your library has changed since you started "
+"the download. If you proceed, some of those changes may be overwritten. "
+"Click \"Show details\" to see the list of changed books. Do you want to "
+"proceed?"
+msgstr ""
+"İndirmeye başladığınızdan bu yana kitaplığınızdaki bazı kitapların meta "
+"verileri değişti. Devam ederseniz bu değişikliklerden bazılarının üzerine "
+"yazılabilir. Değiştirilen kitapların listesini görmek için \"Ayrıntıları "
+"göster\"i tıklayın. Devam etmek istiyor musunuz?"
+
+#: action.py:165 jobs.py:226
+msgid "Unknown"
+msgstr "Bilinmeyen"
+
+#: config.py:40
+msgid "Do not change my search"
+msgstr "Aramamı değiştirme"
+
+#: config.py:41
+msgid "Show the books that have new or updated ISBNs"
+msgstr "Yeni veya güncellenmiş ISBN'lere sahip kitapları göster"
+
+#: config.py:71
+msgid "When the scan completes:"
+msgstr "Tarama tamamlandığında:"
+
+#: config.py:76
+msgid "Valid prefixes for ISBN-13 (comma separated):"
+msgstr "ISBN-13 için geçerli önekler (virgülle ayrılmış):"
+
+#: config.py:81
+msgid "Selected books before running as a background job:"
+msgstr "Arka plan işi olarak çalıştırılmadan önce seçilen kitaplar:"
+
+#: config.py:82
+msgid "Running as a background job is slower but is the only way to avoid\n"
+msgstr ""
+"Arka planda çalışmak daha yavaştır ancak bundan kaçınmanın tek yoludur\n"
+
+#: config.py:83
+msgid "memory leaks and will keep the UI more responsive."
+msgstr ""
+"bellek sızıntısı olur ve kullanıcı arayüzünün daha duyarlı olmasını sağlar."
+
+#: config.py:92
+msgid "Batch size running as a background job:"
+msgstr "Arka plan işi olarak çalışan toplu iş boyutu:"
+
+#: config.py:93
+msgid ""
+"Books will be broken into batches to ensure that if you run\n"
+"extract for a large group you can cancel/close calibre without\n"
+"losing all of your results as you can cancel the pending groups."
+msgstr ""
+"Büyük bir grup için çıkarma çalıştırırsanız, bekleyen grupları iptal \n"
+"edebileceğiniz gibi tüm sonuçlarınızı kaybetmeden calibre'yi iptal \n"
+"edebilmenizi/kapatabilmenizi sağlamak için kitaplar gruplara bölünecektir."
+
+#: config.py:105
+msgid "Display failure dialog if ISBN not found or identical"
+msgstr "ISBN bulunamazsa veya aynıysa hata iletişim kutusunu görüntüle"
+
+#: config.py:106
+msgid ""
+"Uncheck this option if you want do not want to be prompted\n"
+"about no ISBN being found in the book or it is the same as\n"
+"your current value."
+msgstr ""
+"Kitapta ISBN bulunmadığı veya mevcut değerinizle aynı olduğunun \n"
+"sorulmasını istemiyorsanız bu seçeneğin işaretini kaldırın."
+
+#: config.py:113
+msgid "Prompt to apply ISBN changes"
+msgstr "ISBN değişikliklerini uygulama istemi"
+
+#: config.py:114
+msgid ""
+"Uncheck this option if you want changes applied without\n"
+"a confirmation dialog. There is a small risk with this\n"
+"option unchecked that if you are making other changes to\n"
+"this book record at the same time they will be lost."
+msgstr ""
+"Değişikliklerin onay iletişim kutusu olmadan uygulanmasını \n"
+"istiyorsanız bu seçeneğin işaretini kaldırın. Bu seçenek \n"
+"işaretlenmediğinde, bu kitap kaydında aynı anda başka değişiklikler \n"
+"yapıyorsanız bunların kaybolması gibi küçük bir risk vardır."
+
+#: config.py:123
+msgid "Edit the keyboard shortcuts associated with this plugin"
+msgstr "Bu eklenti ile ilişkilendirilen klavye kısayollarını düzenle"
+
+#: config.py:127
+msgid "Help"
+msgstr "Yardım"
+
+#: dialogs.py:25
+msgid "Queueing books for extracting ISBN"
+msgstr "ISBN'yi çıkarmak için kitapları sıraya koyma"
+
+#: dialogs.py:53
+msgid "Queueing"
+msgstr "Kuyruk"
+
+#: dialogs.py:73
+msgid "Extract ISBN failed"
+msgstr "ISBN çıkarma işlemi başarısız oldu"
+
+#: dialogs.py:74
+msgid "Scan aborted as no books with formats found."
+msgstr "Biçimli kitap bulunamadığından tarama iptal edildi."
+
+#: jobs.py:41
+msgid "Extract ISBN for %d books"
+msgstr "%d kitap için ISBN'yi çıkarın"
+
+#: jobs.py:44
+msgid "Extract ISBN started"
+msgstr "ISBN çıkarma işlemi başlatıldı"
+
+#: jobs.py:96
+msgid "Scanned %d of %d"
+msgstr "%d / %d tarandı"
+
+#: jobs.py:113
+msgid "No formats"
+msgstr "Biçim yok"
+
+#: jobs.py:115
+msgid "ISBN not found"
+msgstr "ISBN bulunamadı"
+
+#: jobs.py:121
+msgid "Same ISBN"
+msgstr "Aynı ISBN"
+
+#: jobs.py:127
+msgid "Extracted"
+msgstr "Çıkarıldı"

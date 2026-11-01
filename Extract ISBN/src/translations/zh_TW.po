@@ -1,0 +1,198 @@
+msgid ""
+msgstr "Project-Id-Version: Extract ISBN 1.6.6.1\nLanguage: zh_TW\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\n"
+
+msgid "All settings for this plugin in this library have been cleared."
+msgstr "已清除此書庫中這個外掛的所有設定。"
+
+msgid "Any settings in other libraries or stored in a JSON file in your calibre plugins folder will not be touched."
+msgstr "不會變更其他書庫或 calibre 外掛資料夾內 JSON 檔案中的設定。"
+
+msgid "Are you sure you want to change your settings in this library for this plugin?"
+msgstr "確定要變更此書庫中這個外掛的設定嗎？"
+
+msgid "Are you sure you want to clear your settings in this library for this plugin?"
+msgstr "確定要清除此書庫中這個外掛的設定嗎？"
+
+msgid "Batch size running as a background job:"
+msgstr "背景作業每批書籍數："
+
+msgid "Books will be broken into batches to ensure that if you run\nextract for a large group you can cancel/close calibre without\nlosing all of your results as you can cancel the pending groups."
+msgstr "大量書籍會分批處理，您可以取消尚未開始的批次，\n或關閉 calibre，保留已完成並套用的結果。"
+
+msgid "Clear"
+msgstr "清除"
+
+msgid "Clear all settings for this plugin"
+msgstr "清除此外掛的所有設定"
+
+msgid "Click \"Show details\" to see which books."
+msgstr "按「顯示詳細資料」查看書籍清單。"
+
+msgid "Copy to clipboard"
+msgstr "複製到剪貼簿"
+
+msgid "Could not find an ISBN for {0} book(s) and {1} book(s) matched their existing value."
+msgstr "有 {0} 本書找不到 ISBN，另有 {1} 本書與現有 ISBN 相同。"
+
+msgid "Could not find an ISBN for {0} book(s)."
+msgstr "有 {0} 本書找不到 ISBN。"
+
+msgid "Could not find pdftohtml, check it is in your PATH"
+msgstr "找不到 pdftohtml，請檢查執行檔搜尋路徑。"
+
+msgid "Create new column"
+msgstr "建立新欄位"
+
+msgid "Display failure dialog if ISBN not found or identical"
+msgstr "找不到 ISBN 或與現有值相同時顯示提示"
+
+msgid "Do not change my search"
+msgstr "保留目前搜尋條件"
+
+msgid "Edit the keyboard shortcuts associated with this plugin"
+msgstr "編輯此外掛的鍵盤快捷鍵"
+
+msgid "Extract ISBN"
+msgstr "擷取 ISBN"
+
+msgid "Extract ISBN failed"
+msgstr "ISBN 擷取失敗"
+
+msgid "Extract ISBN for %d books"
+msgstr "擷取 %d 本書的 ISBN"
+
+msgid "Extract ISBN found <b>{0} new isbn(s)</b>."
+msgstr "已找到 <b>{0} 筆新的 ISBN</b>。"
+
+msgid "Extract ISBN from the selected book format"
+msgstr "從所選電子書的內文擷取 ISBN"
+
+msgid "Extract ISBN started"
+msgstr "已開始擷取 ISBN"
+
+msgid "Extracted"
+msgstr "已擷取"
+
+msgid "Extracting ISBN for {0} books"
+msgstr "正在擷取 {0} 本書的 ISBN"
+
+msgid "Failed to extract isbns"
+msgstr "ISBN 擷取失敗"
+
+msgid "Found {0} book(s) where ISBN matched the existing value."
+msgstr "有 {0} 本書擷取的 ISBN 與現有值相同。"
+
+msgid "Help"
+msgstr "說明"
+
+msgid "ISBN extract completed"
+msgstr "ISBN 擷取完成"
+
+msgid "ISBN not found"
+msgstr "找不到 ISBN"
+
+msgid "Keyboard shortcuts"
+msgstr "鍵盤快捷鍵"
+
+msgid "No formats"
+msgstr "沒有書籍格式"
+
+msgid "No rows selected"
+msgstr "尚未選取書籍"
+
+msgid "Please restart calibre now."
+msgstr "請立即重新啟動 calibre。"
+
+msgid "Preferences for:"
+msgstr "偏好設定："
+
+msgid "Proceed with updating your library?"
+msgstr "是否更新書庫？"
+
+msgid "Prompt to apply ISBN changes"
+msgstr "套用 ISBN 變更前先詢問"
+
+msgid "Queueing"
+msgstr "正在排入佇列"
+
+msgid "Queueing books for extracting ISBN"
+msgstr "正在將書籍排入 ISBN 擷取佇列"
+
+msgid "Restart calibre now"
+msgstr "立即重新啟動 calibre"
+
+msgid "Restart required"
+msgstr "需要重新啟動"
+
+msgid "Running as a background job is slower but is the only way to avoid\n"
+msgstr "背景作業較慢，但能避免記憶體洩漏，\n"
+
+msgid "Same ISBN"
+msgstr "ISBN 相同"
+
+msgid "Scan aborted as no books with formats found."
+msgstr "找不到具有可用格式的書籍，已停止掃描。"
+
+msgid "Scan complete"
+msgstr "掃描完成"
+
+msgid "Scan failed"
+msgstr "掃描失敗"
+
+msgid "Scan log"
+msgstr "掃描紀錄"
+
+msgid "Scanned %d of %d"
+msgstr "已掃描 %d 本，共 %d 本"
+
+msgid "Selected books before running as a background job:"
+msgstr "選取書籍超過此數量時使用背景作業："
+
+msgid "Settings changed"
+msgstr "設定已變更"
+
+msgid "Settings deleted"
+msgstr "設定已刪除"
+
+msgid "Settings for this plugin in this library have been changed."
+msgstr "已變更此書庫中這個外掛的設定。"
+
+msgid "Show the books that have new or updated ISBNs"
+msgstr "顯示新增或更新 ISBN 的書籍"
+
+msgid "Some books changed"
+msgstr "部分書籍資料已變更"
+
+msgid "The metadata for some books in your library has changed since you started the download. If you proceed, some of those changes may be overwritten. Click \"Show details\" to see the list of changed books. Do you want to proceed?"
+msgstr "掃描開始後，部分書籍的中繼資料已變更。繼續套用可能覆寫期間變更的 ISBN。按「顯示詳細資料」查看書籍清單。是否繼續？"
+
+msgid "Title image not found - you must restart Calibre before using this plugin!"
+msgstr "找不到標題圖片，請重新啟動 calibre 後再使用此外掛！"
+
+msgid "Uncheck this option if you want changes applied without\na confirmation dialog. There is a small risk with this\noption unchecked that if you are making other changes to\nthis book record at the same time they will be lost."
+msgstr "取消勾選後會直接套用變更。\n掃描期間若另行修改同一本書的 ISBN，\n該值可能被擷取結果覆寫。"
+
+msgid "Uncheck this option if you want do not want to be prompted\nabout no ISBN being found in the book or it is the same as\nyour current value."
+msgstr "取消勾選後，找不到 ISBN 或結果與現有值相同時，\n不再顯示提示。"
+
+msgid "Undefined"
+msgstr "未定義"
+
+msgid "Unknown"
+msgstr "未知"
+
+msgid "Valid prefixes for ISBN-13 (comma separated):"
+msgstr "有效的 ISBN-13 前綴（以逗號分隔）："
+
+msgid "When the scan completes:"
+msgstr "掃描完成後："
+
+msgid "You must restart calibre afterwards."
+msgstr "完成後必須重新啟動 calibre。"
+
+msgid "You must select one or more books to perform this action."
+msgstr "請先選取一本或多本書。"
+
+msgid "memory leaks and will keep the UI more responsive."
+msgstr "並讓介面維持回應。"
+
