@@ -53,11 +53,3 @@ python build_release.py
 ```
 
 發布 zip 會輸出到 `dist/Find Duplicates-zh_TW-release.zip`。
-
-## 來源與修改核對（2026-11-01）
-
-- 固定上游基準：[1.10.11](https://github.com/kiwidude68/calibre_plugins/tree/91b0f23da54fa8f020ba387e1f13a1321706c0ff/find_duplicates)。
-- 本倉庫版號：**1.10.11**。
-- 頂層 Python 比較確認比對核心與固定上游基準一致；差異為描述及共用模組匯入路徑。另保留正體中文資源與說明。早期 JimmXinu 分支的匯入紀錄不等同於目前採用的上游基準。
-
-本次對照固定來源的頂層 Python 檔案，未逐一比較全部圖片、翻譯與巢狀套件資源；此核對不是新一輪完整功能測試。

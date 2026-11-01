@@ -66,11 +66,3 @@ calibre-debug -e "Modify ePub/tests/test_margins.py"
 ```
 
 測試涵蓋非數值與負數邊距、一般及不完整的 CSS 宣告、保留較小邊距，以及 CSS／XHTML 改寫後保留其他樣式與內文、重複執行不再修改。
-
-## 來源與修改核對（2026-11-01）
-
-- 固定上游基準：[1.8.11](https://github.com/kiwidude68/calibre_plugins/tree/51f4bde27bfb095826bda6e3254ea98e72c4f937/modify_epub)。
-- 本倉庫版號：**1.8.11**。
-- 本次比較確認 `src/margins.py` 與上游 1.8.11 一致，非數值 CSS 邊距修正應歸於上游。頂層 Python 差異為外掛描述及共用模組匯入路徑；另有中文文件、正體中文資源與本地測試。
-
-本次對照固定來源的頂層 Python 檔案，未逐一比較全部圖片、翻譯與巢狀套件資源；此核對不是新一輪完整功能測試。
