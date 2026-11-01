@@ -8,7 +8,7 @@ class EmbedMetadataSafePlugin(InterfaceActionBase):
         'embedding metadata into selected books.'
     )
     supported_platforms = ['windows', 'osx', 'linux']
-    author = 'Codex'
+    author = 'SamLiao, codex'
     version = (1, 0, 0)
     minimum_calibre_version = (9, 8, 0)
     actual_plugin = 'calibre_plugins.embed_metadata_safe.ui:EmbedMetadataSafeAction'

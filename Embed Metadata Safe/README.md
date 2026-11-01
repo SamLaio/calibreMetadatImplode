@@ -1,6 +1,6 @@
 # Embed Metadata Safe
 
-版本：**1.0.0**；最低 calibre：**9.8.0**。
+版本：**1.0.0**；最低 calibre：**9.8.0**；作者：**SamLiao 及 codex**。
 
 `Embed Metadata Safe` 是 calibre 的書庫外掛，會在把 metadata 寫回 EPUB 之前先檢查並修復壞掉的 `calibre:user_metadata`。
 如果書檔裡的內嵌 metadata 已經損壞，這個外掛可以先清理再寫回，降低保存時出錯或把書檔卡住的機會。
@@ -47,6 +47,6 @@ python build_release.py
 
 ## 來源與版號核對（2026-11-01）
 
-本倉庫自有外掛，沒有外部上游；`src/embed_metadata_safe/__init__.py` 宣告作者為 Codex、版本 1.0.0、最低 calibre 9.8.0。Git 以 `fbc927d` 記錄加入此外掛。
+本倉庫自有外掛，沒有外部上游；`src/embed_metadata_safe/__init__.py` 宣告作者為 SamLiao 及 codex、版本 1.0.0、最低 calibre 9.8.0。Git 以 `fbc927d` 記錄加入此外掛。
 
 主要實作位於 `safe_epub.py` 與 `main.py`：只移除能解析為 JSON 物件、但缺少 `datatype` 的 `calibre:user_metadata`，不猜補欄位型別；先修復 EPUB 再呼叫 calibre 的嵌入流程。另提供正體中文介面、進度與取消、錯誤摘要及格式選擇。這些屬於本倉庫實作，不應列為上游修正。
