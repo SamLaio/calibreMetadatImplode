@@ -78,7 +78,7 @@ class Texts:
 def build_texts(locale: QLocale | None = None) -> Texts:
     if is_traditional_chinese_locale(locale):
         return Texts(
-            action_label='安全嵌入詮釋資料',
+            action_label='嵌入資料',
             action_tooltip='先修正 EPUB 內壞掉的 calibre:user_metadata，再嵌入詮釋資料',
             window_title='安全嵌入詮釋資料',
             cancel_button_label='取消',

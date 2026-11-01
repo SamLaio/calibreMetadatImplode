@@ -103,6 +103,8 @@ def build_zip(source_dir: Path, output_zip: Path, compile_translations: bool = F
             if file_path.is_dir():
                 continue
             rel = file_path.relative_to(source_dir)
+            if source_dir == ROOT / "Embed Metadata Safe" / "src" and rel.parts[0] == "embed_metadata_safe":
+                rel = Path(*rel.parts[1:])
             if any(part.startswith(".") for part in rel.parts):
                 continue
             if any(part == "__pycache__" for part in rel.parts):

@@ -9,7 +9,7 @@ class EmbedMetadataSafePlugin(InterfaceActionBase):
     )
     supported_platforms = ['windows', 'osx', 'linux']
     author = 'SamLiao, codex'
-    version = (1, 0, 0)
+    version = (1, 0, 1)
     minimum_calibre_version = (9, 8, 0)
     actual_plugin = 'calibre_plugins.embed_metadata_safe.ui:EmbedMetadataSafeAction'
 
