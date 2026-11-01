@@ -7,8 +7,12 @@
 - 匯入來源：使用者提供的已安裝 `Goodreads.zip`，原始版本 1.10.0。
 - 作者：Grant Drake；保留原始 GPL v3 宣告與翻譯資源。
 - 本倉庫修正版：1.10.1，最低 calibre 宣告沿用 2.0.0；未在舊版實測。
-- 上游來源：https://github.com/kiwidude68/calibre_plugins/tree/main/goodreads
+- 上游來源：[kiwidude68/calibre_plugins 的 Goodreads 外掛](https://github.com/kiwidude68/calibre_plugins/tree/main/goodreads)。
 - 原始說明與歷史保留於 `src/README.md`、`src/CHANGELOG.md`。
+
+2026-11-01 已比對上游原始檔，確認為同一隻外掛：名稱、作者、原始 README 與設定程式 `config.py` 均與匯入來源一致。上游當時版本為 1.10.0，其更新紀錄包含改用 JSON 自動完成搜尋，與匯入外掛相符。
+
+本倉庫的 **1.10.1 是基於上游 1.10.0 的本地修正版，並非上游正式發行版本**。本次來源比對未逐一核對所有翻譯資源。
 
 ## 本地修正（2026-11-01）
 
