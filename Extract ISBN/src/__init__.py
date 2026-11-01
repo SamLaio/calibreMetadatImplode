@@ -20,7 +20,7 @@ class ActionExtractISBN(InterfaceActionBase):
     description             = '從電子書內文擷取 ISBN，經確認後更新書庫識別碼'
     supported_platforms     = ['windows', 'osx', 'linux']
     author                  = 'Grant Drake'
-    version                 = (1, 6, 6, 1)
+    version                 = (1, 6, 7, 1)
     minimum_calibre_version = (2, 0, 0)
 
     #: This field defines the GUI plugin class that contains all the code

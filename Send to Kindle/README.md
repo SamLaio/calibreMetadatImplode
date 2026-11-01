@@ -41,3 +41,11 @@
 - [bookfere/Send-to-Kindle-Calibre-Plugin](https://github.com/bookfere/Send-to-Kindle-Calibre-Plugin)，截至 2026-10-23 官方最新正式版為 1.1.1。
 - [作者說明](https://bookfere.com/post/1042.html)
 - [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
+
+## 來源與修改核對（2026-11-01）
+
+- 固定上游基準：[1.1.1](https://github.com/bookfere/Send-to-Kindle-Calibre-Plugin/tree/e57861e85fcddded1344d784e3c1d4cc4306520c)。
+- 本倉庫版號：**v1.1.1_r.1（calibre 顯示 1.1.1）**。
+- `src/main.py` 改用 `mtp_devices.send_template`、書庫中繼資料與寄送視窗書名產生附件檔名，保留 Unicode；另將寄送時讀取的偏好格式鍵由 `preferred` 修正為 `preferred_format`。`src/ui.py` 刪除未使用的格式查詢；`src/__init__.py` 記錄本地修訂版字串。
+
+本次對照固定來源的頂層 Python 檔案，未逐一比較全部圖片、翻譯與巢狀套件資源；此核對不是新一輪完整功能測試。

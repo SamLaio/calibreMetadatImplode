@@ -44,3 +44,9 @@ python build_release.py
 ```
 
 發布 zip 會輸出到 `dist/embed-metadata-safe.zip`。
+
+## 來源與版號核對（2026-11-01）
+
+本倉庫自有外掛，沒有外部上游；`src/embed_metadata_safe/__init__.py` 宣告作者為 Codex、版本 1.0.0、最低 calibre 9.8.0。Git 以 `fbc927d` 記錄加入此外掛。
+
+主要實作位於 `safe_epub.py` 與 `main.py`：只移除能解析為 JSON 物件、但缺少 `datatype` 的 `calibre:user_metadata`，不猜補欄位型別；先修復 EPUB 再呼叫 calibre 的嵌入流程。另提供正體中文介面、進度與取消、錯誤摘要及格式選擇。這些屬於本倉庫實作，不應列為上游修正。

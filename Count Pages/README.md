@@ -64,3 +64,11 @@ calibre-debug -e "Count Pages/tests/test_update.py"
 ```
 
 測試使用離線頁面驗證 Goodreads 網址、頁數解析及來源備援，並載入實際英文斷句模型，檢查三個正體中文語系的完整覆蓋率。
+
+## 來源與修改核對（2026-11-01）
+
+- 固定上游基準：[1.15.3](https://github.com/kiwidude68/calibre_plugins/tree/d46d9197ac2f78e98f2a774a6afbf8d54d9ce68a/count_pages)。
+- 本倉庫版號：**1.15.3**。
+- 頂層 Python 差異為描述及共用模組匯入路徑，Goodreads `.xml` 網址修正來自上游。另有正體中文翻譯、本地測試，以及 `src/nltk_lite/english.pickle` 的二進位屬性設定（`.gitattributes`），避免模型被換行轉換。
+
+本次對照固定來源的頂層 Python 檔案，未逐一比較全部圖片、翻譯與巢狀套件資源；此核對不是新一輪完整功能測試。

@@ -1,5 +1,5 @@
 msgid ""
-msgstr "Project-Id-Version: Extract ISBN 1.6.6.1\nLanguage: zh_TW\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\n"
+msgstr "Project-Id-Version: Extract ISBN 1.6.7.1\nLanguage: zh_TW\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\n"
 
 msgid "All settings for this plugin in this library have been cleared."
 msgstr "已清除此書庫中這個外掛的所有設定。"

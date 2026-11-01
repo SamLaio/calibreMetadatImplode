@@ -43,3 +43,11 @@
 ## 上游來源
 
 [HamsterExAstris/calibre-azw6-image-merge](https://github.com/HamsterExAstris/calibre-azw6-image-merge)。截至 2026-10-23，上游仍為 1.0.0，最後提交為 2021-12-17。
+
+## 來源與修改核對（2026-11-01）
+
+- 固定上游基準：[1.0.0](https://github.com/HamsterExAstris/calibre-azw6-image-merge/tree/63f76d46e19de901536b9bc7c1a02998f26c439b)。
+- 本倉庫版號：**1.0.0**。
+- `src/mobimergehdimage.py` 以 Pillow 取代 `imghdr`，保留 JPEG 位元特徵備援與 TIFF／WDP 對應；其他兩個主要 Python 檔案與此基準一致（忽略空白差異）。
+
+本次對照固定來源的頂層 Python 檔案，未逐一比較全部圖片、翻譯與巢狀套件資源；此核對不是新一輪完整功能測試。

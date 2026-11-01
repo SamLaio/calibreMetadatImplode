@@ -37,3 +37,11 @@ calibre-debug -e "Goodreads/tests/test_goodreads.py"
 ```
 
 已通過 8 組離線回歸測試，並以《61 Hours》（Goodreads ID：6977769）實際驗證詳細頁、系列與封面解析。網站結構或存取限制變動仍可能影響下載；未測試 calibre 圖形介面安裝與所有舊版相容性。
+
+## 來源與修改核對（2026-11-01）
+
+- 固定上游基準：[1.10.0](https://github.com/kiwidude68/calibre_plugins/tree/2a2dbb2469ec6e68179cd71ba943db240045d097/goodreads)。
+- 本倉庫版號：**1.10.1**。
+- 原始來源為使用者提供的 1.10.0 安裝包，本次以固定上游提交交叉核對。主要功能差異在 `src/__init__.py` 與 `src/worker.py`，包括前述比對、引用關係、缺值及連線處理；`config.py` 與固定基準一致，共用模組只調整外掛匯入路徑。
+
+本次對照固定來源的頂層 Python 檔案，未逐一比較全部圖片、翻譯與巢狀套件資源；此核對不是新一輪完整功能測試。

@@ -1,6 +1,6 @@
 # Extract ISBN（擷取 ISBN）
 
-本倉庫修訂版：**1.6.6.1（2026-11-01）**，基於上游程式宣告版本 1.6.6。作者為 Grant Drake，授權為 GPL v3。
+本倉庫修訂版：**1.6.7.1（2026-11-01）**，基於固定匯入提交的上游 1.6.7。作者為 Grant Drake，授權為 GPL v3。
 
 從電子書內文擷取 ISBN，經確認後更新 calibre 書庫中的 ISBN 識別碼；不會修改原始書檔，並保留其他識別碼。支援格式取決於 calibre 的輸入格式支援。
 
@@ -12,7 +12,7 @@
 
 ## 安裝與使用
 
-從 [v1.3.7 發行頁](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.7) 下載並安裝 `Extract ISBN-zh_TW-release.zip`，重新啟動 calibre。在「偏好設定 → 工具列與選單」加入「擷取 ISBN」，選取書籍後執行。使用正體中文介面時會載入 `zh_TW` 翻譯。
+從 [v1.3.8 發行頁](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.8) 下載並安裝 `Extract ISBN-zh_TW-release.zip`，重新啟動 calibre。在「偏好設定 → 工具列與選單」加入「擷取 ISBN」，選取書籍後執行。使用正體中文介面時會載入 `zh_TW` 翻譯。
 
 - 依 calibre 輸入格式偏好順序掃描，找到 ISBN 後停止嘗試其他格式。
 - 非 PDF 先掃書前、再反向掃書尾，最後掃中間內容。
@@ -64,6 +64,6 @@ ISBN 校驗僅確認號碼結構，無法辨認精裝、平裝或電子版。一
 
 - [原始專案](https://github.com/kiwidude68/calibre_plugins/tree/main/extract_isbn)
 - [使用說明](https://github.com/kiwidude68/calibre_plugins/wiki/Extract-ISBN)
-- 匯入提交：`2a2dbb2469ec6e68179cd71ba943db240045d097`；該提交程式宣告為 1.6.6，另含 1.6.7 的語系更新紀錄。本地版號 1.6.6.1 不是上游正式發行版。
+- 匯入提交：`2a2dbb2469ec6e68179cd71ba943db240045d097`；經 2026-11-01 直接核對 GitHub 固定提交原始碼，該提交程式宣告為 1.6.7。本次核對後，將本地修訂版號由 1.6.6.1 更正為 1.6.7.1，以對應實際上游基準。本地版號 1.6.7.1 不是上游正式發行版。
 - 共用模組取自同一提交的 `common/`，只調整外掛匯入路徑。
 - 上游歷史更新紀錄保留於 `CHANGELOG.md`，授權見 `LICENSE.md`。

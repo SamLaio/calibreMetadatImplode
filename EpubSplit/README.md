@@ -42,3 +42,11 @@ python build_release.py
 ```
 
 發布 zip 會輸出到 `dist/EpubSplit-zh_TW-release.zip`。
+
+## 來源與修改核對（2026-11-01）
+
+- 固定上游基準：[3.12.0](https://github.com/JimmXinu/EpubSplit/tree/a0b31ea9c0c9b439329574c4752b24eaaab67f72)。
+- 本倉庫版號：**3.12.0**。
+- `src/epubsplit_plugin.py` 移除 EPUB3 阻擋；`src/epubsplit.py` 增加 EPUB3 導覽解析、EPUB3 輸出與 HTML 解析器備援；`src/__init__.py` 調整描述。另保留正體中文資源。
+
+本次對照固定來源的頂層 Python 檔案，未逐一比較全部圖片、翻譯與巢狀套件資源；此核對不是新一輪完整功能測試。
