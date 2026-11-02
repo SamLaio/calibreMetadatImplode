@@ -1,6 +1,17 @@
 # Calibre 9.x Edit Book API 查核報告
 
-日期：2026-11-02；插件 1.0.0。本機 `calibre-debug --version` 為 **calibre 9.17**。本報告以官方教學及 GitHub **v9.0.0、v9.17.0** 固定標籤來源查核；不將 master 或目前線上手冊視為所有 9.x 的證明。下載來源的 SHA256 列於 tests/source_manifest.json（widget.py 是 editor/widget.py 的本機縮短名稱）。
+日期：2026-11-02；插件 1.1.0。本機 `calibre-debug --version` 為 **calibre 9.17**。本報告以官方教學及 GitHub **v9.0.0、v9.17.0** 固定標籤來源查核；不將 master 或目前線上手冊視為所有 9.x 的證明。下載來源的 SHA256 列於 tests/source_manifest.json（widget.py 是 editor/widget.py 的本機縮短名稱）。
+
+## 1.1.0 發行核對
+
+正式版整合本次新增功能與版面修正，版號、README／操作截圖、CHANGELOG、根目錄摘要及整合發行 v1.3.14 說明一致。發行 ZIP 重新執行七組驗證，包括獨立程序的原生儲存重開流程。
+
+## 1.1.0 背景搜尋與整合驗收
+
+- SearchWorker 於 QThread 執行純資料的搜尋／投影與檔案讀取；Qt 編輯器緩衝區在主執行緒分檔擷取，工作中不存取 Qt 控件。搜尋只讀，切換書籍後丟棄舊工作結果；取消採合作式中斷，Regex 最長等到單檔 2 秒逾時。
+- QAbstractTableModel／QSortFilterProxyModel 按需顯示結果，定位與勾選透過來源索引映射；數值位置排序、狀態篩選與可見列批次均有回歸。
+- Windows 真實 Main、Boss、WebEngine、SaveManager 及外掛動作已驗收，沒有主視窗替身：修改、Undo/Redo、原始碼取代、跨檔批次、原生儲存、正常退出、新程序重開及預覽文字一致均通過。實測 QPA windows、縮放 1.75；測試由 Qt 程式操作實際控件，不等於所有手動鍵鼠流程。
+- 下面早期各節的「完整 GUI／保存未測」屬當時的證據界線；本節更新上述已完成路徑，其餘版本、平台與未覆蓋流程仍不宣稱通過。
 
 ## 0.4.0 文字檔類型補記
 

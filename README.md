@@ -7,10 +7,10 @@
 | 項目 | 說明 |
 | --- | --- |
 | 專案來源 | [SamLaio/calibreMetadatImplode](https://github.com/SamLaio/calibreMetadatImplode)，本倉庫為整合與修訂來源；各外掛的原作者及授權保留於各自目錄。 |
-| 整合發行版號 | **[v1.3.13（2026-11-02）](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.13)**。這是整套發行附件的版號，與各外掛在 calibre 顯示的版號分開管理。 |
+| 整合發行版號 | **[v1.3.14（2026-11-02）](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.14)**。這是整套發行附件的版號，與各外掛在 calibre 顯示的版號分開管理。 |
 | 專案層修改 | 將外掛整理為各自的 `src/`，使用 `build_release.py` 統一輸出十三個獨立安裝包到 `dist/`；排除隱藏檔、快取及 `.po` 翻譯來源。Extract ISBN 與 Generate Cover 的翻譯在打包時分別編譯。 |
-| 本次變更 | 新增 Enhanced Search and Replace 1.0.0，支援全書文字類型搜尋、即時預覽與選擇性取代。 |
-| 上次發行變更 | Embed Metadata Safe 1.0.1 修正安裝包層級，工具列按鈕縮短為「嵌入資料」。 |
+| 本次變更 | Enhanced Search and Replace 1.1.0 新增 HTML 原始碼搜尋、背景進度／取消、結果篩選排序及操作截圖，完成 Windows 儲存重開驗收。 |
+| 上次發行變更 | 新增 Enhanced Search and Replace 1.0.0，提供全書搜尋、即時預覽與選擇性取代。 |
 
 ## 各外掛簡介、來源與版號
 
@@ -21,7 +21,7 @@
 | 外掛及完整說明 | 簡介 | 上游來源與比對基準 | 本倉庫版號 |
 | --- | --- | --- | --- |
 | [Embed Metadata Safe](./Embed%20Metadata%20Safe/README.md) | 清理 EPUB 的特定損壞自訂欄位資料，再嵌入書庫中繼資料。 | [本倉庫自有外掛](./Embed%20Metadata%20Safe/)，作者為 SamLiao 及 codex；沒有獨立上游。 | **1.0.1**；修正 ZIP 安裝層級並縮短按鈕名稱。 |
-| [Enhanced Search and Replace](./Enhanced%20Search%20and%20Replace/README.md) | Edit Book 全書文字類型勾選搜尋、定位與取代。 | 本倉庫自行開發；SamLiao & Codex，API 查核 Calibre v9.0.0／v9.17.0。 | **1.0.0**；全書搜尋、跨標籤純文字保格式取代及完整 HTML 片段模式。 |
+| [Enhanced Search and Replace](./Enhanced%20Search%20and%20Replace/README.md) | Edit Book 全書文字類型勾選搜尋、定位與取代。 | 本倉庫自行開發；SamLiao & Codex，API 查核 Calibre v9.0.0／v9.17.0。 | **1.1.0**；原始碼搜尋、背景進度與取消、篩選排序，預設十五行並附操作截圖。 |
 | [Toolbar Manager](./Toolbar%20Manager/README.md) | 右鍵調整工具列按鈕，開啟外掛首頁、選項或移除外掛。 | 本倉庫自行開發；SamLiao & Codex。 | **1.0.0**。 |
 | [AZW6 Image Merge](./AZW6%20Image%20Merge/README.md) | 將 Amazon AZW6 sidecar 高畫質圖片合併至主書檔。 | Andrew Timson；[HamsterExAstris/calibre-azw6-image-merge，提交 `63f76d4`](https://github.com/HamsterExAstris/calibre-azw6-image-merge/tree/63f76d46e19de901536b9bc7c1a02998f26c439b)，基準 **1.0.0**。 | **1.0.0**，含本地相容性修改。 |
 | [Count Pages](./Count%20Pages/README.md) | 計算或下載頁數、字數與可讀性統計，寫入自訂欄位。 | Grant Drake；[kiwidude68/calibre_plugins/count_pages，提交 `d46d919`](https://github.com/kiwidude68/calibre_plugins/tree/d46d9197ac2f78e98f2a774a6afbf8d54d9ce68a/count_pages)，基準 **1.15.3**。 | **1.15.3**，正體中文整合版。 |
@@ -41,7 +41,7 @@
 | 外掛 | 本倉庫修改點 |
 | --- | --- |
 | Embed Metadata Safe | 本倉庫自行實作：先移除可解析 JSON 物件中缺少 `datatype` 的 `calibre:user_metadata` 項目，再呼叫 calibre 嵌入流程；加入正體中文介面、進度與取消、錯誤摘要及處理格式設定；工具列按鈕簡稱「嵌入資料」。 |
-| Enhanced Search and Replace | 本倉庫自有外掛：全書文字類型勾選搜尋、Regex 群組、即時預覽、純文字保格式／HTML 片段、逐筆／批次取代、狀態保留、定位及復原保護；附測試與操作限制。 |
+| Enhanced Search and Replace | 1.1.0 新增 HTML 原始碼搜尋、背景進度／取消及結果篩選／排序，通過 Windows 儲存重開驗收。原有功能：全書文字類型勾選搜尋、Regex 群組、即時預覽、純文字保格式／HTML 片段、逐筆／批次取代、狀態保留、定位及復原保護；附測試與操作限制。 |
 | Toolbar Manager | 加入專用圖示及正體中文工具列右鍵管理；移除外掛前確認，保護必要入口並保留原有選單。 |
 | AZW6 Image Merge | 以 calibre 內建 Pillow 取代已移除的 `imghdr`，保留 JPEG 位元特徵備援及 TIFF／WDP 對應；補上中文說明與統一打包。合併主流程沿用上游。 |
 | Count Pages | 採用上游 1.15.3 的 Goodreads `.xml` 網址與語系更新；保留正體中文語系別名，補齊 12 個提示至 119 個介面翻譯；還原英文斷句模型並設為二進位，避免 Windows 換行破壞，加入離線回歸測試。 |

@@ -51,4 +51,7 @@ assert not rows[0]['safe']
 update_preview(rows[0], '第$1章', 'text')
 assert rows[0]['safe'] and replace(source, rows) == source.replace('話', '章')
 assert not search('<html><body><p>第10</p><p>話</p></body></html>', r'第(\d+)\s*話', '第$1章')[0]['safe']
+source = document('x' * 65500 + '第<span>1&#48;</span>話')
+rows = search(source, r'第(\d+)話', '第$1章')
+assert replace(source, rows) == source.replace('話', '章')
 print('PASS modes: inline/group formatting, entities, ambiguous format refusal, complete HTML, escaped groups, mode recovery')

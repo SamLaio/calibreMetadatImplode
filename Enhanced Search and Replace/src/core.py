@@ -11,7 +11,17 @@ from xml.parsers import expat
 
 INLINE = {'span', 'b', 'i', 'em', 'strong', 'a', 'small', 'sup', 'sub', 'u', 's'}
 
-def validate_xhtml(raw):
+class SearchCancelled(Exception):
+    pass
+
+
+def check_cancelled(cancelled):
+    if cancelled is not None and cancelled():
+        raise SearchCancelled()
+
+
+def validate_xhtml(raw, cancelled=None):
+    check_cancelled(cancelled)
     def entity_for_validation(match):
         name = match.group(1)
         if name in name2codepoint:
@@ -30,26 +40,35 @@ def validate_xhtml(raw):
     parser.SetParamEntityParsing(expat.XML_PARAM_ENTITY_PARSING_NEVER)
     parser.ExternalEntityRefHandler = lambda *args: 1  # Never open a DTD or external entity.
     try:
-        parser.Parse(checked, True)
+        for start in range(0, len(checked), 65536):
+            check_cancelled(cancelled)
+            parser.Parse(checked[start:start + 65536], False)
+        parser.Parse('', True)
     except expat.ExpatError as err:
         raise ValueError(f'XHTML 格式錯誤（第 {err.lineno} 行）：{expat.ErrorString(err.code)}') from err
 
 class Projection(HTMLParser):
-    def __init__(self, raw):
+    def __init__(self, raw, cancelled=None, progress=None):
         super().__init__(convert_charrefs=False)
-        validate_xhtml(raw)
-        self.raw, self.text, self.mapping = raw, '', []
+        validate_xhtml(raw, cancelled)
+        self.raw, self.parts, self.mapping = raw, [], []
         self.lines = [0]
         self.lines.extend(m.end() for m in re.finditer('\n', raw))
         self.stack = []
-        self.feed(raw)
+        for start in range(0, len(raw), 65536):
+            check_cancelled(cancelled)
+            self.feed(raw[start:start + 65536])
+            if progress:
+                progress(0.4 * min(start + 65536, len(raw)) / max(len(raw), 1), '建立文字索引')
+        self.close()
+        self.text = ''.join(self.parts)
 
     def source_offset(self):
         line, col = self.getpos()
         return self.lines[line - 1] + col
 
     def boundary(self):
-        self.text += '\n'
+        self.parts.append('\n')
         self.mapping.append(None)
 
     def handle_starttag(self, tag, attrs):
@@ -73,14 +92,14 @@ class Projection(HTMLParser):
     def handle_data(self, data):
         if self.visible():
             start = self.source_offset()
-            self.text += data
+            self.parts.append(data)
             self.mapping.extend((start+i, start+i+1) for i in range(len(data)))
 
     def entity(self, literal):
         if self.visible():
             value = unescape(literal)
             start = self.source_offset()
-            self.text += value
+            self.parts.append(value)
             self.mapping.extend([(start, start+len(literal))] * len(value))
 
     def handle_entityref(self, name):
@@ -188,11 +207,16 @@ def update_preview(row, template, mode='text'):
     row.update(after=after, replacement=replacement, error=error, safe=not error, reason=error)
 
 
-def search(raw, pattern, template, mode='text', syntax='html'):
-    projection = Projection(raw) if syntax == 'html' else None
+def search(raw, pattern, template, mode='text', syntax='html', cancelled=None, progress=None):
+    check_cancelled(cancelled)
+    projection = Projection(raw, cancelled, progress) if syntax == 'html' else None
     rows = []
     # Each match stays within one XHTML document.
     for m in compile_regular_expression(pattern, flags=REGEX_FLAGS).finditer(projection.text if projection else raw, timeout=2):
+        check_cancelled(cancelled)
+        if progress and len(rows) % 256 == 0:
+            length = len(projection.text) if projection else len(raw)
+            progress(0.4 + 0.6 * m.end() / max(length, 1), f'搜尋中：{len(rows)} 筆')
         if projection is None:
             row = dict(before=m[0], start=m.start(), end=m.end(), match=m, source_safe=True,
                        mapped=m.start() != m.end(), raw_source=True, syntax=syntax)
@@ -214,8 +238,14 @@ def search(raw, pattern, template, mode='text', syntax='html'):
 def replace(raw, rows):
     if any(not row['safe'] for row in rows):
         raise ValueError('選取結果包含無法安全取代的項目')
-    for row in sorted(rows, key=lambda x:x['start'], reverse=True):
-        raw = raw[:row['start']] + row.get('replacement', escape(row['after'], quote=False)) + raw[row['end']:]
+    pieces, position = [], 0
+    for row in sorted(rows, key=lambda x:x['start']):
+        if not position <= row['start'] <= row['end'] <= len(raw):
+            raise ValueError('取代範圍重疊或已失效，請重新搜尋')
+        pieces.extend((raw[position:row['start']], row.get('replacement', escape(row['after'], quote=False))))
+        position = row['end']
+    pieces.append(raw[position:])
+    raw = ''.join(pieces)
     syntax = rows[0].get('syntax', 'html') if rows else 'html'
     if syntax in {'html', 'xml'}:
         validate_xhtml(raw)

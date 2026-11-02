@@ -1,11 +1,14 @@
 from qt.core import (QAction, QDialog, QVBoxLayout, QHBoxLayout, QLineEdit,
-    QPushButton, QTableWidget, QTableWidgetItem, Qt, QMessageBox, QTextCursor, QLabel,
-    QFormLayout, QHeaderView, QComboBox, QToolButton, QMenu)
+    QPushButton, QTableView, Qt, QMessageBox, QTextCursor, QLabel,
+    QFormLayout, QHeaderView, QComboBox, QToolButton, QMenu, QProgressBar, QTimer, QModelIndex, QApplication, QAbstractButton)
 from calibre.gui2.tweak_book.plugin import Tool
 from calibre.gui2.tweak_book import editors
 from calibre.gui2.tweak_book.editor import syntax_from_mime
 from pathlib import PurePosixPath
-from calibre_plugins.text_regex_p0.core import search, replace, utf16, update_preview
+from bisect import bisect_right
+from calibre_plugins.text_regex_p0.core import replace, utf16, update_preview
+from calibre_plugins.text_regex_p0.results import ResultsModel, ResultsFilter
+from calibre_plugins.text_regex_p0.search_worker import SearchWorker
 
 class ReplacementPreviewError(ValueError):
     pass
@@ -29,7 +32,8 @@ class SearchDialog(QDialog):
         self.setWindowTitle('Enhanced Search and Replace')
         self.resize(800, 420)
         layout = QVBoxLayout(self)
-        layout.addWidget(QLabel('搜尋勾選的文字類型：HTML 內文／其他檔案原始碼。支援 $1 與 \\g<1>。'))
+        description = QLabel('HTML 可選內文／原始碼；其他文字檔搜尋原始碼。支援 $1 與 \\g<1>。')
+        description.setWordWrap(True)
         self.pattern = QLineEdit()
         self.template = QLineEdit()
         fields = QFormLayout()
@@ -43,41 +47,98 @@ class SearchDialog(QDialog):
         self.type_actions = {}
         self.file_types = {}
         self.types_menu.aboutToShow.connect(self.refresh_types)
-        search_fields.addWidget(self.types)
+        self.search_mode = QComboBox()
+        self.search_mode.addItem('HTML：內文', 'html')
+        self.search_mode.addItem('HTML：原始碼', 'xml')
+        self.search_mode.setToolTip('只影響 HTML／XHTML；其他文字檔一律搜尋原始碼')
+        search_fields.addWidget(self.search_mode)
+        types_row = QHBoxLayout()
+        types_row.addWidget(description, 1)
+        types_row.addWidget(self.types)
+        layout.addLayout(types_row)
         fields.addRow('尋找：', search_fields)
         replacement_fields = QHBoxLayout()
         replacement_fields.addWidget(self.template, 1)
         self.mode = QComboBox()
         self.mode.addItem('純文字（保留 HTML）', 'text')
         self.mode.addItem('HTML 片段', 'html')
-        self.mode.setToolTip('HTML 內文：保留標籤或插入完整片段；其他文字類型一律取代原始碼')
+        self.mode.setToolTip('HTML 內文：保留標籤或插入完整片段；原始碼搜尋一律以原始碼取代')
         replacement_fields.addWidget(self.mode)
         fields.addRow('取代為：', replacement_fields)
         layout.addLayout(fields)
-        self.table = QTableWidget(0, 6)
-        self.table.setHorizontalHeaderLabels(['勾選', '原文', '取代預覽', '來源位置', '狀態／原因', '檔案'])
+        self.filter = QComboBox()
+        for label, value in [('全部結果', 'all'), ('待處理', 'pending'), ('已取代', 'done'), ('失敗／需確認', 'failed')]:
+            self.filter.addItem(label, value)
+        layout.addWidget(self.filter)
+        self.model = ResultsModel(self)
+        self.proxy = ResultsFilter(self)
+        self.proxy.setSourceModel(self.model)
+        self.table = QTableView()
+        self.table.setModel(self.proxy)
+        self.corner_button = self.table.findChild(QAbstractButton)
+        self.corner_button.clicked.disconnect()
+        self.corner_button.clicked.connect(lambda: self.toggle_checks(0))
+        self.corner_button.setToolTip('全選／取消目前可見且尚未完成的結果')
+        self.corner_button.setAccessibleName('全選／取消全選')
+        corner_layout = QHBoxLayout(self.corner_button)
+        corner_layout.setContentsMargins(0, 0, 0, 0)
+        corner_label = QLabel('全選')
+        corner_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        corner_label.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
+        corner_layout.addWidget(corner_label)
+        self.table.verticalHeader().setMinimumWidth(self.table.fontMetrics().horizontalAdvance('全選') + 16)
+        self.table.setWordWrap(False)
+        self.table.verticalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Fixed)
+        self.table.verticalHeader().setDefaultSectionSize(self.table.fontMetrics().height() + 12)
         header = self.table.horizontalHeader()
         header.setSectionsClickable(True)
-        header.sectionClicked.connect(self.toggle_checks)
-        self.table.horizontalHeaderItem(0).setToolTip('點擊全選／全部取消勾選')
+        header.sectionClicked.connect(self.header_clicked)
+        header.setSortIndicatorShown(True)
+        header.setSortIndicator(-1, Qt.SortOrder.AscendingOrder)
         header.setSectionResizeMode(QHeaderView.ResizeMode.Interactive)
         for column, width in enumerate((54, 140, 140, 90, 120, 200)):
             header.resizeSection(column, width)
         layout.addWidget(self.table, 1)
+        self.progress = QProgressBar()
+        self.progress.setRange(0, 1000)
+        self.status = QLabel('尚未搜尋')
+        self.cancel_button = QPushButton('取消搜尋')
+        self.cancel_button.setEnabled(False)
+        self.cancel_button.clicked.connect(self.cancel_search)
+        progress_layout = QHBoxLayout()
+        progress_layout.addWidget(self.progress, 1)
+        progress_layout.addWidget(self.cancel_button)
+        layout.addLayout(progress_layout)
+        layout.addWidget(self.status)
         buttons = QHBoxLayout()
         layout.addLayout(buttons)
+        self.action_buttons = []
         for title, callback in [('搜尋', self.scan), ('定位', self.locate), ('逐筆取代', self.single), ('取代勾選', self.batch)]:
             button = QPushButton(title)
             button.clicked.connect(lambda checked=False, cb=callback: self.guard(cb))
             buttons.addWidget(button)
-        self.table.cellDoubleClicked.connect(lambda *args: self.guard(self.locate))
-        self.table.cellClicked.connect(self.position_clicked)
+            self.action_buttons.append(button)
+        self.table.doubleClicked.connect(lambda index: self.guard(self.locate))
+        self.table.clicked.connect(self.position_clicked)
         self.rows = []
+        self.worker = None
+        self.busy = False
+        self.closing = False
         self.preview_warning_shown = False
         self.pattern.textChanged.connect(self.invalidate)
         self.template.textChanged.connect(self.refresh_previews)
         self.mode.currentIndexChanged.connect(self.refresh_previews)
+        self.search_mode.currentIndexChanged.connect(self.invalidate)
+        self.filter.currentIndexChanged.connect(self.filter_changed)
         self.refresh_types()
+        QApplication.instance().aboutToQuit.connect(self.shutdown_search)
+        self.ensurePolished()
+        table_height = (15 * self.table.verticalHeader().defaultSectionSize()
+                        + self.table.horizontalHeader().sizeHint().height()
+                        + self.table.horizontalScrollBar().sizeHint().height()
+                        + 2 * self.table.frameWidth())
+        height = layout.sizeHint().height() - self.table.sizeHint().height() + table_height
+        self.resize(self.width(), min(height, self.screen().availableGeometry().height() - 64))
 
     def refresh_types(self):
         container = self.tool.current_container
@@ -120,27 +181,71 @@ class SearchDialog(QDialog):
         self.update_types_label()
         self.invalidate()
 
+    def current_row(self):
+        index = self.proxy.mapToSource(self.table.currentIndex())
+        return index.row() if index.isValid() else -1
+
+    def select_row(self, row, column=1):
+        index = self.proxy.mapFromSource(self.model.index(row, column))
+        self.table.setCurrentIndex(index)
+        if index.isValid():
+            self.table.scrollTo(index)
+
+    def visible_rows(self):
+        return [self.proxy.mapToSource(self.proxy.index(i, 0)).row() for i in range(self.proxy.rowCount())]
+
+    def header_clicked(self, column):
+        if column == 0:
+            self.table.horizontalHeader().setSortIndicator(self.proxy.sortColumn(), self.proxy.sortOrder())
+        else:
+            header = self.table.horizontalHeader()
+            order = Qt.SortOrder.DescendingOrder if header.sortIndicatorSection() == column and header.sortIndicatorOrder() == Qt.SortOrder.AscendingOrder else Qt.SortOrder.AscendingOrder
+            header.setSortIndicator(column, order)
+            self.proxy.sort(column, order)
+
+    def filter_changed(self):
+        self.proxy.status = self.filter.currentData()
+        self.proxy.invalidate()
+
+    def results_changed(self):
+        self.model.changed()
+        self.proxy.invalidate()
+
     def toggle_checks(self, column):
-        if column != 0 or not self.rows:
+        if column != 0 or self.busy:
             return
-        items = [self.table.item(i, 0) for i, row in enumerate(self.rows) if not row.get('done')]
-        state = (Qt.CheckState.Unchecked if all(item.checkState() == Qt.CheckState.Checked for item in items)
-                 else Qt.CheckState.Checked)
-        for item in items:
-            item.setCheckState(state)
+        rows = [self.rows[i] for i in self.visible_rows() if not self.rows[i].get('done')]
+        checked = not all(row.get('checked') for row in rows)
+        for row in rows:
+            row['checked'] = checked
+        self.model.changed()
 
     def refresh_previews(self):
-        for i, row in enumerate(self.rows):
-            if 'match' not in row or row.get('done'):
-                continue
-            update_preview(row, self.template.text(), self.mode.currentData())
-            for column, value in ((2, row['after']), (4, row['reason'])):
-                self.table.item(i, column).setText(value)
-                self.table.item(i, column).setToolTip(value)
+        if self.busy:
+            return
+        self.preview_generation = getattr(self, 'preview_generation', 0) + 1
+        generation = self.preview_generation
+        template, mode = self.template.text(), self.mode.currentData()
+        self.preview_pending = True
+        def update_chunk(start=0):
+            if generation != self.preview_generation:
+                return
+            for row in self.rows[start:start + 200]:
+                if 'match' in row and not row.get('done'):
+                    update_preview(row, template, mode)
+                    row.pop('failed', None)
+            if start + 200 < len(self.rows):
+                QTimer.singleShot(0, lambda: update_chunk(start + 200))
+            else:
+                self.preview_pending = False
+                self.results_changed()
+        update_chunk()
 
     def invalidate(self):
+        self.preview_generation = getattr(self, 'preview_generation', 0) + 1
+        self.preview_pending = False
         self.rows = []
-        self.table.setRowCount(0)
+        self.model.reset_rows(self.rows)
 
     def guard(self, callback):
         try:
@@ -152,7 +257,15 @@ class SearchDialog(QDialog):
                 self.preview_warning_shown = True
             QMessageBox.warning(self, 'Enhanced Search and Replace', str(err))
 
+    def set_busy(self, busy):
+        self.busy = busy
+        for widget in [self.pattern, self.template, self.types, self.mode, self.search_mode, *self.action_buttons]:
+            widget.setEnabled(not busy)
+        self.cancel_button.setEnabled(busy)
+
     def scan(self):
+        if self.busy:
+            return
         self.invalidate()
         self.preview_warning_shown = False
         self.container = self.tool.current_container
@@ -164,35 +277,86 @@ class SearchDialog(QDialog):
         selected_types = {label for label, action in self.type_actions.items() if action.isChecked()}
         if not selected_types:
             raise ValueError('請至少勾選一種文字檔案類型')
-        self.snapshots = {}
         names = dict.fromkeys([name for name, linear in self.container.spine_names] + sorted(self.container.mime_map))
-        errors = []
-        for name in names:
-            if name not in self.file_types or self.file_types[name][0] not in selected_types:
-                continue
-            try:
-                raw = self.read_source(name)
-                found = search(raw, self.pattern.text(), self.template.text(), self.mode.currentData(), self.file_types[name][1])
-                self.snapshots[name] = raw
-                self.rows.extend(dict(row, name=name) for row in found)
-            except Exception as err:
-                message = f'{name}：{err}'
-                errors.append(message)
-                self.rows.append(dict(name=name, before='', after='', start=0, end=0,
-                                      safe=False, error=message, reason=message))
-        self.table.setRowCount(len(self.rows))
-        for i, row in enumerate(self.rows):
-            check = QTableWidgetItem()
-            check.setFlags(Qt.ItemFlag.ItemIsUserCheckable | Qt.ItemFlag.ItemIsEnabled)
-            check.setCheckState(Qt.CheckState.Unchecked)
-            self.table.setItem(i, 0, check)
-            for j, value in enumerate([row['before'], row['after'], str(row['start']), row['reason'], row['name']], 1):
-                item = QTableWidgetItem(value)
-                item.setToolTip(value)
-                item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
-                self.table.setItem(i, j, item)
-        if errors:
-            raise ValueError('\n'.join(dict.fromkeys(errors)) + '\n其他搜尋結果已保留；請修正錯誤後重新搜尋。')
+        self.search_names = [name for name in names if name in self.file_types and self.file_types[name][0] in selected_types]
+        self.tasks = []
+        self.capture_position = 0
+        self.search_cancelled = False
+        self.progress.setValue(0)
+        self.status.setText('準備搜尋內容…')
+        self.set_busy(True)
+        QTimer.singleShot(0, self.capture_next)
+
+    def capture_next(self):
+        if not self.busy or self.worker is not None:
+            return
+        if self.search_cancelled or self.tool.current_container is not self.container:
+            self.status.setText('搜尋已取消')
+            self.set_busy(False)
+            return
+        if self.capture_position < len(self.search_names):
+            name = self.search_names[self.capture_position]
+            syntax = self.file_types[name][1]
+            if syntax == 'html' and self.search_mode.currentData() == 'xml':
+                syntax = 'xml'
+            raw = str(editors[name].editor.toPlainText()) if name in editors else None
+            self.tasks.append((name, syntax, raw))
+            self.capture_position += 1
+            self.status.setText(f'準備 {self.capture_position}/{len(self.search_names)}：{name}')
+            QTimer.singleShot(0, self.capture_next)
+            return
+        self.worker = SearchWorker(self.container, self.tasks, self.pattern.text(), self.template.text(), self.mode.currentData(), self)
+        self.worker.progress.connect(self.search_progress)
+        self.worker.completed.connect(self.search_completed)
+        self.worker.finished.connect(self.search_finished)
+        self.worker.start()
+
+    def search_progress(self, value, message):
+        self.progress.setValue(value)
+        self.status.setText(message)
+
+    def search_completed(self, result):
+        rows, snapshots, errors, cancelled, fatal = result
+        if self.closing:
+            return
+        if self.tool.current_container is not self.container:
+            self.status.setText('書籍已切換，搜尋結果已丟棄')
+            return
+        self.rows, self.snapshots = rows, snapshots
+        self.model.reset_rows(rows)
+        self.status.setText(f'{"已取消，保留已完成檔案" if cancelled else "搜尋完成"}：{len(rows)} 筆結果')
+        if not cancelled:
+            self.progress.setValue(1000)
+        if fatal or errors:
+            QMessageBox.warning(self, 'Enhanced Search and Replace', fatal or '\n'.join(dict.fromkeys(errors)))
+
+    def search_finished(self):
+        worker, self.worker = self.worker, None
+        worker.deleteLater()
+        self.set_busy(False)
+        if self.closing:
+            self.close()
+
+    def cancel_search(self):
+        self.search_cancelled = True
+        if self.worker is not None:
+            self.worker.requestInterruption()
+        self.status.setText('正在取消搜尋…')
+
+    def shutdown_search(self):
+        if self.worker is not None:
+            self.worker.requestInterruption()
+            self.worker.wait()
+
+    def closeEvent(self, event):
+        if self.busy:
+            self.closing = True
+            self.cancel_search()
+            if self.worker is not None:
+                event.ignore()
+                return
+            self.set_busy(False)
+        event.accept()
 
     def read_source(self, name):
         if name in editors:
@@ -216,13 +380,13 @@ class SearchDialog(QDialog):
             raise ValueError(f'{name}：開啟後內容已變更，請重新搜尋')
         return ed
 
-    def position_clicked(self, row, column):
-        if column == 3:
-            self.table.setCurrentCell(row, column)
+    def position_clicked(self, index):
+        if index.column() == 3:
+            self.table.setCurrentIndex(index)
             self.guard(self.locate)
 
     def locate(self):
-        i = self.table.currentRow()
+        i = self.current_row()
         if i < 0:
             raise ValueError('請選取一列')
         row = self.rows[i]
@@ -237,25 +401,28 @@ class SearchDialog(QDialog):
         text.ensureCursorVisible()
 
     def single(self):
-        i = self.table.currentRow()
+        i = self.current_row()
         if i < 0:
             raise ValueError('請選取一列')
         row = self.rows[i]
+        visible = self.visible_rows()
+        following = visible[visible.index(i) + 1:]
         self.apply([row])
-        for j in range(i + 1, len(self.rows)):
-            if not self.rows[j].get('done'):
-                self.table.setCurrentCell(j, 1)
-                self.table.scrollToItem(self.table.item(j, 1))
+        for j in following:
+            if not self.rows[j].get('done') and self.proxy.mapFromSource(self.model.index(j, 0)).isValid():
+                self.select_row(j)
                 break
         else:
             self.table.clearSelection()
-            self.table.setCurrentItem(None)
+            self.table.setCurrentIndex(QModelIndex())
 
     def batch(self):
-        self.apply([row for i, row in enumerate(self.rows)
-                    if not row.get('done') and self.table.item(i,0).checkState() == Qt.CheckState.Checked])
+        self.apply([self.rows[i] for i in self.visible_rows()
+                    if not self.rows[i].get('done') and self.rows[i].get('checked')])
 
     def apply(self, rows):
+        if self.busy or getattr(self, 'preview_pending', False):
+            raise ValueError('搜尋或預覽更新中，請稍候')
         if not rows:
             raise ValueError('尚未勾選結果')
         if any(row.get('done') for row in rows):
@@ -303,9 +470,9 @@ class SearchDialog(QDialog):
                     if stage == '驗證結果' and not row['safe']:
                         reason += '；' + row['reason']
                     message = f'取代失敗（{stage}）：{reason}'
-                    self.table.item(i, 4).setText(message)
-                    self.table.item(i, 4).setToolTip(message)
+                    row.update(failed=True, reason=message)
                     details.append(f"{row['name']} 第 {i + 1} 筆「{row['before']}」（來源位置 {row['start']}）：{reason}")
+            self.results_changed()
             state = '尚未寫入內容。' if stage == '驗證結果' else '編輯器可能已變更，請先檢查內容；需要時使用復原。'
             if rolled_back:
                 state = '本次跨檔變更已整批回復。'
@@ -314,22 +481,24 @@ class SearchDialog(QDialog):
         self.container = self.tool.current_container
         self.snapshots.update(changes)
         selected_ids = {id(row) for row in rows}
-        edits = {name: [(row['start'], row['end'], len(row['replacement']))
-                        for row in rows if row['name'] == name] for name in names}
-        for i, row in enumerate(self.rows):
-            shift = sum(length - (end - start) for start, end, length in edits.get(row['name'], [])
-                        if end <= row['start'])
+        edits = {}
+        for name in names:
+            delta, ends, shifts = 0, [], [0]
+            for row in sorted((row for row in rows if row['name'] == name), key=lambda row: row['end']):
+                delta += len(row['replacement']) - (row['end'] - row['start'])
+                ends.append(row['end'])
+                shifts.append(delta)
+            edits[name] = (ends, shifts)
+        for row in self.rows:
+            ends, shifts = edits.get(row['name'], ([], [0]))
+            shift = shifts[bisect_right(ends, row['start'])]
             row['start'] += shift
             row['end'] += shift
             if id(row) in selected_ids:
-                row.update(done=True, safe=False, error='', reason='已取代')
+                row.update(done=True, checked=False, failed=False, safe=False, error='', reason='已取代')
                 row['end'] = row['start'] + len(row['replacement'])
-                check = self.table.item(i, 0)
-                check.setCheckState(Qt.CheckState.Unchecked)
-                check.setFlags(Qt.ItemFlag.NoItemFlags)
-                self.table.item(i, 4).setText('已取代')
-                self.table.item(i, 4).setToolTip('已取代；重新搜尋可取得目前內容')
-            self.table.item(i, 3).setText(str(row['start']))
+        self.results_changed()
+
 
 class TextRegexP0(Tool):
     name = 'text-regex-p0'

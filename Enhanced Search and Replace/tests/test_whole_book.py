@@ -1,3 +1,4 @@
+from test_support import scan
 from pathlib import Path
 from tempfile import TemporaryDirectory, mkdtemp
 from types import SimpleNamespace
@@ -56,11 +57,11 @@ with TemporaryDirectory(dir=root/'dist', prefix='whole-book-') as temporary:
     d = SearchDialog(host)
     d.pattern.setText(r'第(\d+)章')
     d.template.setText('第$1回')
-    d.scan()
+    scan(d)
     assert len(d.rows) == 6 and not editors
     assert {row['name'] for row in d.rows} == {'OEBPS/chapter.xhtml', 'OEBPS/second.xhtml'}
-    assert d.table.item(5, 5).text() == 'OEBPS/second.xhtml'
-    d.table.setCurrentCell(5, 1)
+    assert d.model.data(d.model.index(5,5)) == 'OEBPS/second.xhtml'
+    d.select_row(5, 1)
     d.single()
     assert '第99回' in str(editors['OEBPS/second.xhtml'].editor.toPlainText())
     editors['OEBPS/second.xhtml'].undo()
@@ -69,14 +70,14 @@ with TemporaryDirectory(dir=root/'dist', prefix='whole-book-') as temporary:
     editors.clear()
     css = edit_file('OEBPS/style.css', syntax='css')
     host.gui.central.current_editor = css
-    d.scan()
+    scan(d)
     assert len(d.rows) == 6
-    d.table.setCurrentCell(5, 1)
+    d.select_row(5, 1)
     d.locate()
     ed = editors['OEBPS/second.xhtml']
     assert ed.editor.textCursor().selectedText() == '第99章'
     ed.replace_data(second.replace('99', '100'))
-    d.scan()
+    scan(d)
     assert d.rows[-1]['before'] == '第100章'
     ed.replace_data(second.replace('99', '101'))
     try:
@@ -86,14 +87,14 @@ with TemporaryDirectory(dir=root/'dist', prefix='whole-book-') as temporary:
     else:
         raise AssertionError('stale unopened-file result accepted')
     ed.replace_data(second)
-    d.scan()
+    scan(d)
     before = {name: d.read_source(name) for name in d.snapshots}
     safe = [row for row in d.rows if row['safe']]
     retained_rows = d.rows
     d.apply(safe)
     assert d.rows is retained_rows and len(d.rows)==6
     assert all(row['done'] for row in safe)
-    assert all(d.table.item(i,4).text()=='已取代' for i,row in enumerate(d.rows) if row.get('done'))
+    assert all(d.model.data(d.model.index(i,4))=='已取代' for i,row in enumerate(d.rows) if row.get('done'))
     assert boss.global_undo.pos == 1
     assert '第99回' in current_container().raw_data('OEBPS/second.xhtml')
     assert '第12回' in current_container().raw_data('OEBPS/chapter.xhtml')
@@ -106,10 +107,10 @@ with TemporaryDirectory(dir=root/'dist', prefix='whole-book-') as temporary:
     assert '第99回' in str(ed.editor.toPlainText())
     set_current_container(boss.global_undo.undo())
     boss.apply_container_update_to_gui()
-    d.scan()
+    scan(d)
     for i, row in enumerate(d.rows):
         if row['safe']:
-            d.table.item(i, 0).setCheckState(Qt.CheckState.Checked)
+            d.model.setData(d.model.index(i,0), Qt.CheckState.Checked, Qt.ItemDataRole.CheckStateRole)
     saved_rows = d.rows
     saved_position = boss.global_undo.pos
     from calibre.ebooks.oeb.polish.container import Container
@@ -127,9 +128,9 @@ with TemporaryDirectory(dir=root/'dist', prefix='whole-book-') as temporary:
             assert 'second.xhtml' in warning.call_args.args[2]
     assert boss.global_undo.pos == saved_position
     assert all(d.read_source(name) == raw for name, raw in before.items())
-    assert d.rows is saved_rows and d.table.item(5, 0).checkState() == Qt.CheckState.Checked
-    assert '取代失敗' in d.table.item(5, 4).text()
-    d.pattern.setText('第12章|Regex P0 Fixture');d.template.setText('新名稱');d.scan()
+    assert d.rows is saved_rows and d.model.data(d.model.index(5,0), Qt.ItemDataRole.CheckStateRole) == Qt.CheckState.Checked
+    assert '取代失敗' in d.model.data(d.model.index(5,4))
+    d.pattern.setText('第12章|Regex P0 Fixture');d.template.setText('新名稱');scan(d)
     assert any(row['name'] == current_container().opf_name for row in d.rows)
     d.apply(list(d.rows))
     assert '新名稱' in current_container().raw_data(current_container().opf_name)
@@ -140,7 +141,7 @@ with TemporaryDirectory(dir=root/'dist', prefix='whole-book-') as temporary:
     d.pattern.setText(r'第(\d+)章');d.template.setText('第$1回')
     current_container().add_file('OEBPS/broken.xhtml', b'<html><body>', media_type='application/xhtml+xml')
     with patch('calibre_plugins.text_regex_p0.main.QMessageBox.warning') as warning:
-        d.guard(d.scan)
+        d.guard(lambda: scan(d))
         assert 'broken.xhtml' in warning.call_args.args[2]
     assert len(d.rows) == 7 and any(row['before'] == '第99章' for row in d.rows)
     assert any(row['name'] == 'OEBPS/broken.xhtml' and not row['safe'] for row in d.rows)

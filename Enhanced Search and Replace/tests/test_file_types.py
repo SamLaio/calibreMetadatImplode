@@ -1,3 +1,4 @@
+from test_support import scan
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -53,26 +54,26 @@ assert all(action.isChecked() for action in d.type_actions.values())
 assert 'PNG' not in d.type_actions and 'TTF' not in d.type_actions
 assert text_syntax('x.bin', 'application/octet-stream') is None
 assert text_syntax('x.md', 'text/markdown') == 'text'
-d.pattern.setText('red');d.template.setText('blue');d.scan()
+d.pattern.setText('red');d.template.setText('blue');scan(d)
 assert {row['name'] for row in d.rows} == set(files) - {'OEBPS/cover.png', 'OEBPS/font.ttf'}
 d.set_types(False)
 assert not d.rows
 with patch('calibre_plugins.text_regex_p0.main.QMessageBox.warning') as warning:
-    d.guard(d.scan)
+    d.guard(lambda: scan(d))
     assert '至少勾選' in warning.call_args.args[2]
 d.type_actions['CSS'].setChecked(True)
-d.scan()
+scan(d)
 assert len(d.rows) == 1 and d.rows[0]['name'] == 'OEBPS/style.css'
-d.table.cellClicked.emit(0, 3)
+d.table.clicked.emit(d.proxy.mapFromSource(d.model.index(0,3)))
 assert editors['OEBPS/style.css'].syntax == 'css'
 d.single()
 assert str(editors['OEBPS/style.css'].editor.toPlainText()) == 'p {color:blue}'
 editors['OEBPS/style.css'].undo()
 assert str(editors['OEBPS/style.css'].editor.toPlainText()) == 'p {color:red}'
 d.set_types(False);d.type_actions['OPF'].setChecked(True)
-d.pattern.setText('<itemref idref=');d.template.setText('<itemref linear="yes" idref=');d.scan()
+d.pattern.setText('<itemref idref=');d.template.setText('<itemref linear="yes" idref=');scan(d)
 assert d.rows and all(row['name'] == c.opf_name for row in d.rows)
-d.table.cellClicked.emit(0, 3)
+d.table.clicked.emit(d.proxy.mapFromSource(d.model.index(0,3)))
 assert editors[c.opf_name].syntax == 'xml'
 assert editors[c.opf_name].editor.textCursor().selectedText() == '<itemref idref='
 d.single()
@@ -81,9 +82,9 @@ editors[c.opf_name].undo()
 d.set_types(True)
 js = edit_file('OEBPS/script.js', 'javascript')
 js.replace_data('const color="green";')
-d.pattern.setText('green');d.template.setText('purple');d.scan()
+d.pattern.setText('green');d.template.setText('purple');scan(d)
 assert len(d.rows) == 1 and d.rows[0]['name'].endswith('.js')
-d.table.setCurrentCell(0, 1);d.single()
+d.select_row(0, 1);d.single()
 assert str(js.editor.toPlainText()) == 'const color="purple";'
 # XML/JSON integrity is checked on the complete result, not incomplete source snippets.
 for source, pattern, template, syntax in [

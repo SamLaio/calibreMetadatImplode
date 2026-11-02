@@ -1,3 +1,20 @@
+# Enhanced Search and Replace 驗證紀錄
+
+## 1.1.0 目前驗收範圍（2026-11-02）
+
+以下是最新結果，後面保留舊版歷史紀錄；早期「尚未驗收」不應覆蓋本節已完成的路徑。
+
+- 原有五組回歸全部通過，測試改為等待真正的非同步搜尋並使用來源模型，沒有繞過背景工作。
+- test_background_results.py：HTML 標籤／屬性原始碼搜尋與取代、2.0 MiB HTML 文字投影與 30,000 筆命中時主視窗計時事件繼續運作、進度、搜尋取消、工作中關閉、數值排序、排序後定位及逐筆下一筆、篩選後全選／批次、狀態篩選與預覽修復。
+- test_gui_roundtrip.py：獨立設定、測試書副本、Windows 真實 Edit Book Main／Boss／WebEngine／SaveManager，經外掛動作開啟視窗，真實按鈕執行搜尋及取代、單筆 Undo/Redo、原始碼修改、跨檔批次、原生儲存、關閉退出，再由另一個程序重開，核對磁碟 ZIP、編輯器與實際預覽文字。QPA windows、縮放 1.75。驅動為 Qt 測試程式而非人工滑鼠。WebEngine 有圖形上下文降級紀錄，但實際預覽斷言通過。
+- 其他 Calibre 版本、macOS／Linux、所有鍵鼠與螢幕比例、EPUBCheck／內容模型與引用關係仍未涵蓋。大型取代的主執行緒工作與極大量結果記憶體仍是限制。
+
+### 重跑方式
+
+隔離 CALIBRE_CONFIG_DIRECTORY 安裝最新 ZIP 後，在 offscreen 環境執行 test_core.py、test_modes.py、test_editor.py、test_whole_book.py、test_file_types.py、test_background_results.py。GUI 驗收請移除 QT_QPA_PLATFORM，指定 ESR_GUI_BOOK 為 dist/ 內測試副本，依序設定 ESR_GUI_PHASE 為 prepare、edit、reopen，各用新的 calibre-debug -e 程序執行 test_gui_roundtrip.py。不得指定正式書籍；prepare 會產生測試 EPUB。
+
+## 歷史紀錄
+
 # P0 驗證步驟與驗收表
 
 日期：2026-11-02。所有人工步驟請使用 fixture 副本，不要先拿正式書測試。
@@ -104,3 +121,11 @@ Qt 回歸通過：無效群組的搜尋完成不跳窗、結果保留；第一�
 ## 1.0.0 發行核對（2026-11-02）
 
 五組測試於隔離設定安裝的 1.0.0 ZIP 上全部通過；十三個發行 ZIP 的入口、隱藏檔／快取／.po／.pyc 排除與本外掛版號／圖示均通過檢查。根目錄 README、外掛 README、CHANGELOG 及 v1.3.13 發行說明已核對來源、作者、版號及實作範圍。完整 GUI 與保存重開的既有待驗收項目不變。
+
+## 左上角全選按鈕（2026-11-02）
+
+全選／取消綁定勾選欄左側的原生表格角落按鈕，解除原本「選取所有儲存格」連線。回歸檢查已排序結果點角落按鈕僅切換勾選，不改變結果順序、不整格選取；點勾選欄名不勾選、不排序，排序指示維持原欄位。Editor 與背景／篩選／排序測試通過。
+
+## 1.1.0 正式發行核對（2026-11-02）
+
+最後已發行版為 1.0.0，本次正式提升為 1.1.0，整合發行標籤 v1.3.14。隔離安裝 1.1.0 ZIP 後重跑六組回歸，以及真正 Windows GUI 的 prepare／edit／reopen 獨立程序驗收，全部通過；十三個發行 ZIP 排除項目、外掛版號、圖示與新模組均核對通過。README 引用使用者提供的完整操作截圖，檔案內容與原圖相同。
