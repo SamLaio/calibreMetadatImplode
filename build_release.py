@@ -10,6 +10,11 @@ import zipfile
 ROOT = Path(__file__).resolve().parent
 PROJECTS = [
     {
+        "name": "Enhanced Search and Replace",
+        "source": ROOT / "Enhanced Search and Replace" / "src",
+        "output": ROOT / "dist" / "enhanced-search-and-replace.zip",
+    },
+    {
         "name": "Toolbar Manager",
         "source": ROOT / "Toolbar Manager" / "src",
         "output": ROOT / "dist" / "Toolbar Manager-zh_TW-release.zip",

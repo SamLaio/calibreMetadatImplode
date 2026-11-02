@@ -1,0 +1,132 @@
+[
+  {
+    "tag": "v9.0.0",
+    "path": "manual/creating_plugins.rst",
+    "sha256": "7a025bf08d4c4a613bad2446726fe111c6cb43640081a9db463d62f624b93f99"
+  },
+  {
+    "tag": "v9.0.0",
+    "path": "manual/plugin_examples/editor_demo/main.py",
+    "sha256": "d8bb9aa23291b3c2583b6fa171f69897e4000b7482d5b28d6415fb0ce1d2fc5f"
+  },
+  {
+    "tag": "v9.0.0",
+    "path": "src/calibre/customize/__init__.py",
+    "sha256": "b38a8484aded32a8241df9769cc5d97083934983d2a30d76e94a509700696ff4"
+  },
+  {
+    "tag": "v9.0.0",
+    "path": "src/calibre/ebooks/conversion/search_replace.py",
+    "sha256": "597169a89f23d0614d1cb4beaed71ed597c079bfa240c4d95435b30b2d68e0e6"
+  },
+  {
+    "tag": "v9.0.0",
+    "path": "src/calibre/gui2/tweak_book/__init__.py",
+    "sha256": "14b416fd4e1e1973f398b593a3bdfc8a19ffd65391a225cc66d17dd1c1f3bd4e"
+  },
+  {
+    "tag": "v9.0.0",
+    "path": "src/calibre/gui2/tweak_book/boss.py",
+    "sha256": "41a07997f0bad50e924b45dcdaa06939b219e374d7d2bb6cd087524549b85aca"
+  },
+  {
+    "tag": "v9.0.0",
+    "path": "src/calibre/gui2/tweak_book/editor/__init__.py",
+    "sha256": "dd697558002639ae675c38774bda04d10a94b006063d64f8b747443da42fb1c7"
+  },
+  {
+    "tag": "v9.0.0",
+    "path": "src/calibre/gui2/tweak_book/editor/text.py",
+    "sha256": "931ffb2c69c1a28ad92bf16e490e54bf2d4cf1859acb5ce7152e4a7cfb4e8317"
+  },
+  {
+    "tag": "v9.0.0",
+    "path": "src/calibre/gui2/tweak_book/main.py",
+    "sha256": "d4b5ce6c968d26e92820cbd6c5d6ea11b5776d950e84b9caaae64f234c7f835b"
+  },
+  {
+    "tag": "v9.0.0",
+    "path": "src/calibre/gui2/tweak_book/plugin.py",
+    "sha256": "6dca31be43a31963eee9fb41042f6cfcdad55d86ff48512f0241702fd9fff9a5"
+  },
+  {
+    "tag": "v9.0.0",
+    "path": "src/calibre/gui2/tweak_book/search.py",
+    "sha256": "9dec62a336970361a7e8ed0913bbae85f7c96a74121500be328ff026ba3c099c"
+  },
+  {
+    "tag": "v9.0.0",
+    "path": "src/calibre/gui2/tweak_book/ui.py",
+    "sha256": "5a73703ccdb260687c7085b8a493e4d288120c8710996075291d7370ebc59398"
+  },
+  {
+    "tag": "v9.0.0",
+    "path": "widget.py",
+    "sha256": "872e403f420a62629a0e1584071eb00359c1dc3477cc16ab85ee9e75eba54e19"
+  },
+  {
+    "tag": "v9.17.0",
+    "path": "manual/creating_plugins.rst",
+    "sha256": "c50658d654184cccfda8265a71d78e426cde0c10f3022164a37ff95b19fb3262"
+  },
+  {
+    "tag": "v9.17.0",
+    "path": "manual/plugin_examples/editor_demo/main.py",
+    "sha256": "62234bef918dd67277f823762d8983d57a825e0c16e22e1ef43fc6ca49851dee"
+  },
+  {
+    "tag": "v9.17.0",
+    "path": "src/calibre/customize/__init__.py",
+    "sha256": "492627bc0464de45863bc82b86006b6fa8244a4e1932a5d55e83a1c8bdcf2ab7"
+  },
+  {
+    "tag": "v9.17.0",
+    "path": "src/calibre/ebooks/conversion/search_replace.py",
+    "sha256": "2209da55e566d60bf42ef780fef0734c8af4b7d1a8425c24a4b8a7e1f7a71c19"
+  },
+  {
+    "tag": "v9.17.0",
+    "path": "src/calibre/gui2/tweak_book/__init__.py",
+    "sha256": "2786a219cd85bac876b65e2b7731b2bacb878ea7ecc1be9baf17d819e0a082b1"
+  },
+  {
+    "tag": "v9.17.0",
+    "path": "src/calibre/gui2/tweak_book/boss.py",
+    "sha256": "70cec144af6c78095a406b3fefd99946f5c230e4b9528fc1b1d695dd65b51ca0"
+  },
+  {
+    "tag": "v9.17.0",
+    "path": "src/calibre/gui2/tweak_book/editor/__init__.py",
+    "sha256": "ffe188ae69a4a95fea809d39a23cabc9440b4fb338ce33c3d08bb8d08a08e673"
+  },
+  {
+    "tag": "v9.17.0",
+    "path": "src/calibre/gui2/tweak_book/editor/text.py",
+    "sha256": "c876969136ef3c54a4ca27a48cb8c876d1026a3653579b0ad3a191ec1a9fb423"
+  },
+  {
+    "tag": "v9.17.0",
+    "path": "src/calibre/gui2/tweak_book/main.py",
+    "sha256": "905e61b003d287a3bf23222da49c399de28a993dcb8ef7982cfccd126439fe27"
+  },
+  {
+    "tag": "v9.17.0",
+    "path": "src/calibre/gui2/tweak_book/plugin.py",
+    "sha256": "c3bacebb52007aa216ae99a44a95c035f84e065eeb2ebc056f4c8c0068c44b09"
+  },
+  {
+    "tag": "v9.17.0",
+    "path": "src/calibre/gui2/tweak_book/search.py",
+    "sha256": "ce19db2b97f3125d1382d5e2b60574d5bfc19791ad2500316c5603a1c7669ac2"
+  },
+  {
+    "tag": "v9.17.0",
+    "path": "src/calibre/gui2/tweak_book/ui.py",
+    "sha256": "f3cd93b0a7194d8a79ba76089c8bc9e29bb4f76bb13ed47ec0fea800f12a20c9"
+  },
+  {
+    "tag": "v9.17.0",
+    "path": "widget.py",
+    "sha256": "ce4a3fbd6b50c0329ed8c6ff6bbd41d0ebf1569c3e29a402a3bc0cfa7af580da"
+  }
+]
