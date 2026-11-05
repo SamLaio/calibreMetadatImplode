@@ -50,6 +50,13 @@ class GenerateCoverTests(unittest.TestCase):
         self.book.series_index = 2
         self.options[cfg.KEY_SERIES_TEXT] = '{series} 第 {series_index} 集'
 
+    def test_font_families_match_qt(self):
+        model = dialogs.FontFamilyModel()
+        self.assertTrue(model.families)
+        self.assertEqual(list(model.families), list(QFontDatabase.families()))
+        self.assertEqual(model.rowCount(), len(model.families))
+        self.assertEqual(model.index_of(model.families[0]), 0)
+
     def test_actual_chinese_cover(self):
         self.options[cfg.KEY_IMAGE_FILE] = cfg.TOKEN_CURRENT_COVER
         for field in self.options[cfg.KEY_FIELD_ORDER]:

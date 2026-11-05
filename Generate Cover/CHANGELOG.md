@@ -1,5 +1,13 @@
 # 本倉庫更新紀錄
 
+## 2.5.0.1 — 2026-11-05
+
+隨整合版 v1.3.15 發布；Windows、calibre 9.17.0 通過 18 組離線回歸測試。
+
+- 更新至官方 2.5.0（提交 `3fcec0815ff06314ffbe5bd1399d507c1d4fec03`），保留 Grant Drake 作者欄與 GPL v3 授權。
+- 採用上游字型清單修正，僅列出 Qt 可用的字型家族；同步捷克文、西班牙文、法文、日文、瑞典文與烏克蘭文翻譯。
+- 保留本倉庫正體中文、自動縮字、背景切換、批次取消、設定匯入與圖片路徑保護、封面 API 及小螢幕修正。
+
 ## 2.4.2.1 — 2026-11-02
 
 - 匯入上游 2.4.2，保留 Grant Drake 作者欄與 GPL v3 授權，補上 215 個正體中文翻譯。
@@ -16,7 +24,7 @@
 
 # Generate Cover Change Log
 
-## [2.4.2] - 2026-11-01 (beta for 2.5.0)
+## [2.5.0] - 2026-11-05
 ### Added
 - Major redesign of the UI with many new options added.
 - Selecting a field in the Field Order list of the Contents tab now shows contextual options below it.
@@ -30,6 +38,8 @@
 - Slovak translation
 - Serbian (Latin) translation
 - Swedish translation
+### Fixed
+- Font dropdown now shows only valid font families on your system.
 
 ## [2.4.1] - 2026-07-08
 ### Added
