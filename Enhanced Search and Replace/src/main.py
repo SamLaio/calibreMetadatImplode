@@ -298,7 +298,7 @@ class SearchDialog(QDialog):
             name = self.search_names[self.capture_position]
             syntax = self.file_types[name][1]
             if syntax == 'html' and self.search_mode.currentData() == 'xml':
-                syntax = 'xml'
+                syntax = 'html-source'
             raw = str(editors[name].editor.toPlainText()) if name in editors else None
             self.tasks.append((name, syntax, raw))
             self.capture_position += 1
@@ -477,7 +477,7 @@ class SearchDialog(QDialog):
             if rolled_back:
                 state = '本次跨檔變更已整批回復。'
             error_type = ReplacementPreviewError if stage == '驗證結果' and preview_failure else ValueError
-            raise error_type(f"取代失敗：{stage}\n{state}\n" + '\n'.join(details)) from err
+            raise error_type(f"取代失敗：{stage}\n{state}\n" + '\n'.join(details[:3]) + (f'\n另有 {len(details) - 3} 筆，請查看結果列表的狀態／原因。' if len(details) > 3 else '')) from err
         self.container = self.tool.current_container
         self.snapshots.update(changes)
         selected_ids = {id(row) for row in rows}

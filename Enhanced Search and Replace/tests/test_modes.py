@@ -55,3 +55,18 @@ source = document('x' * 65500 + '第<span>1&#48;</span>話')
 rows = search(source, r'第(\d+)話', '第$1章')
 assert replace(source, rows) == source.replace('話', '章')
 print('PASS modes: inline/group formatting, entities, ambiguous format refusal, complete HTML, escaped groups, mode recovery')
+
+# Raw HTML uses literal replacement, including incomplete tags.
+source = document('one<br/>two<br/>three')
+rows = search(source, '<br/>', '<p class="a">', syntax='html-source')
+assert len(rows) == 2 and all(row['safe'] for row in rows)
+assert replace(source, rows) == source.replace('<br/>', '<p class="a">')
+assert replace(source, rows[:1]) == source.replace('<br/>', '<p class="a">', 1)
+assert replace(source, search(source, '<br/>', '<br/>', syntax='html-source')) == source
+try:
+    replace(source, search(source, '<br/>', '<p class="a">', syntax='xml'))
+except ValueError:
+    pass
+else:
+    raise AssertionError('XML validation was bypassed')
+print('Raw HTML literal replacement passed')
