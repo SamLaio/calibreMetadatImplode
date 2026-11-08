@@ -46,6 +46,23 @@ class DisplayTests(unittest.TestCase):
                     self.assertEqual(label.text(), target)
                     label.deleteLater()
 
+    def test_official_server_labels_preserve_values(self):
+        root = self.root('calibre.gui2.preferences.server')
+        label = QLabel('最大进程数:', root)
+        combo = QComboBox(root)
+        combo.addItem('cover_grid', 'cover_grid')
+        edit = QLineEdit('最大进程数', root)
+        spin = QSpinBox(root)
+        spin.setValue(60)
+        for widget in (label, combo, edit, spin):
+            display.translate_widget(widget)
+        self.assertEqual(label.text(), '最大處理程序數：')
+        self.assertEqual(combo.currentData(), 'cover_grid')
+        self.assertEqual(combo.currentText(), 'cover_grid')
+        self.assertEqual(edit.text(), '最大进程数')
+        self.assertEqual(spin.value(), 60)
+        self.assertEqual(display.scope_for(self.root('unrelated')), None)
+
     def test_semantic_values_and_business_signals_are_unchanged(self):
         root = self.root('goodreads')
         combo = QComboBox(root)

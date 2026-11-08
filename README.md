@@ -9,16 +9,16 @@
 | 項目 | 說明 |
 | --- | --- |
 | 專案來源 | [SamLaio/calibreMetadatImplode](https://github.com/SamLaio/calibreMetadatImplode)，本倉庫為整合與修訂來源；各外掛的原作者及授權保留於各自目錄。 |
-| 整合發行版號 | **[v1.3.17（2026-11-09）](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.17)**。這是整套發行附件的版號，與各外掛在 calibre 顯示的版號分開管理。 |
+| 整合發行版號 | **[v1.3.18（2026-11-09）](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.18)**。這是整套發行附件的版號，與各外掛在 calibre 顯示的版號分開管理。 |
 | 專案層修改 | 將外掛整理為各自的 `src/`，使用 `build_release.py` 統一輸出十七個獨立安裝包到 `dist/`；排除隱藏檔、快取及 `.po` 翻譯來源。Extract ISBN、Generate Cover、Goodreads Sync 與 Hardcover Sync 的翻譯在打包時分別編譯。 |
 | 新增外掛 | Goodreads Sync 1.17.6.1、真正的 Hardcover Sync 0.3.1.1、Markdown Output 1.0.3.1，直接中文化並附回歸測試。 |
-| 本次變更 | Generate Cover 更新至 2.5.2.1、Modify ePub 更新至 1.8.12.1，保留本地修改與正體中文。 |
+| 本次變更 | Traditional Chinese Supplement 更新至 1.1.2，修正官方介面混入的簡體文字，補測設定值保持不變。 |
 | 前次變更 | v1.3.16：Enhanced Search and Replace 更新至 1.2.0，支援原始碼逐字取代與錯誤摘要。 |
 | 上次發行變更 | v1.3.15：Generate Cover 更新至 2.5.0.1。 |
 
 ## 各外掛簡介、來源與版號
 
-正體中文補強已擴充為 1.1.1，支援主介面與 Edit Book 的指定顯示文字，附設定儲存與例外攔截測試。
+正體中文補強已擴充為 1.1.2，支援主介面與 Edit Book 的指定顯示文字，附設定儲存與例外攔截測試。
 
 以下先列本倉庫自有外掛，再列有上游來源的外掛，各組依名稱字母升序排列；修改摘要採相同順序。
 
@@ -29,7 +29,7 @@
 | [Embed Metadata Safe](./Embed%20Metadata%20Safe/README.md) | 清理 EPUB 的特定損壞自訂欄位資料，再嵌入書庫中繼資料。 | [本倉庫自有外掛](./Embed%20Metadata%20Safe/)，作者為 SamLiao 及 codex；沒有獨立上游。 | **1.0.1**；修正 ZIP 安裝層級並縮短按鈕名稱。 |
 | [Enhanced Search and Replace](./Enhanced%20Search%20and%20Replace/README.md) | Edit Book 全書文字類型勾選搜尋、定位與取代。 | 本倉庫自行開發；SamLiao & Codex，API 查核 Calibre v9.0.0／v9.17.0。 | **1.2.0**；原始碼逐字取代、錯誤摘要；原始碼搜尋、背景進度與取消、篩選排序，預設十五行並附操作截圖。 |
 | [Toolbar Manager](./Toolbar%20Manager/README.md) | 右鍵調整工具列按鈕，開啟外掛首頁、選項或移除外掛。 | 本倉庫自行開發；SamLiao & Codex。 | **1.0.0**。 |
-| [Traditional Chinese Supplement](./Traditional%20Chinese%20Supplement/README.md) | 補齊指定官方與第三方外掛視窗的正體中文顯示文字。 | 本倉庫自行開發；SamLiao & Codex，核對 calibre 9.18.0 與本機外掛。 | **1.1.1**，主介面及 Edit Book 自動補翻，無工具列按鈕。 |
+| [Traditional Chinese Supplement](./Traditional%20Chinese%20Supplement/README.md) | 補齊指定官方與第三方外掛視窗的正體中文顯示文字。 | 本倉庫自行開發；SamLiao & Codex，核對 calibre 9.18.0 與本機外掛。 | **1.1.2**，主介面及 Edit Book 自動補翻，無工具列按鈕。 |
 | [AZW6 Image Merge](./AZW6%20Image%20Merge/README.md) | 將 Amazon AZW6 sidecar 高畫質圖片合併至主書檔。 | Andrew Timson；[HamsterExAstris/calibre-azw6-image-merge，提交 `63f76d4`](https://github.com/HamsterExAstris/calibre-azw6-image-merge/tree/63f76d46e19de901536b9bc7c1a02998f26c439b)，基準 **1.0.0**。 | **1.0.0**，含本地相容性修改。 |
 | [Count Pages](./Count%20Pages/README.md) | 計算或下載頁數、字數與可讀性統計，寫入自訂欄位。 | Grant Drake；[kiwidude68/calibre_plugins/count_pages，提交 `d46d919`](https://github.com/kiwidude68/calibre_plugins/tree/d46d9197ac2f78e98f2a774a6afbf8d54d9ce68a/count_pages)，基準 **1.15.3**。 | **1.15.3**，正體中文整合版。 |
 | [EpubSplit](./EpubSplit/README.md) | 按目錄或章節將 EPUB 拆成多本新書。 | Jim Miller；[JimmXinu/EpubSplit，標籤 `v3.12.0`](https://github.com/JimmXinu/EpubSplit/tree/a0b31ea9c0c9b439329574c4752b24eaaab67f72)，基準 **3.12.0**。 | **3.12.0**，含本地 EPUB3 修改。 |
