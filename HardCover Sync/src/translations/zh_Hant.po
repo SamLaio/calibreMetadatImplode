@@ -526,3 +526,12 @@ msgstr "{kind}，建議修正"
 msgid "{kind}, unverified"
 msgstr "{kind}，未驗證"
 
+
+msgid "Saved ISBN {isbn} and linked “{title}” to Hardcover."
+msgstr "已儲存 ISBN {isbn}，並將「{title}」連結至 Hardcover。"
+
+msgid "Hardcover rejected the API token ({error}). Update your Hardcover Personal Access Token — and make sure it has the required permissions — in the Hardcover Sync or Hardcover metadata plugin settings."
+msgstr "Hardcover 拒絕此 API 權杖（{error}）。請在 Hardcover Sync 或 Hardcover 中繼資料外掛設定中更新個人存取權杖，並確認已授予必要權限。"
+
+msgid "Hardcover lookup failed: {error}"
+msgstr "Hardcover 查詢失敗：{error}"

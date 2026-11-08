@@ -32,7 +32,7 @@ class HardcoverTests(unittest.TestCase):
         self.network.stop()
 
     def test_identity_translation_and_no_auto_push(self):
-        self.assertEqual(self.plugin.version, (0, 3, 1, 1))
+        self.assertEqual(self.plugin.version, (0, 4, 0, 1))
         self.assertEqual(self.plugin.name, 'Hardcover Sync')
         texts = [x.text() for x in self.widget.findChildren(QLabel)]
         self.assertIn('Hardcover API 金鑰：', texts)

@@ -1,4 +1,3 @@
-
 try:
     load_translations()
 except NameError:
@@ -62,16 +61,27 @@ class IsbnSelectDialog(QDialog):
 
     row_ready = pyqtSignal(int, object)
     cover_ready = pyqtSignal(int, object)
+    lookup_failed = pyqtSignal(str)
 
     def __init__(self, parent, found_isbns: list[FoundIsbn], prompt: str):
         super().__init__(parent)
         self._found_isbns = found_isbns
+        self._results: dict[int, object] = {}
         self._cancelled = Event()
         self._worker = None
         self.setWindowTitle(_("Cull ISBN"))
 
         layout = QVBoxLayout(self)
         layout.addWidget(QLabel(prompt))
+
+        self._warning = QLabel(self)
+        self._warning.setWordWrap(True)
+        self._warning.setStyleSheet(
+            "color: palette(bright-text); background: #a3311f;"
+            " padding: 6px; border-radius: 4px;"
+        )
+        self._warning.setVisible(False)
+        layout.addWidget(self._warning)
 
         self.table = QTableWidget(len(found_isbns), 6, self)
         self.table.setHorizontalHeaderLabels(
@@ -140,6 +150,7 @@ class IsbnSelectDialog(QDialog):
 
         self.row_ready.connect(self._apply_row)
         self.cover_ready.connect(self._apply_cover)
+        self.lookup_failed.connect(self._show_warning)
         self.resize(760, max(320, 150 + len(found_isbns) * (COVER_HEIGHT + 8)))
 
         self._worker = Thread(target=self._lookup_worker, daemon=True)
@@ -151,6 +162,10 @@ class IsbnSelectDialog(QDialog):
             return self._found_isbns[row].isbn
         return None
 
+    def selected_result(self):
+        """The looked-up edition for the selected row (None if unmatched)."""
+        return self._results.get(self.table.currentRow())
+
     def reject(self) -> None:
         self._cancelled.set()
         super().reject()
@@ -161,17 +176,22 @@ class IsbnSelectDialog(QDialog):
 
     def _lookup_worker(self) -> None:
         from calibre_plugins.hardcover_sync.cull_isbn.isbn_lookup import (
-            lookup_isbn,
+            lookup_isbn_with_status,
         )
 
+        reported = False
         for row, entry in enumerate(self._found_isbns):
             if self._cancelled.is_set():
                 return
             try:
-                results = lookup_isbn(entry.isbn)
+                results, hardcover_error = lookup_isbn_with_status(entry.isbn)
                 result = results[0] if results else None
-            except Exception:  # noqa: BLE001 - shown as "no match" in the row
+            except Exception as exc:  # noqa: BLE001 - surfaced below
                 result = None
+                hardcover_error = str(exc)
+            if hardcover_error and not reported:
+                reported = True
+                self.lookup_failed.emit(hardcover_error)
             if self._cancelled.is_set():
                 return
             self.row_ready.emit(row, result)
@@ -180,9 +200,16 @@ class IsbnSelectDialog(QDialog):
                 if data and not self._cancelled.is_set():
                     self.cover_ready.emit(row, data)
 
+    def _show_warning(self, message: str) -> None:
+        if self._cancelled.is_set():
+            return
+        self._warning.setText(message)
+        self._warning.setVisible(True)
+
     def _apply_row(self, row: int, result) -> None:
         if self._cancelled.is_set() or row >= self.table.rowCount():
             return
+        self._results[row] = result
         if result is None:
             self.table.item(row, COL_TITLE).setText(_("No match found"))
             self.table.item(row, COL_AUTHOR).setText("")

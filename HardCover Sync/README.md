@@ -1,12 +1,12 @@
 # Hardcover Sync
 
-版本：**0.3.1.1**；原作者：**Juan York**。基於上游 **0.3.1**，本倉庫負責正體中文與下列修訂；隨整合版 v1.3.17 發布。
+版本：**0.4.0.1**；原作者：**Juan York**。基於上游 **0.4.0**，隨整合版 v1.3.18 發布。
 
 ## 用途
 
 與 Hardcover 同步清單、評分、書評、閱讀狀態、筆記與引文，並可從書籍內文擷取 ISBN。
 
-安裝包見 [v1.3.17 發行頁](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.17)。
+安裝包見 [v1.3.18 發行頁](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.18)。
 
 ## 安裝與使用
 
@@ -20,8 +20,8 @@
 
 ## 本倉庫修改
 
-- 採用 calibre 官方外掛索引提供的真正 Hardcover Sync 0.3.1，作者 Juan York，GPL v3；直接加入 175 個訊息目錄項目與三種正體中文語系名稱。
-- 維持上游 `hardcover_sync` 名稱空間、API 欄位與設定鍵，與 Goodreads Sync 可同時安裝；本地版號為 0.3.1.1。
+- 採用上游 GitHub 0.4.0，保留 ISBN 版本連結與 API 錯誤提示；提供 178 個訊息目錄項目及三種正體中文語系名稱。
+- 維持上游 `hardcover_sync` 名稱空間、API 欄位與設定鍵，與 Goodreads Sync 可同時安裝；本地版號為 0.4.0.1。
 - 原本名為 `HardCover Sync.zip` 的檔案其實是 Goodreads Sync 1.16.11。本專案沒有把那包舊 Goodreads 程式當作 Hardcover 發行。
 - 驗證獨立載入、中文設定頁、API 金鑰／限流／自動上傳設定儲存，以及與 Goodreads Sync 共存。
 
@@ -29,18 +29,21 @@
 
 [原始專案／討論串](https://github.com/jojuyo/calibre-hardcover-sync-plugin)。匯入日期：2026-11-09。
 
-官方安裝包：[373995.zip](https://plugins.calibre-ebook.com/373995.zip)，SHA-256：`a9198fa0f04d5bd8de2b83a80eb9bf60d9fc33757938417db390768a7af36c2b`。
+本版來源：[上游 0.4.0 發行頁](https://github.com/jojuyo/calibre-hardcover-sync-plugin/releases/tag/hardcover-sync-0.4.0)。先前 0.3.1.1 使用 calibre 官方外掛索引的 0.3.1。
 
 ## 測試與限制
 
-Windows、calibre 9.18.0 已通過設定頁、版本與相關功能測試；翻譯目錄另核對格式佔位符及三種語系別名。
+本版在 Windows、calibre 9.18.0 通過 9 項測試：外掛載入、設定保存、Qt 選擇視窗、ISBN 與 Hardcover 識別碼寫入測試書庫、模擬 API 成功及錯誤回應，以及翻譯格式與語系別名。完整主視窗啟動測試尚未通過驗收，不代表外掛本身已確認有錯。
 
-同步會變更書庫或遠端資料，請先備份並核對方向。測試使用獨立設定與測試書庫、封鎖網路，未以真實帳號驗收完整遠端同步。
+已使用本機儲存的 API 金鑰，在 calibre 9.18.0 成功驗證帳號並讀取真實清單、評分、閱讀狀態及書評；未執行遠端寫入或日常書庫回寫。
+
+同步會變更書庫或遠端資料，請先備份並核對方向。自動化測試使用獨立設定與測試書庫並封鎖網路；另有真實帳號唯讀測試，尚未驗收雙向寫入與完整主視窗操作。
 
 ```powershell
 $env:CALIBRE_CONFIG_DIRECTORY = Join-Path $PWD 'dist/standalone-qa/config'
 $env:QT_QPA_PLATFORM = 'offscreen'
 calibre-debug -e "HardCover Sync/tests/test_hardcover_sync.py"
+calibre-debug -e "HardCover Sync/tests/test_040_compatibility.py"
 python -B "HardCover Sync/tests/test_catalog.py"
 ```
 

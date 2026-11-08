@@ -6,7 +6,7 @@ from ._version import __version_tuple__
 class HardcoverSyncPlugin(InterfaceActionBase):
     name = "Hardcover Sync"
     description = (
-        "同步 Hardcover 清單、評分、書評與閱讀狀態，並從書籍內文擷取 ISBN"
+        "雙向同步 calibre 與 Hardcover 的清單、評分、書評、閱讀狀態、筆記、引文及標籤，並擷取書籍 ISBN"
     )
     supported_platforms = ["windows", "osx", "linux"]
     author = "Juan York"

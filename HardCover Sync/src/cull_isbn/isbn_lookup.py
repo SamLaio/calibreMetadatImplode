@@ -1,4 +1,3 @@
-
 try:
     load_translations()
 except NameError:
@@ -28,6 +27,7 @@ query LookupEditionByIsbn($isbn: String!) {
     order_by: {users_count: desc_nulls_last}
     limit: 3
   ) {
+    id
     title
     isbn_10
     isbn_13
@@ -43,6 +43,8 @@ query LookupEditionByIsbn($isbn: String!) {
       name
     }
     book {
+      id
+      slug
       title
     }
   }
@@ -61,6 +63,12 @@ class IsbnLookupResult:
     isbn_13: str | None = None
     publisher: str | None = None
     cover_url: str | None = None
+    # Hardcover identifiers (only populated for Hardcover results), matching the
+    # keys the Hardcover metadata plugin writes: hardcover / hardcover-slug /
+    # hardcover-id / hardcover-edition.
+    edition_id: int | None = None
+    book_id: int | None = None
+    book_slug: str | None = None
 
 
 def isbn10_to_isbn13(isbn10: str) -> str | None:
@@ -78,6 +86,13 @@ def _normalized_isbn(value: str | None) -> str | None:
     if not value:
         return None
     return check_isbn(str(value))
+
+
+def _int_or_none(value) -> int | None:
+    try:
+        return int(value) if value is not None else None
+    except (TypeError, ValueError):
+        return None
 
 
 def simplify_format(
@@ -120,7 +135,7 @@ def _lookup_hardcover(isbn: str, api_key: str) -> list[IsbnLookupResult]:
     client = GraphQLClient(API_URL, useragent)
     client.set_token(api_key)
     data = client.execute(LOOKUP_BY_ISBN, {"isbn": isbn})
-    editions = data.get("editions") or []
+    editions = (data or {}).get("editions") or []
     results: list[IsbnLookupResult] = []
     for edition in editions:
         if not edition:
@@ -144,6 +159,9 @@ def _lookup_hardcover(isbn: str, api_key: str) -> list[IsbnLookupResult]:
                 isbn_13=isbn_13,
                 publisher=(edition.get("publisher") or {}).get("name"),
                 cover_url=(edition.get("image") or {}).get("url"),
+                edition_id=_int_or_none(edition.get("id")),
+                book_id=_int_or_none(book.get("id")),
+                book_slug=book.get("slug"),
             )
         )
     return results
@@ -196,18 +214,57 @@ def _lookup_open_library(isbn: str) -> IsbnLookupResult | None:
     )
 
 
-def lookup_isbn(isbn: str) -> list[IsbnLookupResult]:
+def _hardcover_error_message(exc: Exception) -> str:
+    """Turn a Hardcover API exception into a user-facing explanation."""
+    text = str(exc).strip() or exc.__class__.__name__
+    lowered = text.lower()
+    if any(
+        marker in lowered
+        for marker in ("token", "verify", "unauthor", "401", "permission")
+    ):
+        return _(
+            "Hardcover rejected the API token ({error}). Update your Hardcover "
+            "Personal Access Token — and make sure it has the required "
+            "permissions — in the Hardcover Sync or Hardcover metadata plugin "
+            "settings."
+        ).format(error=text)
+    return _("Hardcover lookup failed: {error}").format(error=text)
+
+
+def lookup_isbn_with_status(
+    isbn: str,
+) -> tuple[list[IsbnLookupResult], str | None]:
+    """Look up an ISBN, returning ``(results, hardcover_error)``.
+
+    ``hardcover_error`` is set only when the Hardcover API itself failed (for
+    example an unverified token), as opposed to simply finding no match. This
+    lets callers tell the user their token/permissions need attention instead
+    of silently showing only Open Library data.
+    """
     api_key = get_api_key()
+    hardcover_error: str | None = None
     if api_key:
-        results = _lookup_hardcover(isbn, api_key)
+        try:
+            results = _lookup_hardcover(isbn, api_key)
+        except Exception as exc:  # noqa: BLE001 - reported back to the caller
+            hardcover_error = _hardcover_error_message(exc)
+            results = []
         if results:
-            return results
+            return results, None
 
     open_library = _lookup_open_library(isbn)
     if open_library:
-        return [open_library]
+        return [open_library], hardcover_error
+    return [], hardcover_error
 
-    if not api_key:
+
+def lookup_isbn(isbn: str) -> list[IsbnLookupResult]:
+    results, hardcover_error = lookup_isbn_with_status(isbn)
+    if results:
+        return results
+    if hardcover_error:
+        raise LookupError(hardcover_error)
+    if not get_api_key():
         raise LookupError(
             _(
                 "No match found. Configure a Hardcover API key in the "

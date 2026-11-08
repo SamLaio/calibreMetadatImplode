@@ -11,8 +11,8 @@
 | 專案來源 | [SamLaio/calibreMetadatImplode](https://github.com/SamLaio/calibreMetadatImplode)，本倉庫為整合與修訂來源；各外掛的原作者及授權保留於各自目錄。 |
 | 整合發行版號 | **[v1.3.18（2026-11-09）](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.18)**。這是整套發行附件的版號，與各外掛在 calibre 顯示的版號分開管理。 |
 | 專案層修改 | 將外掛整理為各自的 `src/`，使用 `build_release.py` 統一輸出十七個獨立安裝包到 `dist/`；排除隱藏檔、快取及 `.po` 翻譯來源。Extract ISBN、Generate Cover、Goodreads Sync 與 Hardcover Sync 的翻譯在打包時分別編譯。 |
-| 新增外掛 | Goodreads Sync 1.17.6.1、真正的 Hardcover Sync 0.3.1.1、Markdown Output 1.0.3.1，直接中文化並附回歸測試。 |
-| 本次變更 | Traditional Chinese Supplement 更新至 1.1.2，修正官方介面混入的簡體文字，補測設定值保持不變。 |
+| 新增外掛 | Goodreads Sync 1.17.6.1、真正的 Hardcover Sync 0.4.0.1、Markdown Output 1.0.3.1，直接中文化並附回歸測試。 |
+| 本次變更 | Traditional Chinese Supplement 更新至 1.1.2，修正官方介面混入的簡體文字；Hardcover Sync 更新至 0.4.0.1，通過真實帳號唯讀測試。 |
 | 前次變更 | v1.3.16：Enhanced Search and Replace 更新至 1.2.0，支援原始碼逐字取代與錯誤摘要。 |
 | 上次發行變更 | v1.3.15：Generate Cover 更新至 2.5.0.1。 |
 
@@ -38,7 +38,7 @@
 | [Generate Cover](./Generate%20Cover/README.md) | 用圖片與書目資料製作自訂封面。 | Grant Drake；[kiwidude68/calibre_plugins/generate_cover](https://github.com/kiwidude68/calibre_plugins/tree/0c15171817995eaf819fce75bf2966cd5aefda3d/generate_cover)，基準 2.5.2。 | **2.5.2.1**，正體中文修訂版。 |
 | [Goodreads](./Goodreads/README.md) | 從 Goodreads 下載書籍中繼資料與封面。 | Grant Drake；最初由使用者提供的 1.10.0 安裝包匯入，已對照 [kiwidude68/calibre_plugins/goodreads，提交 `2a2dbb2`](https://github.com/kiwidude68/calibre_plugins/tree/2a2dbb2469ec6e68179cd71ba943db240045d097/goodreads)，基準 **1.10.0**。 | **1.10.1**，本倉庫修正版。 |
 | [Goodreads Sync](./Goodreads%20Sync/README.md) | 同步 Goodreads 書架、評分、書評與閱讀進度。 | Grant Drake；[上游](https://github.com/kiwidude68/calibre_plugins/tree/main/goodreads_sync)，本機安裝包基準 **1.17.6**。 | **1.17.6.1**，直接正體中文化，保留原同步核心。 |
-| [Hardcover Sync](./HardCover%20Sync/README.md) | 同步 Hardcover 清單與閱讀資料，擷取書籍 ISBN。 | Juan York；[jojuyo/calibre-hardcover-sync-plugin](https://github.com/jojuyo/calibre-hardcover-sync-plugin)，官方安裝包基準 **0.3.1**。 | **0.3.1.1**，真正的 Hardcover 外掛，直接正體中文化。 |
+| [Hardcover Sync](./HardCover%20Sync/README.md) | 同步 Hardcover 清單與閱讀資料，擷取書籍 ISBN。 | Juan York；[jojuyo/calibre-hardcover-sync-plugin](https://github.com/jojuyo/calibre-hardcover-sync-plugin)，上游 GitHub 發行基準 **0.4.0**。 | **0.4.0.1**，真正的 Hardcover 外掛，直接正體中文化。 |
 | [Markdown Output](./Markdown%20Output/README.md) | 將書籍轉為 Markdown，保留連結與圖片參照。 | The_book；[原始討論串](https://www.mobileread.com/forums/showthread.php?t=328999)，本機安裝包基準 **1.0.3**。 | **1.0.3.1**，獨立中文設定頁，修正新版 calibre 相容性。 |
 | [Modify ePub](./Modify%20ePub/README.md) | 直接清理與修改 EPUB，免經轉檔流程。 | Grant Drake 等；[kiwidude68/calibre_plugins/modify_epub，提交 `0c15171`](https://github.com/kiwidude68/calibre_plugins/tree/0c15171817995eaf819fce75bf2966cd5aefda3d/modify_epub)，基準 **1.8.12**。 | **1.8.12.1**，正體中文修訂版。 |
 | [Send to Kindle](./Send%20to%20Kindle/README.md) | 透過 calibre 電子郵件設定寄書到 Kindle，可指定寄送書名與檔名。 | BookFere／bookfere.com；[bookfere/Send-to-Kindle-Calibre-Plugin，標籤 `v1.1.1`](https://github.com/bookfere/Send-to-Kindle-Calibre-Plugin/tree/e57861e85fcddded1344d784e3c1d4cc4306520c)，基準 **1.1.1**。 | **v1.1.1_r.1**；calibre 數字版號顯示 **1.1.1**。 |
@@ -62,7 +62,7 @@
 | Generate Cover | 同步上游 2.5.2 字重及圖片內距遷移；保留正體中文、自動縮字、背景切換、批次取消、設定匯入與路徑保護、封面 API 及三頁捲動區；補齊旋轉文字匯入與新增翻譯。 |
 | Goodreads | 補強書名／作者詞比對、ISBN／ASIN 詳細頁核對與搜尋備援；按引用關係取得系列與作品；修正封面缺少長度標頭、ISBN-13 空值、缺漏日期／評分及重試／逾時處理，加入 8 組離線測試。 |
 | Goodreads Sync | 匯入 1.17.6，直接加入正體中文與語系別名；驗證自訂欄位 helper、同步選項內部值與設定儲存，保留原核心。 |
-| Hardcover Sync | 匯入真正的 0.3.1，獨立名稱空間與直接中文翻譯；驗證 API 設定儲存及與 Goodreads Sync 共存，未使用誤標的舊 Goodreads 包。 |
+| Hardcover Sync | 更新至上游 0.4.0，保留 ISBN 版本連結與 API 錯誤提示，獨立名稱空間與直接中文翻譯；驗證 API 設定儲存及與 Goodreads Sync 共存，未使用誤標的舊 Goodreads 包。 |
 | Markdown Output | 改用獨立中文設定頁，解除對舊 TXT 輸出版面的依賴；保留內部參數，通過實際 EPUB 轉 Markdown 測試。 |
 | Modify ePub | 同步上游 1.8.12 的 calibre 9.18 封面標題／語言替換及日文翻譯，補齊移除封面的呼叫參數；保留邊距修正、正體中文語系、中文說明與描述，加入封面回歸測試。 |
 | Send to Kindle | 寄送檔名改用 calibre `mtp_devices.send_template` 與書庫欄位，套用寄送視窗書名並保留 Unicode；修正偏好格式設定鍵為 `preferred_format`，移除介面未使用的格式查詢，保留正體中文與中文說明。 |
