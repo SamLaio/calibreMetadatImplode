@@ -1,6 +1,6 @@
 # Generate Cover（產生封面）
 
-版本：**2.5.0.1**；作者：**Grant Drake**；授權：GPL v3。基於上游 2.5.0（2026-11-05 正式版），本倉庫補上正體中文與修正。
+版本：**2.5.2.1**；作者：**Grant Drake**；授權：GPL v3。基於上游 2.5.2（2026-11-08），本倉庫補上正體中文與修正。
 
 ## 用途
 
@@ -8,7 +8,7 @@
 
 ## 安裝與使用
 
-1. 從 [v1.3.15 發行頁](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.15) 下載此外掛 ZIP；也可執行 `python -B build_release.py` 自行打包。
+1. 從 [v1.3.17 發行頁](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.17) 下載安裝包，或執行 `python -B build_release.py` 自行打包。
 2. 在 calibre「偏好設定 → 外掛 → 從檔案載入外掛」安裝下載的 ZIP（自行打包時為 `dist/Generate Cover-zh_TW-release.zip`），重新啟動 calibre。
 3. 從「偏好設定 → 工具列與選單」加入「產生封面」，選取一本或多本書後執行。
 4. 選擇圖片與樣式，在「尺寸」「內容」調整排版，檢視預覽後確認產生。
@@ -17,10 +17,13 @@
 
 產生結果會覆寫書庫封面，請先保留需要的原圖。封面不會自動嵌入 EPUB 等書檔；需要時再使用 calibre 的嵌入中繼資料功能。
 
+升級至 2.5.2.1 時，沿用官方遷移規則，會將既有樣式的圖片內距歸零，避免背景圖片出現白邊；有自訂圖片內距的樣式需重新設定。新設定在後續啟動會保留。
+
 ## 本倉庫修正
 
-- 同步上游 2.5.0 的 Qt 可用字型清單修正與六種語系更新。
-- 補上 215 個正體中文翻譯，涵蓋新版選項、欄位名稱與預設系列文字；保留內部設定鍵值及既有樣式。
+- 同步上游 2.5.2 的字重選單、設定遷移與圖片內距修正；保留三頁捲動區及背景模式切換修正。
+- 補齊字重新選項翻譯與旋轉文字的字型量測匯入。
+- 補上 220 個正體中文翻譯，涵蓋新版選項、欄位名稱與預設系列文字；保留內部設定鍵值及既有樣式。
 - 修正長文字自動縮字可能卡住、非整數邊距造成繪圖錯誤，以及小封面配粗框線時無法輸出。
 - 修正背景與圖片放大選項互相鎖定，以及取消背景後的尺寸殘留鎖定。
 - 批次產生可取消；單本失敗會記錄錯誤並繼續，成功寫入後才更新指定欄位。
@@ -31,7 +34,7 @@
 
 ## 來源
 
-- [上游專案](https://github.com/kiwidude68/calibre_plugins/tree/3fcec0815ff06314ffbe5bd1399d507c1d4fec03/generate_cover)，固定提交 `3fcec0815ff06314ffbe5bd1399d507c1d4fec03`。
+- [上游專案](https://github.com/kiwidude68/calibre_plugins/tree/0c15171817995eaf819fce75bf2966cd5aefda3d/generate_cover)，固定提交 `0c15171817995eaf819fce75bf2966cd5aefda3d`。
 - [官方功能與範例](https://github.com/kiwidude68/calibre_plugins/wiki/Generate-Cover)。
 - 最低 calibre 宣告沿用上游 2.85.1；本次在 Windows、calibre 9.17.0 驗證，未逐版測試。
 
@@ -44,4 +47,4 @@ $env:QT_QPA_PLATFORM = 'offscreen'
 calibre-debug -e "Generate Cover/tests/test_generate_cover.py"
 ```
 
-已通過 **18 組測試**，使用獨立設定目錄，涵蓋實際 JPEG 封面、背景圖片、旋轉與底色、取消與錯誤處理、舊樣式、路徑限制、匯入／匯出及正體中文；未對使用者書庫執行批次覆寫。新增 Qt 字型清單回歸測試；本版隨整合版 v1.3.15 發布。
+已通過 **20 組測試**，使用獨立設定目錄，涵蓋實際 JPEG 封面、背景圖片、旋轉與底色、取消與錯誤處理、舊樣式、路徑限制、匯入／匯出及正體中文；未對使用者書庫執行批次覆寫。另涵蓋字重轉換、五種字重輸出與圖片內距只遷移一次。

@@ -10,6 +10,28 @@ import zipfile
 ROOT = Path(__file__).resolve().parent
 PROJECTS = [
     {
+        "name": "Goodreads Sync",
+        "source": ROOT / "Goodreads Sync" / "src",
+        "output": ROOT / "dist" / "Goodreads Sync-zh_TW-release.zip",
+        "compile_translations": True,
+    },
+    {
+        "name": "Hardcover Sync",
+        "source": ROOT / "HardCover Sync" / "src",
+        "output": ROOT / "dist" / "Hardcover Sync-zh_TW-release.zip",
+        "compile_translations": True,
+    },
+    {
+        "name": "Markdown Output",
+        "source": ROOT / "Markdown Output" / "src",
+        "output": ROOT / "dist" / "Markdown Output-zh_TW-release.zip",
+    },
+    {
+        "name": "Traditional Chinese Supplement",
+        "source": ROOT / "Traditional Chinese Supplement" / "src",
+        "output": ROOT / "dist" / "Traditional Chinese Supplement-zh_TW-release.zip",
+    },
+    {
         "name": "Enhanced Search and Replace",
         "source": ROOT / "Enhanced Search and Replace" / "src",
         "output": ROOT / "dist" / "enhanced-search-and-replace.zip",

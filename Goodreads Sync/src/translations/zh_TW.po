@@ -1,0 +1,948 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\nLanguage: zh_TW\nMIME-Version: 1.0\nContent-Transfer-Encoding: 8bit\n"
+
+msgid "&Author:"
+msgstr "作者(&A):"
+
+msgid "&Customize plugin"
+msgstr "設定外掛(&C)"
+
+msgid "&Go!"
+msgstr "搜尋(&G)"
+
+msgid "&Help"
+msgstr "說明(&H)"
+
+msgid "&Title:"
+msgstr "書名(&T):"
+
+msgid "&View book on Goodreads.com"
+msgstr "在 Goodreads.com 檢視書籍(&V)"
+
+msgid "&What should calibre do with matching linked books when you click 'Add to shelf'?"
+msgstr "按下「加入書架」時，要對已連結的書籍執行什麼動作？(&W)"
+
+msgid "&What should calibre do with matching linked books when you click 'Sync from shelf'?"
+msgstr "按下「從書架同步」時，要對已連結的書籍執行什麼動作？(&W)"
+
+msgid "+ Add '{0}' to column '{1}'<br>"
+msgstr "+ 將「{0}」加入「{1}」欄位<br>"
+
+msgid "- Remove '{0}' from column '{1}'<br>"
+msgstr "- 從「{1}」欄位移除「{0}」<br>"
+
+msgid "A book can only be on one of your exclusive shelves"
+msgstr "一本書只能放在一個互斥書架"
+
+msgid "A user with the same name already exists"
+msgstr "已有相同名稱的使用者"
+
+msgid "Action"
+msgstr "動作"
+
+msgid "Actions will be applied when you click Sync Now"
+msgstr "按下「立即同步」後會套用這些動作"
+
+msgid "Active"
+msgstr "啟用"
+
+msgid "Add '{0}' to column '{1}', "
+msgstr "將「{0}」加入「{1}」欄位，"
+
+msgid "Add Failed"
+msgstr "新增失敗"
+
+msgid "Add Goodreads Date Read to calibre"
+msgstr "將 Goodreads 已讀日期加入 calibre"
+
+msgid "Add Goodreads Rating to calibre"
+msgstr "將 Goodreads 評分加入 calibre"
+
+msgid "Add Goodreads Review Text to calibre"
+msgstr "將 Goodreads 書評加入 calibre"
+
+msgid "Add Shelf"
+msgstr "新增書架"
+
+msgid "Add a new shelf"
+msgstr "新增書架"
+
+msgid "Add action"
+msgstr "新增動作"
+
+msgid "Add book to shelves represented by your tags"
+msgstr "依標籤將書籍加入對應書架"
+
+msgid "Add calibre Date Read to Goodreads"
+msgstr "將 calibre 已讀日期加入 Goodreads"
+
+msgid "Add calibre Rating to Goodreads"
+msgstr "將 calibre 評分加入 Goodreads"
+
+msgid "Add calibre Review Text to Goodreads"
+msgstr "將 calibre 書評加入 Goodreads"
+
+msgid "Add empty book to calibre"
+msgstr "在 calibre 新增空白書籍"
+
+msgid "Add new user"
+msgstr "新增使用者"
+
+msgid "Add to Shelf"
+msgstr "加入書架"
+
+msgid "Add to calibre"
+msgstr "加入 calibre"
+
+msgid "Add to shelf"
+msgstr "加入書架"
+
+msgid "Add user profile"
+msgstr "新增使用者設定檔"
+
+msgid "Add value to column"
+msgstr "將值加入欄位"
+
+msgid "Add, replace or clear link to a Goodreads book"
+msgstr "新增、替換或清除 Goodreads 書籍連結"
+
+msgid "Added {0} books to shelf"
+msgstr "已將 {0} 本書加入書架"
+
+msgid "All settings for this plugin in this library have been cleared."
+msgstr "此書庫中此外掛的所有設定已清除。"
+
+msgid "Allowing customizing the order of books on this shelf"
+msgstr "允許自訂此書架的書籍順序"
+
+msgid "Always overwrite calibre ISBN value"
+msgstr "一律覆寫 calibre 的 ISBN"
+
+msgid "An empty book will be created in calibre for this book \nusing the Goodreads metadata"
+msgstr "將使用 Goodreads 中繼資料，\n在 calibre 建立此書的空白書籍記錄"
+
+msgid "Any settings in other libraries or stored in a JSON file in your calibre plugins folder will not be touched."
+msgstr "其他書庫及 calibre 外掛資料夾內 JSON 檔案的設定不會變更。"
+
+msgid "Are you sure you want to change your settings in this library for this plugin?"
+msgstr "確定要變更此書庫中此外掛的設定嗎？"
+
+msgid "Are you sure you want to clear your settings in this library for this plugin?"
+msgstr "確定要清除此書庫中此外掛的設定嗎？"
+
+msgid "Are you sure you want to delete the selected {0} actions?"
+msgstr "確定要刪除所選的 {0} 個動作嗎？"
+
+msgid "Are you sure you want to delete this action?"
+msgstr "確定要刪除此動作嗎？"
+
+msgid "Are you sure you want to remove the link(s)?"
+msgstr "確定要移除這些連結嗎？"
+
+msgid "Are you sure?"
+msgstr "您確定嗎？"
+
+msgid "Author"
+msgstr "作者"
+
+msgid "Author:"
+msgstr "作者："
+
+msgid "Authorize Plugin with Goodreads"
+msgstr "授權外掛存取 Goodreads"
+
+msgid "Book: %v"
+msgstr "書籍：%v"
+
+msgid "Calibre book:"
+msgstr "calibre 書籍："
+
+msgid "Calibre must be restarted before the plugin can be configured."
+msgstr "請先重新啟動 calibre，再設定此外掛。"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Clear"
+msgstr "清除"
+
+msgid "Clear all settings for this plugin"
+msgstr "清除此外掛的所有設定"
+
+msgid "Clear the author field"
+msgstr "清空作者欄位"
+
+msgid "Clear the link with Goodreads"
+msgstr "清除與 Goodreads 的連結"
+
+msgid "Clear the title field"
+msgstr "清空書名欄位"
+
+msgid "Click Yes to overwrite the link to this book, No to Cancel"
+msgstr "按「是」覆寫此書連結，按「否」取消"
+
+msgid "Column"
+msgstr "欄位"
+
+msgid "Comment"
+msgstr "備註"
+
+msgid "Confirm Authorization"
+msgstr "確認授權"
+
+msgid "Copy All"
+msgstr "全部複製"
+
+msgid "Copy Selected"
+msgstr "複製選取項目"
+
+msgid "Copy to clipboard"
+msgstr "複製到剪貼簿"
+
+msgid "Count as at last shelves list refresh"
+msgstr "上次重新整理書架清單時的數量"
+
+msgid "Count*"
+msgstr "數量*"
+
+msgid "Cover"
+msgstr "封面"
+
+msgid "Create Goodreads shelf"
+msgstr "建立 Goodreads 書架"
+
+msgid "Create new column"
+msgstr "建立新欄位"
+
+msgid "Ctrl+V"
+msgstr "Ctrl+V"
+
+msgid "Date Read"
+msgstr "已讀日期"
+
+msgid "Date read column:"
+msgstr "已讀日期欄位："
+
+msgid "Date when the book was last read."
+msgstr "最近一次閱讀此書的日期。"
+
+msgid "Delete action"
+msgstr "刪除動作"
+
+msgid "Delete user profile"
+msgstr "刪除使用者設定檔"
+
+msgid "Display the 'Add to shelf' menu option"
+msgstr "顯示「加入書架」選單"
+
+msgid "Display the 'Remove from shelf' menu option"
+msgstr "顯示「從書架移除」選單"
+
+msgid "Display the 'Sync from shelf' menu option"
+msgstr "顯示「從書架同步」選單"
+
+msgid "Display the 'Update reading progress' menu option"
+msgstr "顯示「更新閱讀進度」選單"
+
+msgid "Display the 'View shelf' menu option"
+msgstr "顯示「檢視書架」選單"
+
+msgid "Do you want to continue?"
+msgstr "要繼續嗎？"
+
+msgid "Do you want to delete the user profile for '{0}'"
+msgstr "確定要刪除「{0}」的使用者設定檔嗎？"
+
+msgid "Download shelves your book is on as tags"
+msgstr "將書籍所屬書架下載為標籤"
+
+msgid "Download tags from shelves"
+msgstr "從書架下載標籤"
+
+msgid "Duplicate shelf name"
+msgstr "書架名稱重複"
+
+msgid "Edit 'Shelf Add' Actions"
+msgstr "編輯「加入書架」動作"
+
+msgid "Edit 'Sync' Actions"
+msgstr "編輯「同步」動作"
+
+msgid "Edit Shelf Add Actions"
+msgstr "編輯加入書架動作"
+
+msgid "Edit Shelf Sync Actions"
+msgstr "編輯書架同步動作"
+
+msgid "Edit Shelves on Goodreads"
+msgstr "在 Goodreads 編輯書架"
+
+msgid "Edit actions to apply when using 'Add to shelf'"
+msgstr "編輯「加入書架」時套用的動作"
+
+msgid "Edit actions to apply when using 'Sync from shelf'"
+msgstr "編輯「從書架同步」時套用的動作"
+
+msgid "Edit add to shelf actions for '{0}' shelf"
+msgstr "編輯「{0}」書架的加入動作"
+
+msgid "Edit add to shelf actions for {0} shelves"
+msgstr "編輯 {0} 個書架的加入動作"
+
+msgid "Edit shelf add actions"
+msgstr "編輯加入書架動作"
+
+msgid "Edit sync actions"
+msgstr "編輯同步動作"
+
+msgid "Edit sync actions for '{0}' shelf"
+msgstr "編輯「{0}」書架的同步動作"
+
+msgid "Edit sync actions for {0} shelves"
+msgstr "編輯 {0} 個書架的同步動作"
+
+msgid "Edit the keyboard shortcuts associated with this plugin"
+msgstr "編輯此外掛的鍵盤快捷鍵"
+
+msgid "Edition"
+msgstr "版本"
+
+msgid "Exclude selected from Sync"
+msgstr "將選取項目排除同步"
+
+msgid "Exclusive Shelf Warning"
+msgstr "互斥書架警告"
+
+msgid "For books on the <b>{0}</b> shelf:<br>"
+msgstr "對 <b>{0}</b> 書架中的書籍：<br>"
+
+msgid "For use with the \"Add to shelf\" and \"Sync from shelf\" menu items\nto synchronise with your Goodreads review for a book"
+msgstr "供「加入書架」及「從書架同步」使用，\n以同步 Goodreads 的書籍評論資料"
+
+msgid "For use with the \"Download tags from shelves\" and \"Upload tags as shelves\" menu items"
+msgstr "供「從書架下載標籤」及「將標籤上傳為書架」使用"
+
+msgid "GR Author"
+msgstr "Goodreads 作者"
+
+msgid "GR Date Read"
+msgstr "Goodreads 已讀日期"
+
+msgid "GR ISBN"
+msgstr "Goodreads ISBN"
+
+msgid "GR Rating"
+msgstr "Goodreads 評分"
+
+msgid "GR Series"
+msgstr "Goodreads 系列"
+
+msgid "GR Title"
+msgstr "Goodreads 書名"
+
+msgid "Goodreads"
+msgstr "Goodreads"
+
+msgid "Goodreads Date Added"
+msgstr "Goodreads 加入日期"
+
+msgid "Goodreads Date Read"
+msgstr "Goodreads 已讀日期"
+
+msgid "Goodreads Date Started"
+msgstr "Goodreads 開始閱讀日期"
+
+msgid "Goodreads Date Updated"
+msgstr "Goodreads 更新日期"
+
+msgid "Goodreads Failure"
+msgstr "Goodreads 發生錯誤"
+
+msgid "Goodreads Progress"
+msgstr "Goodreads 閱讀進度"
+
+msgid "Goodreads Rating"
+msgstr "Goodreads 評分"
+
+msgid "Goodreads Review"
+msgstr "Goodreads 書評"
+
+msgid "Goodreads Sync progress"
+msgstr "Goodreads 同步進度"
+
+msgid "Goodreads Tags"
+msgstr "Goodreads 標籤"
+
+msgid "Goodreads book:"
+msgstr "Goodreads 書籍："
+
+msgid "Goodreads failure"
+msgstr "Goodreads 發生錯誤"
+
+msgid "Goodreads tags used for mapping to calbre."
+msgstr "用於對應至 calibre 的 Goodreads 標籤。"
+
+msgid "Goodreads.com Editions"
+msgstr "Goodreads.com 書籍版本"
+
+msgid "Goodreads.com matches for ISBN"
+msgstr "Goodreads.com ISBN 比對結果"
+
+msgid "Goodreads.com matches for Title/Author"
+msgstr "Goodreads.com 書名／作者比對結果"
+
+msgid "Have you clicked 'Allow access' for this plugin on the Goodreads website?"
+msgstr "您是否已在 Goodreads 網站按下「Allow access」授權此外掛？"
+
+msgid "Help"
+msgstr "說明"
+
+msgid "ISBN"
+msgstr "ISBN"
+
+msgid "ISBN:"
+msgstr "ISBN："
+
+msgid "If adding empty books, store author as LN,FN"
+msgstr "新增空白書籍時，作者以「姓,名」儲存"
+
+msgid "If it reoccurs you may have exceeded a request limit imposed by Goodreads."
+msgstr "若持續發生，可能已超過 Goodreads 的請求限制。"
+
+msgid "If the reading progress is 100%, put the books onto the 'read' shelf."
+msgstr "閱讀進度為 100% 時，將書籍放入 read 書架。"
+
+msgid "If the reading progress is being updated, but the books are not finished, put the books onto the 'currently-reading' shelf."
+msgstr "更新閱讀進度時，將尚未讀完的書籍放入 currently-reading 書架。"
+
+msgid "If the reading progress is the percent read, check this. Otherwise, the reading progress the page number."
+msgstr "勾選後以已讀百分比表示閱讀進度，否則使用頁碼。"
+
+msgid "In Library"
+msgstr "在書庫中"
+
+msgid "In which case wait an additional 5-10 minutes before retrying."
+msgstr "若是如此，請再等候 5 至 10 分鐘後重試。"
+
+msgid "Include"
+msgstr "納入"
+
+msgid "Include selected in Sync"
+msgstr "將選取項目納入同步"
+
+msgid "Invalid book"
+msgstr "無效的書籍"
+
+msgid "Invalid column"
+msgstr "無效的欄位"
+
+msgid "Keyboard shortcuts"
+msgstr "鍵盤快捷鍵"
+
+msgid "Link to Goodreads"
+msgstr "連結至 Goodreads"
+
+msgid "Link to a different edition of a Goodreads book"
+msgstr "連結至 Goodreads 書籍的其他版本"
+
+msgid "Linked book"
+msgstr "已連結書籍"
+
+msgid "Linked to calibre Title"
+msgstr "已連結的 calibre 書名"
+
+msgid "Make all Active"
+msgstr "全部設為啟用"
+
+msgid "Make none Active"
+msgstr "全部設為停用"
+
+msgid "Never modify the calibre ISBN"
+msgstr "永不修改 calibre 的 ISBN"
+
+msgid "New custom colums have been created.\nYou will need to restart calibre for this change to be applied."
+msgstr "已建立新的自訂欄位。\n請重新啟動 calibre 以套用變更。"
+
+msgid "No Goodreads Id"
+msgstr "沒有 Goodreads 識別碼"
+
+msgid "No Goodreads book linked!"
+msgstr "尚未連結 Goodreads 書籍！"
+
+msgid "No actions have been set for this shelf.\nUse 'Customize plugin' to specify the actions"
+msgstr "此書架尚未設定動作。\n請在「自訂外掛」指定動作"
+
+msgid "No book selected"
+msgstr "尚未選取書本"
+
+msgid "No books required tags updating"
+msgstr "沒有書籍需要更新標籤"
+
+msgid "No calibre book linked!"
+msgstr "尚未連結 calibre 書籍！"
+
+msgid "No changes will be made to your shelf in Goodreads for this book"
+msgstr "這本書不會變更您在 Goodreads 的書架"
+
+msgid "No goodreads work id found for this book"
+msgstr "找不到此書的 Goodreads 作品識別碼"
+
+msgid "No shelves required updating"
+msgstr "沒有書架需要更新"
+
+msgid "No shelves selected"
+msgstr "未選取書架"
+
+msgid "None"
+msgstr "沒有"
+
+msgid "One shelf only can be featured at the top of your profile"
+msgstr "只有一個書架能置於個人檔案頂端"
+
+msgid "Only one Goodreads book can be linked to a calibre book at a time."
+msgstr "一本 calibre 書籍同時只能連結一本 Goodreads 書籍。"
+
+msgid "Open a web browser page showing the linked Goodreads book"
+msgstr "在瀏覽器中開啟已連結的 Goodreads 書籍頁面"
+
+msgid "Or, try a different calibre search:"
+msgstr "或嘗試不同的 calibre 搜尋："
+
+msgid "Other Options:"
+msgstr "其他選項："
+
+msgid "Overwrite Goodreads Link"
+msgstr "覆寫 Goodreads 連結"
+
+msgid "Page"
+msgstr "頁"
+
+msgid "Paste Goodreads.com url"
+msgstr "貼上 Goodreads.com 網址"
+
+msgid "Please restart calibre now."
+msgstr "請立即重新啟動 calibre。"
+
+msgid "Preferences for:"
+msgstr "偏好設定："
+
+msgid "Progress"
+msgstr "進度"
+
+msgid "Put books on currently-reading shelf"
+msgstr "將書籍放入 currently-reading 書架"
+
+msgid "Put finished books on read shelf"
+msgstr "將已讀完的書籍放入 read 書架"
+
+msgid "Rating"
+msgstr "評分"
+
+msgid "Rating column:"
+msgstr "評分欄位："
+
+msgid "Rating for the book."
+msgstr "書籍評分。"
+
+msgid "Reading progress column:"
+msgstr "閱讀進度欄位："
+
+msgid "Reading progress for the book"
+msgstr "書籍閱讀進度"
+
+msgid "Reading progress is percent read"
+msgstr "閱讀進度使用已讀百分比"
+
+msgid "Ready"
+msgstr "準備就緒"
+
+msgid "Reduce your selection to at most 50 rows."
+msgstr "請將選取範圍縮減至最多 50 列。"
+
+msgid "Refresh Shelves"
+msgstr "重新整理書架"
+
+msgid "Refresh the list of shelves and book counts from Goodreads"
+msgstr "從 Goodreads 重新取得書架清單與書籍數量"
+
+msgid "Remove '{0}' from column '{1}', "
+msgstr "從「{1}」欄位移除「{0}」，"
+
+msgid "Remove from Shelf"
+msgstr "從書架移除"
+
+msgid "Remove from shelf"
+msgstr "從書架移除"
+
+msgid "Remove link"
+msgstr "移除連結"
+
+msgid "Remove value from column"
+msgstr "從欄位移除值"
+
+msgid "Removed {0} books from shelf"
+msgstr "已從書架移除 {0} 本書"
+
+msgid "Removing Goodreads ids from books"
+msgstr "正在移除書籍的 Goodreads 識別碼"
+
+msgid "Removing any linked Goodreads ids may result in you having to manually select the link again for these book(s)."
+msgstr "移除 Goodreads 識別碼後，可能需要為這些書籍重新手動選擇連結。"
+
+msgid "Removing the column '{0}' action as the column cannot be found"
+msgstr "找不到「{0}」欄位，將移除對應動作"
+
+msgid "Replace calibre ISBN only if none present"
+msgstr "僅在 calibre 沒有 ISBN 時填入"
+
+msgid "Restart calibre now"
+msgstr "立即重新啟動 calibre"
+
+msgid "Restart required"
+msgstr "需要重新啟動程式"
+
+msgid "Review"
+msgstr "書評"
+
+msgid "Review of book."
+msgstr "書籍評論。"
+
+msgid "Review text column:"
+msgstr "書評文字欄位："
+
+msgid "Search Goodreads"
+msgstr "搜尋 Goodreads"
+
+msgid "Search Goodreads.com"
+msgstr "搜尋 Goodreads.com"
+
+msgid "Search again using this title/author"
+msgstr "使用此書名／作者再次搜尋"
+
+msgid "Search calibre"
+msgstr "搜尋 calibre"
+
+msgid "Search for Goodreads book"
+msgstr "搜尋 Goodreads 書籍"
+
+msgid "Search for book in Goodreads"
+msgstr "搜尋 Goodreads 書籍"
+
+msgid "Search for calibre Book"
+msgstr "搜尋 calibre 書籍"
+
+msgid "Select All / Select None"
+msgstr "全選／取消全選"
+
+msgid "Select Goodreads user:"
+msgstr "選擇 Goodreads 使用者："
+
+msgid "Select a calibre book to link to this Goodreads book:"
+msgstr "選擇要連結至此 Goodreads 書籍的 calibre 書籍："
+
+msgid "Select one or more shelves to add or remove from"
+msgstr "選擇一個或多個要加入或移除書籍的書架"
+
+msgid "Select shelf:"
+msgstr "選擇書架："
+
+msgid "Select shelves to sync from:"
+msgstr "選擇要同步來源的書架："
+
+msgid "Select the Goodreads book to link to this calibre book:"
+msgstr "選擇要連結至此 calibre 書籍的 Goodreads 書籍："
+
+msgid "Select the Goodreads edition to link to this calibre book:"
+msgstr "選擇要連結至此 calibre 書籍的 Goodreads 版本："
+
+msgid "Series"
+msgstr "系列"
+
+msgid "Series:"
+msgstr "系列："
+
+msgid "Settings changed"
+msgstr "設定已變更"
+
+msgid "Settings deleted"
+msgstr "設定已刪除"
+
+msgid "Settings for this plugin in this library have been changed."
+msgstr "此書庫中此外掛的設定已變更。"
+
+msgid "Shelf Add Actions"
+msgstr "加入書架動作"
+
+msgid "Shelf Name"
+msgstr "書架名稱"
+
+msgid "Shelf marked as exclusive"
+msgstr "書架標示為互斥"
+
+msgid "Shelf name:"
+msgstr "書架名稱："
+
+msgid "Shelves"
+msgstr "書架"
+
+msgid "Show Active shelves only"
+msgstr "只顯示已啟用的書架"
+
+msgid "Skip"
+msgstr "略過"
+
+msgid "Skip this book and move to the next:\n'{0}'"
+msgstr "略過這本書並移至下一本：\n「{0}」"
+
+msgid "Status"
+msgstr "狀態"
+
+msgid "Switch Edition"
+msgstr "切換版本"
+
+msgid "Switch Goodreads Edition"
+msgstr "切換 Goodreads 版本"
+
+msgid "Sync Actions"
+msgstr "同步動作"
+
+msgid "Sync Now"
+msgstr "立即同步"
+
+msgid "Sync date read from Goodreads when syncing from this shelf"
+msgstr "從此書架同步時取得 Goodreads 已讀日期"
+
+msgid "Sync from '{0}' shelf"
+msgstr "從「{0}」書架同步"
+
+msgid "Sync from Goodreads Shelf"
+msgstr "從 Goodreads 書架同步"
+
+msgid "Sync from shelf"
+msgstr "從書架同步"
+
+msgid "Sync from {0} shelves"
+msgstr "從 {0} 個書架同步"
+
+msgid "Sync rating from Goodreads when syncing from this shelf"
+msgstr "從此書架同步時取得 Goodreads 評分"
+
+msgid "Sync review text from Goodreads when syncing from this shelf"
+msgstr "從此書架同步時取得 Goodreads 書評"
+
+msgid "Synchronisable Custom Columns:"
+msgstr "可同步的自訂欄位："
+
+msgid "Synchronised {0} books from shelf"
+msgstr "已從書架同步 {0} 本書"
+
+msgid "Syncing books from shelves"
+msgstr "正在從書架同步書籍"
+
+msgid "Syncing from shelf: {0}"
+msgstr "正在從書架同步：{0}"
+
+msgid "Tags column:"
+msgstr "標籤欄位："
+
+msgid "The following actions will be performed for books that are synced:"
+msgstr "同步書籍時將執行下列動作："
+
+msgid "The request contacting Goodreads has failed."
+msgstr "連線至 Goodreads 的請求失敗。"
+
+msgid "There are books in this list not yet linked to calibre which will be ignored."
+msgstr "清單中尚未連結至 calibre 的書籍將被略過。"
+
+msgid "There are books in this list not yet linked to calibre which will be ignored.<p><p>Are you sure you want to continue?"
+msgstr "清單中尚未連結至 calibre 的書籍將被略過。<p><p>確定要繼續嗎？"
+
+msgid "There is already a shelf named:"
+msgstr "已有以下名稱的書架："
+
+msgid "This Goodreads book is linked to a different calibre book."
+msgstr "這本 Goodreads 書籍已連結至另一本 calibre 書籍。"
+
+msgid "This calibre book is already linked to a different Goodreads book."
+msgstr "這本 calibre 書籍已連結至另一本 Goodreads 書籍。"
+
+msgid "This calibre book is linked to a different Goodreads book."
+msgstr "這本 calibre 書籍已連結至另一本 Goodreads 書籍。"
+
+msgid "This will result in these books being <b>moved</b> to one of your other shelves rather than being deleted from all shelves."
+msgstr "這會將書籍<b>移至</b>您的其他書架，而不會從所有書架刪除。"
+
+msgid "Title"
+msgstr "書名"
+
+msgid "Title image not found - you must restart Calibre before using this plugin!"
+msgstr "找不到標題圖片，請重新啟動 calibre 後再使用此外掛！"
+
+msgid "Title:"
+msgstr "書名："
+
+msgid "To fix missing links, double click to search for a matching book in Goodreads"
+msgstr "連按兩下以搜尋 Goodreads 中的對應書籍，補上缺少的連結"
+
+msgid "To fix missing links, double click to search for a matching book in calibre."
+msgstr "連按兩下以搜尋 calibre 中的對應書籍，補上缺少的連結。"
+
+msgid "Today"
+msgstr "今天"
+
+msgid "Too Many Rows"
+msgstr "選取列數過多"
+
+msgid "Too many shelves"
+msgstr "書架數量過多"
+
+msgid "Unable to Sync"
+msgstr "無法同步"
+
+msgid "Unable to obtain the user id"
+msgstr "無法取得使用者識別碼"
+
+msgid "Unable to retrieve books for selected shelves."
+msgstr "無法取得所選書架的書籍。"
+
+msgid "Undefined"
+msgstr "不明確"
+
+msgid "Unknown"
+msgstr "未知"
+
+msgid "Update Progress"
+msgstr "更新進度"
+
+msgid "Update Reading Progress"
+msgstr "更新閱讀進度"
+
+msgid "Update reading progress"
+msgstr "更新閱讀進度"
+
+msgid "Updated progress for {0} books"
+msgstr "已更新 {0} 本書的閱讀進度"
+
+msgid "Updated tags for {0} books"
+msgstr "已更新 {0} 本書的標籤"
+
+msgid "Updated {0} shelves for selected books"
+msgstr "已為所選書籍更新 {0} 個書架"
+
+msgid "Updating Goodreads progress"
+msgstr "正在更新 Goodreads 閱讀進度"
+
+msgid "Updating book"
+msgstr "正在更新書籍"
+
+msgid "Updating books"
+msgstr "正在更新書籍"
+
+msgid "Updating books in calibre..."
+msgstr "正在更新 calibre 書籍……"
+
+msgid "Upload date read to Goodreads when adding to this shelf"
+msgstr "加入此書架時將已讀日期上傳至 Goodreads"
+
+msgid "Upload rating to Goodreads when adding to this shelf"
+msgstr "加入此書架時將評分上傳至 Goodreads"
+
+msgid "Upload review text to Goodreads when adding to this shelf"
+msgstr "加入此書架時將書評上傳至 Goodreads"
+
+msgid "Upload tags as shelves"
+msgstr "將標籤上傳為書架"
+
+msgid "User Shelves:"
+msgstr "使用者書架："
+
+msgid "User: {0}"
+msgstr "使用者：{0}"
+
+msgid "Value"
+msgstr "數值"
+
+msgid "View &book on Goodreads.com"
+msgstr "在 Goodreads.com 檢視書籍(&B)"
+
+msgid "View linked book"
+msgstr "檢視已連結書籍"
+
+msgid "View shelf"
+msgstr "檢視書架"
+
+msgid "When linking to Goodreads:"
+msgstr "連結至 Goodreads 時："
+
+msgid "When searching calibre, if only one result is found then automatically link to it without prompting"
+msgstr "搜尋 calibre 時，若只有一筆結果，直接連結而不再詢問。"
+
+msgid "Yes"
+msgstr "是"
+
+msgid "You are about to remove from a shelf marked as exclusive."
+msgstr "即將從標示為互斥的書架移除書籍。"
+
+msgid "You are already linked to this calibre book"
+msgstr "您已連結至這本 calibre 書籍"
+
+msgid "You can drag/drop a Goodreads website link to add it to the results."
+msgstr "可拖放 Goodreads 網頁連結，將其加入結果。"
+
+msgid "You cannot add to more than one exclusive shelf."
+msgstr "無法同時加入多個互斥書架。"
+
+msgid "You cannot switch editions for a book that is not already linked to Goodreads.<br>"
+msgstr "書籍尚未連結至 Goodreads，無法切換版本。<br>"
+
+msgid "You have already linked to this Goodreads book"
+msgstr "您已連結至這本 Goodreads 書籍"
+
+msgid "You must create a profile for each Goodreads user you will connect to.<br>Enter a unique display name for this user profile:"
+msgstr "請為每個要連結的 Goodreads 使用者建立設定檔。<br>輸入此設定檔不重複的顯示名稱："
+
+msgid "You must link this Goodreads book to a matching book in calibre \nin order for any sync actions to be applied"
+msgstr "請先將此 Goodreads 書籍連結至 calibre 中的對應書籍，\n才能套用同步動作"
+
+msgid "You must link this calibre book to a matching book in Goodreads"
+msgstr "請先將此 calibre 書籍連結至 Goodreads 中的對應書籍"
+
+msgid "You must restart calibre afterwards."
+msgstr "完成後請重新啟動 calibre。"
+
+msgid "You must select a book to switch edition"
+msgstr "請先選擇要切換版本的書籍"
+
+msgid "You must select one or more shelves first."
+msgstr "請先選擇至少一個書架。"
+
+msgid "You must specify sync actions or columns for at least one shelf first."
+msgstr "請先為至少一個書架指定同步動作或欄位。"
+
+msgid "calibre Author"
+msgstr "calibre 作者"
+
+msgid "calibre ISBN"
+msgstr "calibre ISBN"
+
+msgid "calibre Rating"
+msgstr "calibre 評分"
+
+msgid "calibre Search Results"
+msgstr "calibre 搜尋結果"
+
+msgid "calibre Series"
+msgstr "calibre 系列"
+
+msgid "calibre Tags"
+msgstr "calibre 標籤"
+
+msgid "{0} missing links"
+msgstr "缺少 {0} 個連結"
+
+msgid "{0}, {1} books to add"
+msgstr "{0}，將新增 {1} 本書"
+
+msgid "{0}, {1} warnings"
+msgstr "{0}，{1} 個警告"
+

@@ -646,3 +646,18 @@ msgstr "{預設}"
 
 msgid "Book {series_index} of {series}"
 msgstr "{series} 第 {series_index} 集"
+
+msgid "Light"
+msgstr "細體"
+
+msgid "Normal"
+msgstr "標準"
+
+msgid "Demi Bold"
+msgstr "半粗體"
+
+msgid "Black"
+msgstr "特粗體"
+
+msgid "Style:"
+msgstr "樣式："

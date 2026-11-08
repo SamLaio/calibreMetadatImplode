@@ -1,5 +1,12 @@
 # 本倉庫更新紀錄
 
+## 2.5.2.1 — 2026-11-08
+
+- 更新至上游 2.5.2（提交 `0c15171817995eaf819fce75bf2966cd5aefda3d`），加入五種字重選單及舊粗體設定轉換。
+- 採用官方圖片內距歸零遷移，修正背景白邊；原有自訂圖片內距需重新設定。
+- 保留正體中文與全部本地修正、小螢幕三頁捲動區；新增五個翻譯，補齊旋轉文字字型量測匯入。
+- 通過 20 組離線回歸測試；隨整合版 v1.3.17 發布。
+
 ## 2.5.0.1 — 2026-11-05
 
 隨整合版 v1.3.15 發布；Windows、calibre 9.17.0 通過 18 組離線回歸測試。
@@ -23,6 +30,16 @@
 ---
 
 # Generate Cover Change Log
+
+## [2.5.2] - 2026-11-08
+### Fixed
+- Reset all image margins to zero when migrating configuration to prevent incorrect padding on background images.
+  Anyone who was using image padding but not as a background image will need to reapply their value manually.
+
+## [2.5.1] - 2026-11-07
+### Added
+- Font weight dropdown to allow more options than just normal and bold
+- Scrollbar to allow dialog to be made smaller vertically for users with small screens
 
 ## [2.5.0] - 2026-11-05
 ### Added

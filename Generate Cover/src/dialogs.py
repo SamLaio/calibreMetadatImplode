@@ -21,8 +21,8 @@ try:
                         QLineEdit, QGridLayout, QColorDialog, QColor, QSpinBox,
                         pyqtSignal, QComboBox, QTabWidget, QWidget, QInputDialog,
                         QTimer, QTextEdit, QProgressDialog, QSize, QPoint, QListView,
-                        QToolButton, QFileDialog, QPainter, QPen, QRect,
-                        QAbstractListModel, QFont, QFontDatabase, QSpacerItem, QSizePolicy, QScrollArea)
+                        QToolButton, QFileDialog, QPainter, QPen, QRect, QScrollArea,
+                        QAbstractListModel, QFont, QFontDatabase, QSpacerItem, QSizePolicy)
 except ImportError:
     from PyQt5.Qt import (Qt, QVBoxLayout, QLabel, QAbstractItemView, QCheckBox,
                         QGroupBox, QIcon, QPixmap, QListWidget, QListWidgetItem,
@@ -30,8 +30,8 @@ except ImportError:
                         QLineEdit, QGridLayout, QColorDialog, QColor, QSpinBox,
                         pyqtSignal, QComboBox, QTabWidget, QWidget, QInputDialog,
                         QTimer, QTextEdit, QProgressDialog, QSize, QPoint, QListView,
-                        QToolButton, QFileDialog, QPainter, QPen, QRect,
-                        QAbstractListModel, QFont, QFontDatabase, QSpacerItem, QSizePolicy, QScrollArea)
+                        QToolButton, QFileDialog, QPainter, QPen, QRect, QScrollArea,
+                        QAbstractListModel, QFont, QFontDatabase, QSpacerItem, QSizePolicy)
 
 from calibre import fit_image
 from calibre.constants import iswindows
@@ -486,6 +486,26 @@ class FontComboBox(QComboBox):
         if self.currentIndex() < 0:
             return None
         return unicode(self.currentText()).strip()
+
+
+class QFontWeightComboBox(QComboBox):
+
+    def __init__(self, parent):
+        QComboBox.__init__(self, parent)
+        self.addItem(_('Light'), 'Light')
+        self.addItem(_('Normal'), 'Normal')
+        self.addItem(_('Demi Bold'), 'Demi Bold')
+        self.addItem(_('Bold'), 'Bold')
+        self.addItem(_('Black'), 'Black')
+
+    def select_value(self, value):
+        idx = self.findData(value) if value else -1
+        self.setCurrentIndex(idx)
+
+    def get_value(self):
+        if self.currentIndex() < 0:
+            return None
+        return self.itemData(self.currentIndex())
 
 
 class SavedSettingsTab(QWidget):
@@ -1386,7 +1406,7 @@ class ContentsTab(QWidget):
         self.field_order_list.itemChecked.connect(self.changed)
         self.field_order_list.itemMoved.connect(self.changed)
         self.field_order_list.currentRowChanged.connect(self.parent_dialog.element_selection_changed)
-        self.field_order_list.setFixedHeight(120)
+        self.field_order_list.setFixedHeight(84)
         field_layout.addWidget(self.field_order_list)
         field_button_layout = QVBoxLayout()
         field_layout.addLayout(field_button_layout)
@@ -1412,7 +1432,7 @@ class ContentsTab(QWidget):
                                 'Uncheck this to place text around the image.'))
         image_options_layout.addWidget(self.background_image_checkbox)
         self.image_padding_spins = add_padding_controls(
-            self, image_options_layout, 5000, self.changed)
+            self, image_options_layout, 5000, self.parent_dialog.element_options_changed)
         self.image_options_groupbox.setVisible(False)
 
         image_border_groupbox = QGroupBox(_('Border:'), self)
@@ -1491,20 +1511,21 @@ class ContentsTab(QWidget):
         font_options_layout.addWidget(self.fonts_reduced_checkbox, 1, 1, 1, 2)
 
         font_style_layout = QHBoxLayout()
-        font_alignment_label = QLabel(_('Alignment:'), self)
-        font_alignment_label.setMinimumWidth(80)
-        font_style_layout.addWidget(font_alignment_label)
+        font_style_label = QLabel(_('Style:'), self)
+        font_style_label.setMinimumWidth(80)
+        font_style_layout.addWidget(font_style_label)
         self.font_alignment_combo = QComboBox(self)
         self.font_alignment_combo.setMinimumWidth(75)
         self.font_alignment_combo.addItem(_('Left'), 'left')
         self.font_alignment_combo.addItem(_('Centre'), 'center')
         self.font_alignment_combo.addItem(_('Right'), 'right')
         self.font_alignment_combo.currentIndexChanged.connect(self.parent_dialog.font_options_changed)
+
         font_style_layout.addWidget(self.font_alignment_combo)
-        self.font_bold_checkbox = QCheckBox(_('Bold'), self)
-        self.font_bold_checkbox.stateChanged.connect(
-            self.parent_dialog.font_options_changed)
-        font_style_layout.addWidget(self.font_bold_checkbox)
+        self.font_weight_combo = QFontWeightComboBox(self)
+        self.font_weight_combo.setMinimumWidth(75)
+        font_style_layout.addWidget(self.font_weight_combo)
+        self.font_weight_combo.currentIndexChanged.connect(self.parent_dialog.font_options_changed)
         self.font_italic_checkbox = QCheckBox(_('Italic'), self)
         self.font_italic_checkbox.stateChanged.connect(self.parent_dialog.font_options_changed)
         font_style_layout.addWidget(self.font_italic_checkbox)
@@ -1651,10 +1672,12 @@ class CoverOptionsDialog(SizePersistedDialog):
         self.saved_settings_tab = SavedSettingsTab(self)
         self.saved_settings_tab.changed.connect(self.options_changed)
         self.saved_settings_tab.settings_changed.connect(self.saved_settings_changed)
+
         self.contents_tab = ContentsTab(self)
         self.contents_tab.changed.connect(self.options_changed)
         self.dimensions_tab = DimensionsTab(self)
         self.dimensions_tab.changed.connect(self.options_changed)
+
         self.contents_tab.background_image_checkbox.stateChanged.connect(
             self.dimensions_tab.image_resize_changed)
         for page, label in ((self.saved_settings_tab, _('Settings')),
@@ -1838,8 +1861,6 @@ class CoverOptionsDialog(SizePersistedDialog):
         self.dimensions_tab.bottom_margin_spin.setValue(margins['bottom'])
         self.dimensions_tab.left_margin_spin.setValue(margins['left'])
         self.dimensions_tab.right_margin_spin.setValue(margins['right'])
-        for side, spin in self.contents_tab.image_padding_spins.items():
-            spin.setValue(margins['image'][side])
 
         borders = self.current[cfg.KEY_BORDERS]
         self.dimensions_tab.cover_border_width_spin.setValue(borders['coverBorder'])
@@ -1869,7 +1890,6 @@ class CoverOptionsDialog(SizePersistedDialog):
         self.save_selected_text_value()
         self.current[cfg.KEY_SERIES_TEXT] = unicode(self.contents_tab.series_text_ledit.text()).strip()
         self.current[cfg.KEY_BACKDROPS_LINKED] = self.contents_tab.colors_panel.backdrops_linked_checkbox.isChecked()
-
         self.current[cfg.KEY_BACKGROUND_IMAGE] = self.contents_tab.background_image_checkbox.isChecked()
         self.current[cfg.KEY_RESIZE_IMAGE_TO_FIT] = self.dimensions_tab.resize_image_to_fit_checkbox.isChecked()
         self.current[cfg.KEY_RESIZE_TO_IMAGE] = self.dimensions_tab.resize_to_image_checkbox.isChecked()
@@ -1898,16 +1918,11 @@ class CoverOptionsDialog(SizePersistedDialog):
         bottom_mgn = int(unicode(self.dimensions_tab.bottom_margin_spin.value()).strip())
         left_mgn = int(unicode(self.dimensions_tab.left_margin_spin.value()).strip())
         right_mgn = int(unicode(self.dimensions_tab.right_margin_spin.value()).strip())
-        image_mgn = {
-            side: spin.value()
-            for side, spin in self.contents_tab.image_padding_spins.items()
-        }
         self.current[cfg.KEY_MARGINS] = (top_mgn, bottom_mgn, left_mgn)
         self.current[cfg.KEY_MARGINS] = {'top':    top_mgn,
                                          'bottom': bottom_mgn,
                                          'left':   left_mgn,
-                                         'right':  right_mgn,
-                         'image':  image_mgn}
+                                         'right':  right_mgn}
 
         cover_border_width = int(unicode(self.dimensions_tab.cover_border_width_spin.value()).strip())
         image_border_width = int(unicode(self.contents_tab.image_border_width_spin.value()).strip())
@@ -1957,18 +1972,19 @@ class CoverOptionsDialog(SizePersistedDialog):
         self.contents_tab.font_family_combo.setEnabled(font_key is not None)
         self.contents_tab.font_size_spin.setEnabled(font_key is not None)
         self.contents_tab.font_alignment_combo.setEnabled(font_key is not None)
-        self.contents_tab.font_bold_checkbox.setEnabled(font_key is not None)
+        self.contents_tab.font_weight_combo.setEnabled(font_key is not None)
         self.contents_tab.font_italic_checkbox.setEnabled(font_key is not None)
         self.contents_tab.font_underline_checkbox.setEnabled(font_key is not None)
         self.contents_tab.font_rotation_combo.setEnabled(font_key is not None)
         self.contents_tab.font_rotation_side_combo.setEnabled(False)
+
         for spin in self.contents_tab.font_text_padding_spins.values():
             spin.setEnabled(font_key is not None)
         if font_key is not None:
             font = self.current[cfg.KEY_FONTS][font_key]
             self.contents_tab.font_family_combo.select_value(font['name'])
             self.contents_tab.font_size_spin.setValue(font['size'])
-            self.contents_tab.font_bold_checkbox.setChecked(font.get('bold', False))
+            self.contents_tab.font_weight_combo.select_value(font.get('weight', 'Normal'))
             self.contents_tab.font_italic_checkbox.setChecked(font.get('italic', False))
             self.contents_tab.font_underline_checkbox.setChecked(font.get('underline', False))
             alignment_index = self.contents_tab.font_alignment_combo.findData(font['align'])
@@ -1980,19 +1996,24 @@ class CoverOptionsDialog(SizePersistedDialog):
             side_index = self.contents_tab.font_rotation_side_combo.findData(side)
             self.contents_tab.font_rotation_side_combo.setCurrentIndex(max(0, side_index))
             self.contents_tab.font_rotation_side_combo.setEnabled(angle in (90, 270))
-            padding = field.get(cfg.KEY_FIELD_TEXT_PADDING, cfg.DEFAULT_ELEMENT_OPTIONS[cfg.KEY_FIELD_TEXT_PADDING])
+            text_padding = field.get(cfg.KEY_FIELD_TEXT_PADDING, cfg.DEFAULT_ELEMENT_OPTIONS[cfg.KEY_FIELD_TEXT_PADDING])
             for side, spin in self.contents_tab.font_text_padding_spins.items():
-                spin.setValue(padding[side])
+                spin.setValue(text_padding[side])
             self.contents_tab.colors_panel.update_selected_field(field['name'])
+
         show_author_option = field['name'] == 'Author'
         show_series_option = field['name'] == 'Series'
         self.contents_tab.swap_author_checkbox.setVisible(show_author_option)
         self.contents_tab.series_label.setVisible(show_series_option)
         self.contents_tab.series_text_ledit.setVisible(show_series_option)
+        if is_image_element:
+            image_padding = field.get(cfg.KEY_FIELD_IMAGE_PADDING, cfg.DEFAULT_ELEMENT_OPTIONS[cfg.KEY_FIELD_IMAGE_PADDING])
+            for side, spin in self.contents_tab.image_padding_spins.items():
+                spin.setValue(image_padding[side])
         self.contents_tab.set_image_mode(is_image_element)
-        padding = field.get(cfg.KEY_FIELD_PADDING, cfg.DEFAULT_ELEMENT_OPTIONS[cfg.KEY_FIELD_PADDING])
+        backdrop_padding = field.get(cfg.KEY_FIELD_BACKDROP_PADDING, cfg.DEFAULT_ELEMENT_OPTIONS[cfg.KEY_FIELD_BACKDROP_PADDING])
         for side, spin in self.contents_tab.colors_panel.element_padding_spins.items():
-            spin.setValue(padding[side])
+            spin.setValue(backdrop_padding[side])
         self.contents_tab.colors_panel.element_backdrop_checkbox.setChecked(field.get(cfg.KEY_FIELD_BACKDROP, False))
         self.contents_tab.colors_panel.element_backdrop_full_width_checkbox.setChecked(
             field.get(cfg.KEY_FIELD_BACKDROP_FULL_WIDTH, False))
@@ -2029,7 +2050,7 @@ class CoverOptionsDialog(SizePersistedDialog):
         font = self.current[cfg.KEY_FONTS][font_key]
         font['name'] = self.contents_tab.font_family_combo.get_value()
         font['size'] = self.contents_tab.font_size_spin.value()
-        font['bold'] = self.contents_tab.font_bold_checkbox.isChecked()
+        font['weight'] = self.contents_tab.font_weight_combo.get_value()
         font['italic'] = self.contents_tab.font_italic_checkbox.isChecked()
         font['underline'] = self.contents_tab.font_underline_checkbox.isChecked()
         font['align'] = self.contents_tab.font_alignment_combo.itemData(
@@ -2048,6 +2069,7 @@ class CoverOptionsDialog(SizePersistedDialog):
         if self.contents_tab.fonts_linked_checkbox.isChecked():
             for name, _ in DIC_name_font:
                 self.current[cfg.KEY_FONTS][name.lower()]['name'] = font['name']
+                self.current[cfg.KEY_FONTS][name.lower()]['weight'] = font['weight']
         self.options_changed()
 
     def fonts_linked_changed(self, *args):
@@ -2108,7 +2130,7 @@ class CoverOptionsDialog(SizePersistedDialog):
             return
         field = self.contents_tab.field_order_list.field_list[row]
         if field['name'] != 'Image':
-            field[cfg.KEY_FIELD_PADDING] = {
+            field[cfg.KEY_FIELD_BACKDROP_PADDING] = {
                 side: spin.value()
                 for side, spin in self.contents_tab.colors_panel.element_padding_spins.items()
             }
@@ -2120,13 +2142,19 @@ class CoverOptionsDialog(SizePersistedDialog):
             if self.contents_tab.colors_panel.backdrops_linked_checkbox.isChecked():
                 backdrop_keys = (cfg.KEY_FIELD_BACKDROP,
                                  cfg.KEY_FIELD_BACKDROP_FULL_WIDTH,
-                                 cfg.KEY_FIELD_PADDING,
+                                 cfg.KEY_FIELD_BACKDROP_PADDING,
                                  cfg.KEY_FIELD_BACKDROP_COLOR, cfg.KEY_FIELD_BACKDROP_OPACITY)
                 selected_backdrop = {key: field[key] for key in backdrop_keys}
                 for other_field in self.contents_tab.field_order_list.field_list:
                     if other_field['name'] != 'Image':
                         other_field.update(selected_backdrop)
-        self.current[cfg.KEY_BACKDROPS_LINKED] = self.contents_tab.colors_panel.backdrops_linked_checkbox.isChecked()
+            self.current[cfg.KEY_BACKDROPS_LINKED] = self.contents_tab.colors_panel.backdrops_linked_checkbox.isChecked()
+        else:
+            image_padding = {
+                side: spin.value()
+                for side, spin in self.contents_tab.image_padding_spins.items()
+            }
+            field[cfg.KEY_FIELD_IMAGE_PADDING] = image_padding
         self.options_changed()
 
     def pick_element_backdrop_color(self):

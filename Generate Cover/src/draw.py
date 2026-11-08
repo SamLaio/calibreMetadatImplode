@@ -19,6 +19,26 @@ try:
 except NameError:
     pass
 
+try:
+    from qt.core import QFont, QFontMetrics, Qt, QPainter, QRect, QColor
+    weight_map = {
+        "Light": QFont.Weight.Light,
+        "Normal": QFont.Weight.Normal,      # <--- Fixed here
+        "Demi Bold": QFont.Weight.DemiBold,
+        "Bold": QFont.Weight.Bold,
+        "Black": QFont.Weight.Black,
+    }
+    default_font_weight = QFont.Weight.Normal
+except ImportError:
+    from PyQt5.Qt import QFont, QFontMetrics, Qt, QPainter, QRect, QColor
+    weight_map = {
+        "Light": QFont.Light,
+        "Normal": QFont.Normal,      # <--- Fixed here
+        "Demi Bold": QFont.DemiBold,
+        "Bold": QFont.Bold,
+        "Black": QFont.Black,
+    }
+    default_font_weight = QFont.Normal
 
 def get_image_size(image_path):
     with open(image_path, 'rb') as stream:
@@ -39,17 +59,14 @@ class TextLine(object):
 
     def __init__(self, text, font_name, font_size,
                  bottom_margin=30, align='center', fill_color='#000000',
-                 bold=False, italic=False, underline=False):
+                 weight='Normal', italic=False, underline=False):
         self.text = force_unicode(text)
         self.bottom_margin = bottom_margin
         self.fill_color = fill_color
-        try:
-            from qt.core import QFont, Qt
-        except ImportError:
-            from PyQt5.Qt import QFont, Qt
         self.font = QFont(font_name) if font_name else QFont()
         self.font.setPixelSize(font_size)
-        self.font.setBold(bool(bold))
+
+        self.font.setWeight(weight_map.get(weight, default_font_weight))
         self.font.setItalic(bool(italic))
         self.font.setUnderline(bool(underline))
         self._font_align = align
@@ -72,14 +89,14 @@ class TextLine(object):
         self.backdrop_color = field.get(cfg.KEY_FIELD_BACKDROP_COLOR, '#000000')
         self.backdrop_opacity = field.get(cfg.KEY_FIELD_BACKDROP_OPACITY, 70)
         self.backdrop_padding = field.get(
-            cfg.KEY_FIELD_PADDING,
-            cfg.DEFAULT_ELEMENT_OPTIONS[cfg.KEY_FIELD_PADDING])
+            cfg.KEY_FIELD_BACKDROP_PADDING,
+            cfg.DEFAULT_ELEMENT_OPTIONS[cfg.KEY_FIELD_BACKDROP_PADDING])
 
 
 def get_textline(text, font_info, margin, fill_color='#000000'):
     return TextLine(text, font_info['name'], font_info['size'], margin,
                     align=font_info['align'], fill_color=fill_color,
-                    bold=font_info.get('bold', False),
+                    weight=font_info.get('weight', default_font_weight),
                     italic=font_info.get('italic', False),
                     underline=font_info.get('underline', False))
 
@@ -126,10 +143,6 @@ def add_border(img, border_width, border_color, bgcolor):
 
 def draw_sized_text(img, dw, line, top, left_margin, right_margin,
                     auto_reduce_font):
-    try:
-        from qt.core import QPainter, Qt, QRect, QColor
-    except ImportError:
-        from PyQt5.Qt import QPainter, Qt, QRect, QColor
     left_margin += line.text_padding['left']
     right_margin += line.text_padding['right']
     total_margin = left_margin + right_margin
@@ -209,10 +222,6 @@ def draw_sized_text(img, dw, line, top, left_margin, right_margin,
 
 
 def measure_text_height(img, line, left_margin, right_margin):
-    try:
-        from qt.core import QPainter, Qt, QRect
-    except ImportError:
-        from PyQt5.Qt import QPainter, Qt, QRect
     left_margin += line.text_padding['left']
     right_margin += line.text_padding['right']
     if img.size[0] - left_margin - right_margin <= 0:
@@ -250,10 +259,6 @@ def scaleup_image(width, height, pwidth, pheight):
 
 
 def prepare_rotated_field(lines, edge_length):
-    try:
-        from qt.core import QFontMetrics, Qt, QRect
-    except ImportError:
-        from PyQt5.Qt import QFontMetrics, Qt, QRect
     padding = lines[0].text_padding
     backdrop_padding = (
         lines[0].backdrop_padding if lines[0].backdrop_enabled else
@@ -292,10 +297,6 @@ def prepare_rotated_field(lines, edge_length):
 
 
 def draw_rotated_field(img, field, x, top, edge_length):
-    try:
-        from qt.core import QPainter, Qt, QRect, QColor
-    except ImportError:
-        from PyQt5.Qt import QPainter, Qt, QRect, QColor
     lines = field['lines']
     angle = field['angle']
     padding = field['padding']
@@ -376,13 +377,15 @@ def create_cover_page(top_lines, bottom_lines, rotated_fields, display_image, op
         return i
     width = size_limit(width)
     height = size_limit(height)
+
     margins = options.get(cfg.KEY_MARGINS)
-    (top_mgn, bottom_mgn, left_mgn, right_mgn, image_mgn) = (
+    (top_mgn, bottom_mgn, left_mgn, right_mgn) = (
         margins['top'], margins['bottom'], margins['left'],
-        margins['right'], margins['image'])
+        margins['right'])
     left_mgn = min([left_mgn, (width / 2) - 10])
     right_mgn = min([right_mgn, (width / 2) - 10])
     edge_length = max(1, height - top_mgn - bottom_mgn)
+
     rotated_fields = {
         side: [prepare_rotated_field(field, edge_length) for field in rotated_fields[side]]
         for side in ('left', 'right')
@@ -393,6 +396,12 @@ def create_cover_page(top_lines, bottom_lines, rotated_fields, display_image, op
     content_right_margin = right_mgn + right_rail_width
     left_text_margin = content_left_margin if content_left_margin > 0 else 10
     right_text_margin = content_right_margin if content_right_margin > 0 else 10
+    # image_padding should come from the image field in the field order, if present, otherwise use the default
+    image_padding = {'top': 0, 'bottom': 0, 'left': 0, 'right': 0}
+    for field in options[cfg.KEY_FIELD_ORDER]:
+        if field['name'] == 'Image':
+            image_padding = field.get(cfg.KEY_FIELD_IMAGE_PADDING, image_padding)
+            break
 
     colors = options[cfg.KEY_COLORS]
     bgcolor, border_color = (
@@ -417,11 +426,11 @@ def create_cover_page(top_lines, bottom_lines, rotated_fields, display_image, op
         logo = Image()
         logo.open(image_path)
         outer_margin = 0 if cover_border_width == 0 else cover_border_width
-        left = outer_margin + image_mgn['left']
-        top = outer_margin + image_mgn['top']
+        left = outer_margin + image_padding['left']
+        top = outer_margin + image_padding['top']
         logo.size = (
-            max(1, width - outer_margin * 2 - image_mgn['left'] - image_mgn['right']),
-            max(1, height - outer_margin * 2 - image_mgn['top'] - image_mgn['bottom']))
+            max(1, width - outer_margin * 2 - image_padding['left'] - image_padding['right']),
+            max(1, height - outer_margin * 2 - image_padding['top'] - image_padding['bottom']))
         canvas.compose(logo, int(left), int(top))
 
     top = top_mgn
@@ -460,11 +469,11 @@ def create_cover_page(top_lines, bottom_lines, rotated_fields, display_image, op
                 right_text_margin, auto_reduce_font=False)
             footer_bottom = text_top - line.text_padding['top']
         footer_top = footer_bottom
-        available = (max(1, width - (content_left_margin + content_right_margin + image_mgn['left'] + image_mgn['right'])),
-                     int(footer_top - top) - image_mgn['top'] - image_mgn['bottom'])
+        available = (max(1, width - (content_left_margin + content_right_margin + image_padding['left'] + image_padding['right'])),
+                     int(footer_top - top) - image_padding['top'] - image_padding['bottom'])
     else:
-        available = (max(1, width - (content_left_margin + content_right_margin + image_mgn['left'] + image_mgn['right'])),
-                     int(height - top) - bottom_mgn - image_mgn['top'] - image_mgn['bottom'])
+        available = (max(1, width - (content_left_margin + content_right_margin + image_padding['left'] + image_padding['right'])),
+                     int(height - top) - bottom_mgn - image_padding['top'] - image_padding['bottom'])
 
     left_x = left_mgn
     for field in rotated_fields['left']:
@@ -492,9 +501,9 @@ def create_cover_page(top_lines, bottom_lines, rotated_fields, display_image, op
         if image_border_width > 0:
             logo = add_border(logo, image_border_width, image_border_color, bgcolor)
 
-        left = int(max(0, content_left_margin + image_mgn['left'] +
+        left = int(max(0, content_left_margin + image_padding['left'] +
                    (available[0] - lwidth) / 2.))
-        top = top + image_mgn['top'] + ((available[1] - lheight) / 2.)
+        top = top + image_padding['top'] + ((available[1] - lheight) / 2.)
         canvas.compose(logo, int(left), int(top))
 
     return canvas.export(output_format)
@@ -543,7 +552,7 @@ def generate_cover_for_book(mi, options=None, db=None):
     fonts = options[cfg.KEY_FONTS]
     colors = options[cfg.KEY_COLORS]
     use_same_fill_color = options.get(cfg.KEY_FILL_COLORS_LINKED, True)
-    
+
     # Determine fill colors for each text type
     title_fill = colors.get('title_fill', '#000000')
     if use_same_fill_color:
@@ -551,7 +560,7 @@ def generate_cover_for_book(mi, options=None, db=None):
     else:
         author_fill = colors.get('author_fill', title_fill)
         series_fill = colors.get('series_fill', title_fill)
-    
+
     content_lines = {}
     content_lines['Title'] = [
         get_textline(title_line.strip(), fonts['title'], 0, title_fill)

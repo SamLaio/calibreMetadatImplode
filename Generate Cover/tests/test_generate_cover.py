@@ -57,6 +57,34 @@ class GenerateCoverTests(unittest.TestCase):
         self.assertEqual(model.rowCount(), len(model.families))
         self.assertEqual(model.index_of(model.families[0]), 0)
 
+    def test_upgrade_preserves_bold_and_resets_image_padding_once(self):
+        for bold in (False, True):
+            old = copy.deepcopy(self.options)
+            for font in old[cfg.KEY_FONTS].values():
+                font.pop('weight', None)
+                font['bold'] = bold
+            old[cfg.KEY_MARGINS]['image'] = dict.fromkeys(cfg.DEFAULT_PADDING, 17)
+            migrated = cfg.migrate_config_setting(2.34, 'old', old)
+            for font in migrated[cfg.KEY_FONTS].values():
+                self.assertEqual(font['weight'], 'Bold' if bold else 'Normal')
+                self.assertNotIn('bold', font)
+            image = next(f for f in migrated[cfg.KEY_FIELD_ORDER] if f['name'] == 'Image')
+            self.assertEqual(image[cfg.KEY_FIELD_IMAGE_PADDING], cfg.DEFAULT_PADDING)
+            self.assertNotIn('image', migrated[cfg.KEY_MARGINS])
+            image[cfg.KEY_FIELD_IMAGE_PADDING]['top'] = 12
+            cfg.migrate_config_setting(2.52, 'current', migrated)
+            self.assertEqual(image[cfg.KEY_FIELD_IMAGE_PADDING]['top'], 12)
+
+    def test_all_font_weights_render_and_keep_internal_values(self):
+        combo = dialogs.QFontWeightComboBox(None)
+        for weight, value in draw.weight_map.items():
+            combo.select_value(weight)
+            self.assertEqual(combo.get_value(), weight)
+            self.options[cfg.KEY_FONTS]['title']['weight'] = weight
+            line = draw.get_textline('Title', self.options[cfg.KEY_FONTS]['title'], 0)
+            self.assertEqual(line.font.weight(), value)
+            self.assertFalse(QImage.fromData(draw.generate_cover_for_book(self.book, self.options)).isNull())
+
     def test_actual_chinese_cover(self):
         self.options[cfg.KEY_IMAGE_FILE] = cfg.TOKEN_CURRENT_COVER
         for field in self.options[cfg.KEY_FIELD_ORDER]:

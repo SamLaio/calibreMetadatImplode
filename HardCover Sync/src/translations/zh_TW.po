@@ -1,0 +1,528 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\nLanguage: zh_TW\nMIME-Version: 1.0\nContent-Transfer-Encoding: 8bit\n"
+
+msgid "\"{title}\" will be newly marked as Read on Hardcover."
+msgstr "「{title}」即將在 Hardcover 標示為已讀。"
+
+msgid "({count} without a Hardcover match)"
+msgstr "（{count} 本未找到 Hardcover 對應書籍）"
+
+msgid "1 book was not on the list."
+msgstr "有一本書不在清單中。"
+
+msgid "API requests per minute:"
+msgstr "每分鐘 API 請求數："
+
+msgid "Add to List"
+msgstr "加入清單"
+
+msgid "Added 1 book to {list_name}."
+msgstr "已將一本書加入 {list_name}。"
+
+msgid "Added {count} books to {list_name}."
+msgstr "已將 {count} 本書加入 {list_name}。"
+
+msgid "Audio Book"
+msgstr "有聲書"
+
+msgid "Author"
+msgstr "作者"
+
+msgid "Automatic Hardcover sync"
+msgstr "Hardcover 自動同步"
+
+msgid "Automatically push column edits to Hardcover"
+msgstr "自動將欄位變更上傳至 Hardcover"
+
+msgid "Book"
+msgstr "書本"
+
+msgid "Configure Hardcover API key"
+msgstr "設定 Hardcover API 金鑰"
+
+msgid "Cover"
+msgstr "封面"
+
+msgid "Create Hardcover List"
+msgstr "建立 Hardcover 清單"
+
+msgid "Create New"
+msgstr "建立新清單"
+
+msgid "Created list \"{name}\"."
+msgstr "已建立清單「{name}」。"
+
+msgid "Cull ISBN"
+msgstr "擷取 ISBN"
+
+msgid "Cull ISBN: scanning “{title}”…"
+msgstr "擷取 ISBN：正在掃描「{title}」……"
+
+msgid "E-Book"
+msgstr "電子書"
+
+msgid "Failed to create list: {error}"
+msgstr "建立清單失敗：{error}"
+
+msgid "Failed to pull from Hardcover: {error}"
+msgstr "從 Hardcover 下載資料失敗：{error}"
+
+msgid "Failed to pull ratings: {error}"
+msgstr "下載評分失敗：{error}"
+
+msgid "Failed to pull reviews: {error}"
+msgstr "下載書評失敗：{error}"
+
+msgid "Failed to pull statuses: {error}"
+msgstr "下載狀態失敗：{error}"
+
+msgid "Failed to pull tags: {error}"
+msgstr "下載標籤失敗：{error}"
+
+msgid "Failed to push ratings: {error}"
+msgstr "上傳評分失敗：{error}"
+
+msgid "Failed to push reviews: {error}"
+msgstr "上傳書評失敗：{error}"
+
+msgid "Failed to push statuses: {error}"
+msgstr "上傳狀態失敗：{error}"
+
+msgid "Failed to push tags: {error}"
+msgstr "上傳標籤失敗：{error}"
+
+msgid "Failed to push to Hardcover: {error}"
+msgstr "上傳資料至 Hardcover 失敗：{error}"
+
+msgid "Failed to scan the book for ISBNs: {error}"
+msgstr "掃描書籍 ISBN 失敗：{error}"
+
+msgid "Format"
+msgstr "格式"
+
+msgid "Hardcover API key:"
+msgstr "Hardcover API 金鑰："
+
+msgid "Hardcover Sync"
+msgstr "Hardcover Sync"
+
+msgid "Hardcover Sync updated the custom column in your library. Restart calibre if the field does not appear in book details."
+msgstr "Hardcover Sync 已更新書庫中的自訂欄位。若書籍詳細資料未出現該欄位，請重新啟動 calibre。"
+
+msgid "Hardcover Sync: Cull ISBN"
+msgstr "Hardcover 同步：擷取 ISBN"
+
+msgid "Hardcover Sync: Pull Notes"
+msgstr "Hardcover 同步：下載筆記"
+
+msgid "Hardcover Sync: Pull Quotes"
+msgstr "Hardcover 同步：下載引文"
+
+msgid "Hardcover Sync: Pull Rating"
+msgstr "Hardcover 同步：下載評分"
+
+msgid "Hardcover Sync: Pull Review"
+msgstr "Hardcover 同步：下載書評"
+
+msgid "Hardcover Sync: Pull Status"
+msgstr "Hardcover 同步：下載狀態"
+
+msgid "Hardcover Sync: Pull Tags"
+msgstr "Hardcover 同步：下載標籤"
+
+msgid "Hardcover Sync: Push Notes"
+msgstr "Hardcover 同步：上傳筆記"
+
+msgid "Hardcover Sync: Push Quotes"
+msgstr "Hardcover 同步：上傳引文"
+
+msgid "Hardcover Sync: Push Rating"
+msgstr "Hardcover 同步：上傳評分"
+
+msgid "Hardcover Sync: Push Review"
+msgstr "Hardcover 同步：上傳書評"
+
+msgid "Hardcover Sync: Push Status"
+msgstr "Hardcover 同步：上傳狀態"
+
+msgid "Hardcover Sync: Push Tags"
+msgstr "Hardcover 同步：上傳標籤"
+
+msgid "Hardcover Sync: auto-push failed: {error}"
+msgstr "Hardcover 同步：自動上傳失敗：{error}"
+
+msgid "Hardcover Sync: failed to load lists ({error})"
+msgstr "Hardcover 同步：無法載入清單（{error}）"
+
+msgid "Hardcover Sync: fetching list memberships…"
+msgstr "Hardcover 同步：正在取得書籍所屬清單……"
+
+msgid "Hardcover Sync: fetching your entries…"
+msgstr "Hardcover 同步：正在取得您的資料……"
+
+msgid "Hardcover Sync: fetching your ratings…"
+msgstr "Hardcover 同步：正在取得您的評分……"
+
+msgid "Hardcover Sync: fetching your reviews…"
+msgstr "Hardcover 同步：正在取得您的書評……"
+
+msgid "Hardcover Sync: fetching your statuses…"
+msgstr "Hardcover 同步：正在取得您的狀態……"
+
+msgid "Hardcover Sync: fetching your tags…"
+msgstr "Hardcover 同步：正在取得您的標籤……"
+
+msgid "Hardcover Sync: finished {done} books"
+msgstr "Hardcover 同步：已完成 {done} 本書"
+
+msgid "Hardcover Sync: finished {done}/{total} ({errors} errors)"
+msgstr "Hardcover 同步：已完成 {done}/{total}（{errors} 個錯誤）"
+
+msgid "Hardcover Sync: loaded {count} lists"
+msgstr "Hardcover 同步：已載入 {count} 個清單"
+
+msgid "Hardcover Sync: loading your lists…"
+msgstr "Hardcover 同步：正在載入您的清單……"
+
+msgid "Hardcover Sync: looking up 0/{total}…"
+msgstr "Hardcover 同步：正在查詢 0/{total}……"
+
+msgid "Hardcover Sync: looking up {done}/{total}…"
+msgstr "Hardcover 同步：正在查詢 {done}/{total}……"
+
+msgid "Hardcover Sync: marked {count} books without a Hardcover identifier"
+msgstr "Hardcover 同步：已標示 {count} 本沒有 Hardcover 識別碼的書籍"
+
+msgid "Hardcover Sync: pulling ratings for {count} books…"
+msgstr "Hardcover 同步：正在下載 {count} 本書的評分……"
+
+msgid "Hardcover Sync: pulling reviews for {count} books…"
+msgstr "Hardcover 同步：正在下載 {count} 本書的書評……"
+
+msgid "Hardcover Sync: pulling statuses for {count} books…"
+msgstr "Hardcover 同步：正在下載 {count} 本書的狀態……"
+
+msgid "Hardcover Sync: pulling tags for {count} books…"
+msgstr "Hardcover 同步：正在下載 {count} 本書的標籤……"
+
+msgid "Hardcover Sync: pulling {label} for {count} books…"
+msgstr "Hardcover 同步：正在下載 {count} 本書的{label}……"
+
+msgid "Hardcover Sync: push cancelled"
+msgstr "Hardcover 同步：已取消上傳"
+
+msgid "Hardcover Sync: pushed tags for {count} books"
+msgstr "Hardcover 同步：已上傳 {count} 本書的標籤"
+
+msgid "Hardcover Sync: pushed {count} ratings"
+msgstr "Hardcover 同步：已上傳 {count} 筆評分"
+
+msgid "Hardcover Sync: pushed {count} reviews"
+msgstr "Hardcover 同步：已上傳 {count} 筆書評"
+
+msgid "Hardcover Sync: pushed {count} statuses"
+msgstr "Hardcover 同步：已上傳 {count} 筆狀態"
+
+msgid "Hardcover Sync: pushing ratings for {count} books…"
+msgstr "Hardcover 同步：正在上傳 {count} 本書的評分……"
+
+msgid "Hardcover Sync: pushing reviews for {count} books…"
+msgstr "Hardcover 同步：正在上傳 {count} 本書的書評……"
+
+msgid "Hardcover Sync: pushing statuses for {count} books…"
+msgstr "Hardcover 同步：正在上傳 {count} 本書的狀態……"
+
+msgid "Hardcover Sync: pushing tags for {count} books…"
+msgstr "Hardcover 同步：正在上傳 {count} 本書的標籤……"
+
+msgid "Hardcover Sync: pushing {label} for {count} books…"
+msgstr "Hardcover 同步：正在上傳 {count} 本書的{label}……"
+
+msgid "Hardcover Sync: refreshing {count} books ({labeled} marked without Hardcover id)…"
+msgstr "Hardcover 同步：正在重新整理 {count} 本書（{labeled} 本標示為缺少 Hardcover 識別碼）……"
+
+msgid "Hardcover Sync: resolving {count} editions…"
+msgstr "Hardcover 同步：正在核對 {count} 個版本……"
+
+msgid "Hardcover Sync: restored {count} from cache"
+msgstr "Hardcover 同步：已從快取還原 {count} 筆"
+
+msgid "Hardcover Sync: set tags on {count} books"
+msgstr "Hardcover 同步：已為 {count} 本書設定標籤"
+
+msgid "Hardcover Sync: set {count} ratings"
+msgstr "Hardcover 同步：已設定 {count} 筆評分"
+
+msgid "Hardcover Sync: set {count} reviews"
+msgstr "Hardcover 同步：已設定 {count} 筆書評"
+
+msgid "Hardcover Sync: set {count} statuses"
+msgstr "Hardcover 同步：已設定 {count} 筆狀態"
+
+msgid "Hardcover Sync: set {label} on {count} books"
+msgstr "Hardcover 同步：已為 {count} 本書設定{label}"
+
+msgid "Hardcover Sync: updated {changed} of {done} books"
+msgstr "Hardcover 同步：已更新 {done} 本書中的 {changed} 本"
+
+msgid "Hardcover Sync: {label} added {inserted}, removed {deleted}"
+msgstr "Hardcover 同步：{label}已新增 {inserted} 筆、移除 {deleted} 筆"
+
+msgid "I don't know (leave blank on Hardcover)"
+msgstr "不確定（Hardcover 保持空白）"
+
+msgid "ISBN"
+msgstr "ISBN"
+
+msgid "ISBN-10"
+msgstr "ISBN-10"
+
+msgid "ISBN-13"
+msgstr "ISBN-13"
+
+msgid "Leave blank to use the API key from the Hardcover metadata plugin, if one is configured."
+msgstr "留空時會使用 Hardcover 中繼資料外掛中已設定的 API 金鑰。"
+
+msgid "List name cannot be empty."
+msgstr "清單名稱不可空白。"
+
+msgid "List name:"
+msgstr "清單名稱："
+
+msgid "Lists"
+msgstr "清單"
+
+msgid "Loading lists..."
+msgstr "正在載入清單……"
+
+msgid "Looking up…"
+msgstr "正在查詢……"
+
+msgid "Manage Lists"
+msgstr "管理清單"
+
+msgid "Maximum Hardcover API requests per minute. This limit is shared with the Hardcover metadata plugin. Hardcover allows about 60/min."
+msgstr "每分鐘最多的 Hardcover API 請求數，與 Hardcover 中繼資料外掛共用限制。Hardcover 約允許每分鐘 60 次。"
+
+msgid "No Hardcover lists found"
+msgstr "找不到 Hardcover 清單"
+
+msgid "No ISBN-10 or ISBN-13 numbers were found in the book text."
+msgstr "書籍內文中找不到 ISBN-10 或 ISBN-13。"
+
+msgid "No book found for ISBN {isbn}."
+msgstr "找不到 ISBN {isbn} 對應的書籍。"
+
+msgid "No books are selected. Select books in the library, then choose Refresh selected books."
+msgstr "尚未選取書籍。請在書庫選取書籍，再選擇「重新整理所選書籍」。"
+
+msgid "No books selected"
+msgstr "尚未選取書本"
+
+msgid "No match found"
+msgstr "未找到匹配項"
+
+msgid "No match found. Configure a Hardcover API key in the Hardcover Sync or Hardcover metadata plugin for richer results."
+msgstr "找不到符合項目。可在 Hardcover Sync 或 Hardcover 中繼資料外掛設定 API 金鑰，以取得更完整的結果。"
+
+msgid "None of the selected books have a Hardcover identifier. Download metadata from Hardcover first."
+msgstr "所選書籍都沒有 Hardcover 識別碼，請先從 Hardcover 下載中繼資料。"
+
+msgid "None of the selected books have a rating to push."
+msgstr "所選書籍都沒有可上傳的評分。"
+
+msgid "None of the selected books have a review to push."
+msgstr "所選書籍都沒有可上傳的書評。"
+
+msgid "None of the selected books have a status to push."
+msgstr "所選書籍都沒有可上傳的狀態。"
+
+msgid "None of the selected books have {label} to push."
+msgstr "所選書籍都沒有可上傳的{label}。"
+
+msgid "Notes"
+msgstr "備註"
+
+msgid "Publisher"
+msgstr "出版社"
+
+msgid "Pull Notes"
+msgstr "下載筆記"
+
+msgid "Pull Quotes"
+msgstr "下載引文"
+
+msgid "Pull Rating"
+msgstr "下載評分"
+
+msgid "Pull Review"
+msgstr "下載書評"
+
+msgid "Pull Status"
+msgstr "下載狀態"
+
+msgid "Pull Tags"
+msgstr "下載標籤"
+
+msgid "Pull {label}"
+msgstr "下載{label}"
+
+msgid "Push Notes"
+msgstr "上傳筆記"
+
+msgid "Push Quotes"
+msgstr "上傳引文"
+
+msgid "Push Rating"
+msgstr "上傳評分"
+
+msgid "Push Review"
+msgstr "上傳書評"
+
+msgid "Push Status"
+msgstr "上傳狀態"
+
+msgid "Push Tags"
+msgstr "上傳標籤"
+
+msgid "Push automatically"
+msgstr "自動上傳"
+
+msgid "Push manually"
+msgstr "手動上傳"
+
+msgid "Push {label}"
+msgstr "上傳{label}"
+
+msgid "Quotes"
+msgstr "引文"
+
+msgid "Ratings"
+msgstr "評分"
+
+msgid "Refresh"
+msgstr "重新整理"
+
+msgid "Remove from List"
+msgstr "從清單移除"
+
+msgid "Removed 1 book from {list_name}."
+msgstr "已從 {list_name} 移除一本書。"
+
+msgid "Removed {count} books from {list_name}."
+msgstr "已從 {list_name} 移除 {count} 本書。"
+
+msgid "Reviews"
+msgstr "書評"
+
+msgid "Saved ISBN {isbn} on “{title}”."
+msgstr "已將 ISBN {isbn} 儲存至「{title}」。"
+
+msgid "Select a book to search for ISBNs."
+msgstr "請選擇要搜尋 ISBN 的書籍。"
+
+msgid "Select an ISBN to save on this book:"
+msgstr "選擇要儲存至此書的 ISBN："
+
+msgid "Select exactly one book to search for ISBNs."
+msgstr "搜尋 ISBN 時請只選擇一本書。"
+
+msgid "Select one or more books to pull from Hardcover."
+msgstr "請選擇至少一本要從 Hardcover 下載資料的書籍。"
+
+msgid "Select one or more books to pull ratings for."
+msgstr "請選擇至少一本要下載評分的書籍。"
+
+msgid "Select one or more books to pull reviews for."
+msgstr "請選擇至少一本要下載書評的書籍。"
+
+msgid "Select one or more books to pull statuses for."
+msgstr "請選擇至少一本要下載狀態的書籍。"
+
+msgid "Select one or more books to pull tags for."
+msgstr "請選擇至少一本要下載標籤的書籍。"
+
+msgid "Select one or more books to push ratings for."
+msgstr "請選擇至少一本要上傳評分的書籍。"
+
+msgid "Select one or more books to push reviews for."
+msgstr "請選擇至少一本要上傳書評的書籍。"
+
+msgid "Select one or more books to push statuses for."
+msgstr "請選擇至少一本要上傳狀態的書籍。"
+
+msgid "Select one or more books to push tags for."
+msgstr "請選擇至少一本要上傳標籤的書籍。"
+
+msgid "Select one or more books to push to Hardcover."
+msgstr "請選擇至少一本要將資料上傳至 Hardcover 的書籍。"
+
+msgid "Set read date"
+msgstr "設定已讀日期"
+
+msgid "Skipped 1 book without a Hardcover identifier."
+msgstr "已略過一本沒有 Hardcover 識別碼的書籍。"
+
+msgid "Skipped {count} books without a Hardcover identifier."
+msgstr "已略過 {count} 本沒有 Hardcover 識別碼的書籍。"
+
+msgid "Some entries could not be pushed:"
+msgstr "部分資料無法上傳："
+
+msgid "Some ratings could not be pushed:"
+msgstr "部分評分無法上傳："
+
+msgid "Some reviews could not be pushed:"
+msgstr "部分書評無法上傳："
+
+msgid "Some statuses could not be pushed:"
+msgstr "部分狀態無法上傳："
+
+msgid "Some tags could not be pushed:"
+msgstr "部分標籤無法上傳："
+
+msgid "Specific date:"
+msgstr "指定日期："
+
+msgid "Status"
+msgstr "狀態"
+
+msgid "Sync the selected books with Hardcover"
+msgstr "將所選書籍與 Hardcover 同步"
+
+msgid "Tags"
+msgstr "標籤"
+
+msgid "Title"
+msgstr "書名"
+
+msgid "Today"
+msgstr "今天"
+
+msgid "Unknown"
+msgstr "未知"
+
+msgid "When enabled, editing a book's rating, review, status, notes or quotes pushes the change to Hardcover automatically."
+msgstr "啟用後，編輯書籍的評分、書評、狀態、筆記或引文會自動上傳至 Hardcover。"
+
+msgid "Which read date should be used?"
+msgstr "要使用哪個已讀日期？"
+
+msgid "Would you like Hardcover Sync to push these changes to Hardcover automatically from now on?\n\nYou can change this later in the plugin's settings."
+msgstr "往後是否要讓 Hardcover Sync 自動將這些變更上傳至 Hardcover？\n\n稍後可在外掛設定變更。"
+
+msgid "You just edited a column that Hardcover Sync can push (rating, review, status, notes or quotes)."
+msgstr "您剛編輯了 Hardcover Sync 可上傳的欄位（評分、書評、狀態、筆記或引文）。"
+
+msgid "{count} books were not on the list."
+msgstr "有 {count} 本書不在清單中。"
+
+msgid "{count} books will be newly marked as Read on Hardcover:"
+msgstr "即將在 Hardcover 將 {count} 本書標示為已讀："
+
+msgid "{kind}, suggested correction"
+msgstr "{kind}，建議修正"
+
+msgid "{kind}, unverified"
+msgstr "{kind}，未驗證"
+
