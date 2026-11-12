@@ -24,6 +24,12 @@
 | Markdown Output | v1.3.17 | 2026-11-09 | 1.0.3.1 |
 | Traditional Chinese Supplement | v1.3.17 | 2026-11-09 | 1.1.1 |
 
+## [v1.3.19] — 2026-11-12
+
+- Generate Cover **2.5.2.1 → 2.5.4.1**，採用上游文字量測修正，保留正體中文及本地修正。
+- Modify ePub **1.8.12.1 → 1.8.14.1**，採用上游封面替換與移除修正，保留封面頁樣式、正體中文及邊距修正。
+- Traditional Chinese Supplement **1.1.2 → 1.1.3**，新增 268 條 calibre 編輯器正體中文對照。
+
 ## [v1.3.18] — 2026-11-09
 
 - Traditional Chinese Supplement **1.1.2**：完整掃描本機 calibre 9.18.0 三份官方正體中文目錄，為含明確簡體字的 310 筆文字建立精確顯示對照。
@@ -160,3 +166,5 @@
 [v1.3.15]: https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.15
 [v1.3.16]: https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.16
 [v1.3.17]: https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.17
+
+[v1.3.19]: https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.19

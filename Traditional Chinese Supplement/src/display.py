@@ -1,6 +1,7 @@
-from qt.core import (QAbstractButton, QAbstractItemView, QGroupBox, QLabel,
-                     QLineEdit, QPlainTextEdit, QTextEdit, QToolButton, QWidget)
+from qt.core import (QAbstractButton, QAbstractItemView, QAction, QGroupBox, QLabel,
+                     QLineEdit, QMainWindow, QMenu, QPlainTextEdit, QTextEdit, QToolButton, QWidget)
 from calibre_plugins.traditional_chinese_supplement.strings import COMMON, SCOPES
+from calibre_plugins.traditional_chinese_supplement.editor_strings import EDITOR_SCOPE, EDITOR_TEXT
 from pathlib import Path
 import sys
 
@@ -31,12 +32,28 @@ def translate_widget(widget):
         return
     texts = SCOPES[scope]
     def translated(text):
+        if scope == EDITOR_SCOPE and text in SCOPES['calibre.gui2']:
+            return SCOPES['calibre.gui2'][text]
         return texts.get(text, COMMON.get(text, text))
     for getter, setter in (('toolTip', 'setToolTip'), ('statusTip', 'setStatusTip'), ('whatsThis', 'setWhatsThis')):
         old = getattr(widget, getter)()
         new = translated(old)
         if new != old:
             getattr(widget, setter)(new)
+    if scope == EDITOR_SCOPE:
+        if isinstance(widget, QMainWindow):
+            for action in widget.findChildren(QAction):
+                for getter, setter in ((action.text, action.setText), (action.toolTip, action.setToolTip),
+                                       (action.statusTip, action.setStatusTip)):
+                    old = getter()
+                    new = EDITOR_TEXT.get(old, old)
+                    if new != old:
+                        setter(new)
+        elif isinstance(widget, QMenu):
+            old = widget.title()
+            new = EDITOR_TEXT.get(old, old)
+            if new != old:
+                widget.setTitle(new)
     # Combo/list/table values can be program identifiers; never change their models.
     if isinstance(widget, (QLabel, QAbstractButton)) and not isinstance(widget, QToolButton):
         old = widget.text()

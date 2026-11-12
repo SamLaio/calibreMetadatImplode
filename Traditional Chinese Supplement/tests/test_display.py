@@ -63,6 +63,48 @@ class DisplayTests(unittest.TestCase):
         self.assertEqual(spin.value(), 60)
         self.assertEqual(display.scope_for(self.root('unrelated')), None)
 
+    def test_real_editor_accessibility_and_existing_actions(self):
+        import builtins
+        from collections import Counter
+        from string import Formatter
+        from calibre.gui2.tweak_book import accessibility
+        from calibre.utils import localization
+        from calibre_plugins.traditional_chinese_supplement.editor_strings import EDITOR_SCOPE, EDITOR_TEXT
+        from calibre_plugins.traditional_chinese_supplement.main import TranslationTool
+
+        root = type('EditorWindow', (QMainWindow,), {'__module__': EDITOR_SCOPE})(None)
+        self.windows.append(root)
+        action = QAction('Close tabs to the &right', root)
+        action.setData('close-right')
+        with (patch.object(builtins, '_', new=lambda text: text),
+              patch.object(localization, '_', new=accessibility._),
+              patch.object(builtins, 'ngettext', new=builtins.ngettext),
+              patch.object(localization, 'ngettext', new=accessibility.ngettext),
+              patch.object(accessibility, 'ngettext', new=accessibility.ngettext),
+              patch.object(accessibility, '_', new=accessibility._),
+              patch.object(ui, 'get_lang', return_value='zh_TW')):
+            tool = TranslationTool()
+            try:
+                panel = accessibility.CheckList('Accessibility', accessibility.ACCESS_MODE,
+                                                ('tactile',), ['tactile'], parent=root)
+                self.assertEqual(panel.boxes['tactile'].text(), '觸覺內容，例如點字')
+                self.assertEqual(panel.values, ['tactile'])
+                editor = vars(accessibility).copy()
+                self.assertEqual(eval("ngettext('One image', '{} images', 2).format(2)", editor), '2 張圖片')
+                self.assertEqual(builtins._('Accessibility'), 'Accessibility')
+                root.show()
+                self.app.processEvents()
+                self.assertEqual(action.text(), '關閉右側分頁(&R)')
+                self.assertEqual(action.data(), 'close-right')
+            finally:
+                tool.translator.stop()
+
+        fields = lambda text: Counter((name, spec, conversion) for _, name, spec, conversion
+                                      in Formatter().parse(text) if name is not None)
+        for source, target in EDITOR_TEXT.items():
+            self.assertEqual(fields(source), fields(target), source)
+            self.assertEqual(source.count('%s'), target.count('%s'), source)
+
     def test_semantic_values_and_business_signals_are_unchanged(self):
         root = self.root('goodreads')
         combo = QComboBox(root)

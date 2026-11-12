@@ -14,10 +14,12 @@ spec = importlib.util.spec_from_file_location(
 plugin = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = plugin
 spec.loader.exec_module(plugin)
+from lxml import etree
+from calibre_plugins.modify_epub.container import ExtendedContainer
 from calibre_plugins.modify_epub.covers import CoverUpdater
 from calibre_plugins.modify_epub.modify import BookModifier
 from calibre.ebooks.oeb.transforms.cover import CoverManager
-import calibre.ebooks.oeb.polish as polish
+import calibre.ebooks.oeb.polish.opf as opf
 
 
 class CoverTests(unittest.TestCase):
@@ -27,6 +29,15 @@ class CoverTests(unittest.TestCase):
         with patch.object(CoverUpdater, 'remove_existing_cover') as remove:
             self.assertTrue(BookModifier._remove_cover(job, container))
             remove.assert_called_once()
+
+    def test_body_text_ignores_style_and_title_without_editing_document(self):
+        document = etree.fromstring(b'<html xmlns="http://www.w3.org/1999/xhtml"><body>'
+                                    b'<style>img {width: 100%}</style><title>Cover</title>'
+                                    b'<img src="cover.jpg"/></body></html>')
+        original = etree.tostring(document)
+        container = SimpleNamespace(get_parsed_etree=lambda name: document)
+        self.assertFalse(ExtendedContainer.get_body_text(container, 'cover.xhtml'))
+        self.assertEqual(etree.tostring(document), original)
 
     def test_titlepage_old_and_new_metadata_api(self):
         for modern in (False, True):
@@ -40,10 +51,10 @@ class CoverTests(unittest.TestCase):
                     def fill(text, title, language):
                         return text.replace('__title__', title.replace('&', '&amp;').replace('%', '%%')).replace('__lang__', language)
                     if modern:
-                        context = patch.object(polish, 'get_book_language_tag', return_value='zh-TW', create=True)
+                        context = patch.object(opf, 'get_book_language_tag', return_value='zh-TW', create=True)
                         metadata = patch.object(CoverManager, 'fill_metadata', side_effect=fill, create=True)
                     else:
-                        context = patch.dict(sys.modules, {'calibre.ebooks.oeb.polish': None})
+                        context = patch.dict(sys.modules, {'calibre.ebooks.oeb.polish.opf': None})
                         metadata = patch.object(CoverManager, 'fill_metadata', create=True)
                         template = template.replace('__title__', 'Cover').replace('__lang__', 'en')
                     with context, metadata as method, patch.object(CoverManager, 'SVG_TEMPLATE', template), patch.object(CoverManager, 'NONSVG_TEMPLATE', template):

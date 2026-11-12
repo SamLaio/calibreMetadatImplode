@@ -1,3 +1,6 @@
+from calibre_plugins.traditional_chinese_supplement.editor_strings import EDITOR_SCOPE, EDITOR_TEXT
+
+
 COMMON = {'Options:': '選項：',
  'Configuration:': '設定：',
  'Other Options:': '其他選項：',
@@ -449,6 +452,7 @@ SCOPES = {'chinese_text': {'Conversion Direction': '轉換方向',
 
 
 # Exact official display strings only; never convert user content at runtime.
+SCOPES[EDITOR_SCOPE] = EDITOR_TEXT
 SCOPES['calibre.gui2'] = {'\n            在哪里搜索/替换:\n            <dl>\n            <dt><b>当前文件</b></dt>\n            <dd>仅在当前打开的文件中搜索</dd>\n            <dt><b>所有文本文件</b></dt>\n            <dd>在所有文本(HTML)文件中搜索</dd>\n            <dt><b>已选文件</b></dt>\n            <dd>在当前文件浏览器中选择的文件中搜索</dd>\n            <dt><b>打开文件</b></dt>\n            <dd>在当前编辑器中打开的文件中搜索</dd>\n            </dl>': '\n'
                                                                                                                                                                                                                                                                                                                                                                    '            '
                                                                                                                                                                                                                                                                                                                                                                    '在哪裡搜索/替換:\n'

@@ -7,7 +7,7 @@ class TraditionalChineseSupplement(InterfaceActionBase, EditBookToolPlugin):
     name = 'Traditional Chinese Supplement'
     description = '補齊指定 calibre 與第三方外掛視窗的正體中文顯示文字。'
     author = 'SamLiao & Codex'
-    version = (1, 1, 2)
+    version = (1, 1, 3)
     minimum_calibre_version = (9, 17, 0)
     supported_platforms = ['windows', 'osx', 'linux']
     actual_plugin = 'calibre_plugins.traditional_chinese_supplement.ui:TranslationAction'
