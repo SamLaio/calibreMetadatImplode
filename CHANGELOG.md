@@ -34,6 +34,14 @@
 | Plugin Backup | v1.3.25 | 2026-11-22 | 0.1 |
 | Tag Cloud | v1.3.33 | 2026-11-27 | 0.1 |
 
+## [v1.3.34](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.34) — 2026-11-27
+
+### Tag Cloud 0.1.1
+
+- 行距由 180% 縮至 115%，移除段落上下留白。
+- 改依目前顯示詞彙的本數範圍縮放字級至 12～36 pt，避免熱門詞的字級過於接近。
+- 本數相同的詞維持一致大小；取熱門前 N 個詞後亂序排列，同一次開啟期間保持位置。
+
 ## [v1.3.33](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.33) — 2026-11-27
 
 ### Tag Cloud 0.1

@@ -22,7 +22,8 @@ def tag_query(tags, match_all=True, field='tags'):
     return (' and ' if match_all else ' or ').join(terms)
 
 
-def font_size(count, maximum):
-    if maximum <= 1:
-        return 12
-    return 12 + round(12 * log1p(count - 1) / log1p(maximum - 1))
+def font_size(count, maximum, minimum=1):
+    if maximum <= minimum:
+        return 20
+    fraction = (log1p(count) - log1p(minimum)) / (log1p(maximum) - log1p(minimum))
+    return 12 + round(24 * max(0, min(1, fraction)))

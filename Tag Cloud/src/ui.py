@@ -9,6 +9,7 @@ from calibre.utils.config import JSONConfig
 from calibre_plugins.tag_cloud.core import count_tags, font_size, tag_query
 from html import escape
 import hashlib
+import random
 
 prefs = JSONConfig('plugins/tag_cloud')
 prefs.defaults.update(visible=True, sizes=[600, 300], limit=60, match_all=True, scope=0, field='tags')
@@ -24,10 +25,11 @@ class CloudPanel(QWidget):
         self.names = []
         self.base_query = None
         self.last_query = None
+        self.order_seed = random.random()
         layout = QVBoxLayout(self)
         layout.setContentsMargins(6, 4, 6, 4)
         header = QHBoxLayout()
-        header.addWidget(QLabel('標籤雲 0.1'))
+        header.addWidget(QLabel('標籤雲 0.1.1'))
         header.addStretch()
         refresh = QToolButton(self)
         refresh.setText('更新')
@@ -110,7 +112,7 @@ class CloudPanel(QWidget):
 
     def configure(self):
         dialog = QDialog(self)
-        dialog.setWindowTitle('Tag Cloud 0.1 — 設定')
+        dialog.setWindowTitle('Tag Cloud 0.1.1 — 設定')
         layout = QVBoxLayout(dialog)
         layout.addWidget(QLabel('雲的統計與篩選欄位（標籤／系列／作者／自訂欄位）'))
         field = QComboBox(dialog)
@@ -165,8 +167,10 @@ class CloudPanel(QWidget):
         needle = self.find.text().casefold().strip()
         values = [(name, count) for name, count in self.counts if needle in name.casefold()]
         values = values[:prefs['limit']]
+        random.Random(self.order_seed).shuffle(values)
         self.names = [name for name, count in values]
-        maximum = max((count for name, count in self.counts), default=1)
+        maximum = max((count for name, count in values), default=1)
+        minimum = min((count for name, count in values), default=1)
         pieces = []
         for index, (name, count) in enumerate(values):
             colors = prefs['colors']
@@ -175,10 +179,10 @@ class CloudPanel(QWidget):
             weight = 'bold' if name in self.selected else 'normal'
             mark = '✓ ' if name in self.selected else ''
             pieces.append(f'<a href="tag:{index}" title="{escape(name, quote=True)} · {count} 本" '
-                          f'style="color:{color};font-size:{font_size(count, maximum)}pt;'
+                          f'style="color:{color};font-size:{font_size(count, maximum, minimum)}pt;'
                           f'font-weight:{weight};text-decoration:none">'
                           f'{escape(mark + name).replace(" ", "&nbsp;")}</a>')
-        self.cloud.setHtml('<p style="line-height:180%;text-align:center">' +
+        self.cloud.setHtml('<p style="line-height:115%;margin:0;text-align:center">' +
                            ' &nbsp; '.join(pieces) + '</p>' if pieces else '沒有符合的標籤。')
         self.status.setText('已選：' + '、'.join(self.selected) if self.selected
                             else f'{len(self.counts)} 個標籤；顯示 {len(values)} 個')

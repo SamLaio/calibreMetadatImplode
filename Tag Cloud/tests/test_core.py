@@ -18,9 +18,12 @@ class CloudTests(unittest.TestCase):
         self.assertEqual(core.tag_query([]), '')
 
     def test_font_bounds_and_equal_counts(self):
-        self.assertEqual(core.font_size(1, 1), 12)
-        self.assertEqual(core.font_size(10000, 10000), 24)
-        self.assertTrue(12 <= core.font_size(12, 10000) <= 24)
+        self.assertEqual(core.font_size(1, 1, 1), 20)
+        self.assertEqual(core.font_size(10000, 10000, 100), 36)
+        self.assertEqual(core.font_size(100, 10000, 100), 12)
+        sizes = [core.font_size(n, 1000, 500) for n in (500, 600, 800, 1000)]
+        self.assertEqual(sizes, sorted(set(sizes)))
+        self.assertGreaterEqual(sizes[-1] - sizes[0], 24)
 
     def test_series_and_authors(self):
         self.assertEqual(core.count_tags({1: '系列甲', 2: '系列甲', 3: None}), [('系列甲', 2)])

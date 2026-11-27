@@ -122,6 +122,17 @@ class GuiTests(unittest.TestCase):
         self.assertEqual(panel.selected, [])
         self.assertEqual(panel.field.currentData(), 'tags')
 
+    def test_random_order_stays_stable_on_selection(self):
+        panel = self.action.panel
+        panel.order_seed = 42
+        panel.counts = [(str(n), 100 - n) for n in range(20)]
+        panel.render()
+        names = list(panel.names)
+        self.assertNotEqual(names, [name for name, count in panel.counts])
+        panel.selected = [names[0]]
+        panel.render()
+        self.assertEqual(panel.names, names)
+
     def test_settings_colors_and_field(self):
         from qt.core import QTimer, QDialog, QComboBox, QCheckBox
         panel = self.action.panel

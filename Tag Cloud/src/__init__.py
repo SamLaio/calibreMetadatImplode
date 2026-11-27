@@ -7,7 +7,7 @@ class TagCloud(InterfaceActionBase):
     name = 'Tag Cloud'
     description = '在左側顯示標籤、系列或作者雲，支援點選篩書與自訂配色。'
     author = 'SamLiao & Codex'
-    version = (0, 1)
+    version = (0, 1, 1)
     minimum_calibre_version = (9, 19, 0)
     supported_platforms = ['windows', 'osx', 'linux']
     actual_plugin = 'calibre_plugins.tag_cloud.ui:TagCloudAction'
