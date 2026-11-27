@@ -8,6 +8,16 @@ spec.loader.exec_module(core)
 
 
 class CloudTests(unittest.TestCase):
+    def test_scalar_field_values(self):
+        from datetime import datetime
+        self.assertEqual(core.field_terms(False, 'bool'), ['否'])
+        self.assertEqual(core.field_terms(0, 'int'), ['0'])
+        self.assertEqual(core.field_terms(datetime(2026, 11, 27), 'datetime'), ['2026-11-27'])
+        self.assertEqual(core.field_terms(10, 'rating'), ['5 ★'])
+        self.assertEqual(core.field_terms({'isbn': '123'}, 'text'), ['isbn:123'])
+        self.assertEqual(core.indexed_terms({1: True, 2: False, 3: True}, 'bool')[1],
+                         {'是': {1, 3}, '否': {2}})
+
     def test_counts_unique_tags_per_book(self):
         self.assertEqual(core.count_tags({1: ('歷史', '歷史'), 2: ('歷史', '台灣'), 3: ()}),
                          [('歷史', 2), ('台灣', 1)])

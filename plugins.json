@@ -8,7 +8,7 @@
       "version": [
         0,
         1,
-        4
+        5
       ],
       "minimum_calibre_version": [
         9,
@@ -22,9 +22,9 @@
       ],
       "id": "samlaio.tag-cloud",
       "asset": "TagCloud.zip",
-      "size": 8432,
-      "sha256": "f9950fe5848a4b8efb5b9c05b8e3cb96caf45cf2ddd04e64ab2ae64a5f75fed5",
-      "package_sha256": "35a72e541d0d6c2f78e980af2ac36dc0bc28e7dfd54f8c6f8ac379b4046cb15a"
+      "size": 9937,
+      "sha256": "cd7954f4f824ceb18aa4e259545003af152a87ef4d1a41c29ab40d7f5664d864",
+      "package_sha256": "24f781f40a311206acf950de037735e08eeaa66920f7da800ee351b0bcecca04"
     },
     {
       "name": "GitHub Plugin Updater",

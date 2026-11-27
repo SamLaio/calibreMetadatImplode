@@ -34,6 +34,15 @@
 | Plugin Backup | v1.3.25 | 2026-11-22 | 0.1 |
 | Tag Cloud | v1.3.33 | 2026-11-27 | 0.1 |
 
+## [v1.3.36](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.36) — 2026-11-27
+
+### Tag Cloud 0.1.5
+
+- 欄位下拉右側新增齒輪，提供全部欄位勾選清單；預設僅作者、標籤、出版社，各書庫分別保存。
+- 支援各類欄位原值產雲及點選篩書；已選詞固定置前，保留未選詞排序，搜尋與顯示數量不隱藏已選詞。
+- 同步程式宣告、內外層 README 與發行清單；通過 5 項核心、15 項 Qt／資料庫及實際安裝包主視窗驗證。
+- 發行說明正文不重複 GitHub Release 標題；其餘 26 支外掛版號與內容不變。
+
 ## [v1.3.35](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.35) — 2026-11-27
 
 ### Tag Cloud 0.1.4

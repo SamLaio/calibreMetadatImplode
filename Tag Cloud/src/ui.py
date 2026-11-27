@@ -2,12 +2,14 @@ from qt.core import (
     QComboBox, QHBoxLayout, QIcon, QLabel, QLineEdit, QPushButton,
     QSplitter, QTextBrowser, QTimer, QToolButton, QVBoxLayout, QWidget, Qt,
     QDialog, QDialogButtonBox, QCheckBox, QColor, QColorDialog,
+    QListWidget, QListWidgetItem,
 )
 from calibre.gui2 import error_dialog, gprefs, config
 from calibre.gui2.actions import InterfaceAction
 from calibre.gui2.widgets import HistoryLineEdit
 from calibre.utils.config import JSONConfig
-from calibre_plugins.tag_cloud.core import count_tags, font_size, tag_query
+from calibre.utils.icu import sort_key
+from calibre_plugins.tag_cloud.core import indexed_terms, font_size, tag_query, book_query
 from html import escape
 import hashlib
 import random
@@ -17,6 +19,7 @@ prefs.defaults.update(visible=True, sizes=[600, 300], limit=100, match_all=True,
 prefs.defaults.update(random_colors=True, colors=['#56b4e9', '#e69f00', '#009e73', '#cc79a7', '#d55e00'])
 prefs.defaults['click_mode'] = 'intersection'
 prefs.defaults['order'] = 'random'
+prefs.defaults['enabled_fields'] = {}
 
 
 class CloudPanel(QWidget):
@@ -103,19 +106,57 @@ class CloudPanel(QWidget):
         self.mode.currentIndexChanged.connect(self.change_click_mode)
         self.order.currentIndexChanged.connect(self.change_order)
 
-    def populate_fields(self):
-        self.field.blockSignals(True)
-        self.field.clear()
-        for key, label in (('tags', '標籤'), ('series', '系列'), ('authors', '作者')):
-            self.field.addItem(label, key)
+    def available_fields(self):
         metadata = self.action.gui.current_db.new_api.field_metadata
-        for key in sorted(metadata.custom_field_keys()):
+        fields = []
+        keys = ['authors', 'tags', 'publisher'] + [key for key in metadata if key not in ('authors', 'tags', 'publisher')]
+        for key in keys:
             info = metadata[key]
-            if info['datatype'] == 'series' or (info['datatype'] == 'text' and info['is_multiple']):
-                self.field.addItem(info['name'] + ' (' + key + ')', key)
-        index = self.field.findData(prefs['field'])
-        self.field.setCurrentIndex(max(0, index))
-        self.field.blockSignals(False)
+            if info['datatype'] is not None:
+                fields.append((key, (info['name'] or key) + ' (' + key + ')'))
+        return fields
+
+    def enabled_fields(self):
+        library = self.action.gui.current_db.new_api.library_id
+        return prefs['enabled_fields'].get(library, ['authors', 'tags', 'publisher'])
+
+    def save_enabled_fields(self, fields):
+        libraries = dict(prefs['enabled_fields'])
+        libraries[self.action.gui.current_db.new_api.library_id] = list(fields)
+        prefs['enabled_fields'] = libraries
+
+    def populate_fields(self, enabled=None, selector=None):
+        selector = self.field if selector is None else selector
+        selected = selector.currentData() or prefs['field']
+        enabled = self.enabled_fields() if enabled is None else enabled
+        selector.blockSignals(True)
+        selector.clear()
+        for key, label in self.available_fields():
+            if key in enabled:
+                selector.addItem(label, key)
+        selector.setCurrentIndex(max(0, selector.findData(selected)))
+        selector.blockSignals(False)
+
+    def choose_fields(self, enabled, parent):
+        dialog = QDialog(parent)
+        dialog.setWindowTitle('選擇詞雲欄位')
+        layout = QVBoxLayout(dialog)
+        layout.addWidget(QLabel('只有勾選的欄位會出現在下拉選單；依目前書庫保存。'))
+        listing = QListWidget(dialog)
+        for key, label in self.available_fields():
+            item = QListWidgetItem(label, listing)
+            item.setData(Qt.ItemDataRole.UserRole, key)
+            item.setFlags(item.flags() | Qt.ItemFlag.ItemIsUserCheckable)
+            item.setCheckState(Qt.CheckState.Checked if key in enabled else Qt.CheckState.Unchecked)
+        layout.addWidget(listing)
+        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        buttons.accepted.connect(dialog.accept)
+        buttons.rejected.connect(dialog.reject)
+        layout.addWidget(buttons)
+        dialog.resize(480, 500)
+        if dialog.exec() == QDialog.DialogCode.Accepted:
+            return [listing.item(i).data(Qt.ItemDataRole.UserRole) for i in range(listing.count())
+                    if listing.item(i).checkState() == Qt.CheckState.Checked]
 
     def search_words(self, *args):
         self.find.save_history()
@@ -132,14 +173,28 @@ class CloudPanel(QWidget):
 
     def configure(self):
         dialog = QDialog(self)
-        dialog.setWindowTitle('Tag Cloud 0.1.4 — 設定')
+        dialog.setWindowTitle('Tag Cloud 0.1.5 — 設定')
         layout = QVBoxLayout(dialog)
-        layout.addWidget(QLabel('雲的統計與篩選欄位（標籤／系列／作者／自訂欄位）'))
+        layout.addWidget(QLabel('雲的統計與篩選欄位'))
+        field_row = QHBoxLayout()
         field = QComboBox(dialog)
         for index in range(self.field.count()):
             field.addItem(self.field.itemText(index), self.field.itemData(index))
         field.setCurrentIndex(self.field.currentIndex())
-        layout.addWidget(field)
+        field_row.addWidget(field, 1)
+        fields_button = QToolButton(dialog)
+        fields_button.setIcon(QIcon.ic('gear.png'))
+        fields_button.setToolTip('勾選下拉選單可用的欄位')
+        fields_button.setAccessibleName('選擇詞雲欄位')
+        field_row.addWidget(fields_button)
+        layout.addLayout(field_row)
+        enabled = list(self.enabled_fields())
+        def edit_fields():
+            result = self.choose_fields(enabled, dialog)
+            if result is not None:
+                enabled[:] = result
+                self.populate_fields(enabled, field)
+        fields_button.clicked.connect(edit_fields)
         choices = []
         for label, original in (('統計範圍', self.scope), ('顯示詞彙數量', self.limit),
                                 ('點選動作', self.mode), ('排序', self.order)):
@@ -182,22 +237,40 @@ class CloudPanel(QWidget):
         if dialog.exec() == QDialog.DialogCode.Accepted:
             prefs['random_colors'] = random_colors.isChecked()
             prefs['colors'] = colors
-            self.field.setCurrentIndex(field.currentIndex())
+            chosen = field.currentData()
+            if chosen != self.field.currentData():
+                self.clear()
+            self.save_enabled_fields(enabled)
+            self.populate_fields()
+            self.field.setCurrentIndex(self.field.findData(chosen))
+            prefs['field'] = chosen
             for original, choice in choices:
                 original.setCurrentIndex(choice.currentIndex())
             if clear.isChecked():
                 self.clear()
-            self.render()
+            self.reload()
 
     def reload(self, *args):
         try:
             db = self.action.gui.current_db
+            key = self.field.currentData()
+            if key is None:
+                self.counts, self.term_books = [], {}
+                self.render()
+                return
             # Empty search respects the virtual library, without the current search.
             ids = (db.search_getting_ids('', '') if self.scope.currentIndex() == 0
                    else db.new_api.all_book_ids())
             self.book_ids = frozenset(ids)
             self.category_order = {}
-            self.counts = count_tags(db.new_api.all_field_for(self.field.currentData(), self.book_ids))
+            if key == 'id':
+                values = {book_id: book_id for book_id in self.book_ids}
+            elif key in db.new_api.fields:
+                values = db.new_api.all_field_for(key, self.book_ids)
+            else:
+                values = {book_id: db.new_api.get_proxy_metadata(book_id).get(key) for book_id in self.book_ids}
+            datatype = 'comments' if key == 'comments' else db.new_api.field_metadata[key]['datatype']
+            self.counts, self.term_books = indexed_terms(values, datatype)
             prefs['scope'] = self.scope.currentIndex()
             self.render()
         except Exception as err:
@@ -209,17 +282,23 @@ class CloudPanel(QWidget):
         prefs['limit'] = text if text == '全部' else int(text)
         needle = self.find.text().casefold().strip()
         values = [(name, count) for name, count in self.counts if needle in name.casefold()]
-        if self.order.currentIndex() == 0:
+        if self.order.currentIndex() == 0 and self.field.currentData() is not None:
             key = (config['sort_tags_by'], self.field.currentData())
             if key not in self.category_order:
                 categories = self.action.gui.current_db.new_api.get_categories(sort=key[0], book_ids=self.book_ids)
                 self.category_order[key] = {tag.name: index for index, tag in enumerate(categories.get(key[1], ()))}
             positions = self.category_order[key]
-            values.sort(key=lambda item: positions.get(item[0], len(positions)))
+            values.sort(key=lambda item: (positions.get(item[0], len(positions)), sort_key(item[0])))
         if text != '全部':
             values = values[:int(text)]
         if self.order.currentIndex() == 1:
             random.Random(self.order_seed).shuffle(values)
+        counts = dict(self.counts)
+        pinned = [(name, counts.get(name, 0)) for name in self.selected]
+        values = [(name, count) for name, count in values if name not in self.selected]
+        if text != '全部':
+            values = values[:max(0, int(text) - len(pinned))]
+        values = pinned + values
         self.names = [name for name, count in values]
         maximum = max((count for name, count in values), default=1)
         minimum = min((count for name, count in values), default=1)
@@ -237,7 +316,7 @@ class CloudPanel(QWidget):
         self.cloud.setHtml('<p style="line-height:115%;margin:0;text-align:center">' +
                            ' &nbsp; '.join(pieces) + '</p>' if pieces else '沒有符合的標籤。')
         self.status.setText('已選：' + '、'.join(self.selected) if self.selected
-                            else f'{len(self.counts)} 個標籤；顯示 {len(values)} 個')
+                            else f'{len(self.counts)} 個詞彙；顯示 {len(values)} 個')
 
     def clicked(self, url):
         name = self.names[int(url.path())]
@@ -267,7 +346,13 @@ class CloudPanel(QWidget):
             return
         if self.last_query is None or current != self.last_query:
             self.base_query = current
-        query = tag_query(self.selected, True, self.field.currentData())
+        field = self.field.currentData()
+        if field in ('tags', 'authors', 'series', 'publisher') or (field and field.startswith('#') and
+                self.action.gui.current_db.new_api.field_metadata[field]['datatype'] in ('text', 'series')):
+            query = tag_query(self.selected, True, field)
+        else:
+            matches = set.intersection(*(self.term_books.get(term, set()) for term in self.selected))
+            query = book_query(matches)
         if self.base_query:
             query = '(' + self.base_query + ') and (' + query + ')'
         self.last_query = query
@@ -282,7 +367,9 @@ class CloudPanel(QWidget):
         self.selected = []
         self.base_query = self.last_query = None
         self.populate_fields()
+        self.find.blockSignals(True)
         self.find.setText('')
+        self.find.blockSignals(False)
         self.reload()
 
 

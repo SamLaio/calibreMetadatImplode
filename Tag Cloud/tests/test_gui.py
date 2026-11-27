@@ -73,6 +73,7 @@ class GuiTests(unittest.TestCase):
         self.gui.library_view = SimpleNamespace(model=lambda: SimpleNamespace(count_changed_signal=Signal()))
         ui.prefs['field'] = 'tags'
         ui.prefs['visible'] = True
+        ui.prefs['enabled_fields'] = {}
         self.action.initialization_complete()
 
     def tearDown(self):
@@ -95,6 +96,8 @@ class GuiTests(unittest.TestCase):
         self.assertEqual(self.gui.search.text, '')
         panel.clicked(QUrl('tag:' + str(panel.names.index('作者甲'))))
         self.assertEqual(len(self.db.new_api.search(self.gui.search.text)), 2)
+        panel.save_enabled_fields(['authors', 'tags', 'publisher', 'series'])
+        panel.populate_fields()
         panel.field.setCurrentIndex(panel.field.findData('series'))
         self.assertEqual(panel.counts, [('系列甲', 2)])
 
@@ -135,6 +138,21 @@ class GuiTests(unittest.TestCase):
         panel.render()
         self.assertEqual(panel.names, names)
 
+    def test_selected_terms_are_pinned(self):
+        panel = self.action.panel
+        panel.counts = [(str(i), 100 - i) for i in range(100)]
+        panel.limit.setCurrentText('50')
+        panel.selected = ['80', '90']
+        panel.find.setText('1')
+        panel.render()
+        self.assertEqual(panel.names[:2], ['80', '90'])
+        self.assertLessEqual(len(panel.names), 50)
+        self.assertIn('✓', panel.cloud.toPlainText())
+        panel.selected = ['90']
+        panel.render()
+        self.assertEqual(panel.names[0], '90')
+        self.assertNotIn('80', panel.names)
+
     def test_quantity_options(self):
         panel = self.action.panel
         panel.counts = [(str(n), n + 1) for n in range(550)]
@@ -163,6 +181,64 @@ class GuiTests(unittest.TestCase):
             self.assertEqual(panel.names, names)
         finally:
             config['sort_tags_by'] = original
+
+    def test_field_whitelist(self):
+        panel = self.action.panel
+        self.assertEqual([panel.field.itemData(i) for i in range(panel.field.count())],
+                         ['authors', 'tags', 'publisher'])
+        panel.save_enabled_fields(['title', 'rating'])
+        panel.populate_fields()
+        self.assertEqual(set(panel.field.itemData(i) for i in range(panel.field.count())), {'title', 'rating'})
+        panel.save_enabled_fields([])
+        panel.populate_fields()
+        panel.reload()
+        self.assertEqual(panel.field.count(), 0)
+        self.assertEqual(panel.counts, [])
+
+    def test_all_fields_and_typed_selection(self):
+        from qt.core import QUrl
+        panel = self.action.panel
+        keys = [key for key, label in panel.available_fields()]
+        panel.save_enabled_fields(keys)
+        panel.populate_fields()
+        for key in keys:
+            panel.field.setCurrentIndex(panel.field.findData(key))
+            panel.reload()
+            self.assertNotIn('無法讀取標籤', panel.cloud.toPlainText(), key + ': ' + panel.status.text())
+        book_id = sorted(self.db.new_api.all_book_ids())[0]
+        self.db.new_api.set_field('rating', {book_id: 10})
+        panel.field.setCurrentIndex(panel.field.findData('rating'))
+        panel.reload()
+        panel.clicked(QUrl('tag:' + str(panel.names.index('5 ★'))))
+        self.assertEqual(self.db.new_api.search(self.gui.search.text), {book_id})
+        from calibre_plugins.tag_cloud.core import book_query
+        self.assertEqual(self.db.new_api.search(book_query(self.db.new_api.all_book_ids())),
+                         self.db.new_api.all_book_ids())
+        self.assertEqual(self.db.new_api.search(book_query(set())), set())
+
+    def test_field_picker_cancel_and_accept(self):
+        from qt.core import QDialog, QTimer, QListWidget, Qt
+        panel = self.action.panel
+        before = panel.enabled_fields()
+        def accept():
+            dialog = next(w for w in QApplication.topLevelWidgets()
+                          if isinstance(w, QDialog) and w.isVisible())
+            listing = dialog.findChild(QListWidget)
+            for i in range(listing.count()):
+                item = listing.item(i)
+                item.setCheckState(Qt.CheckState.Checked if item.data(Qt.ItemDataRole.UserRole) == 'title'
+                                   else Qt.CheckState.Unchecked)
+            dialog.accept()
+        QTimer.singleShot(0, accept)
+        self.assertEqual(panel.choose_fields(before, self.gui), ['title'])
+        self.assertEqual(panel.enabled_fields(), before)
+        def cancel():
+            dialog = next(w for w in QApplication.topLevelWidgets()
+                          if isinstance(w, QDialog) and w.isVisible())
+            dialog.reject()
+        QTimer.singleShot(0, cancel)
+        self.assertIsNone(panel.choose_fields(before, self.gui))
+        self.assertEqual(panel.enabled_fields(), before)
 
     def test_native_search_history_and_clear(self):
         panel = self.action.panel
@@ -241,6 +317,7 @@ class GuiTests(unittest.TestCase):
         self.db.new_api.set_field('#cloud_tags', {ids[0]: ['自訂甲']})
         self.db.new_api.set_field('#cloud_series', {ids[1]: '自訂系列甲'})
         panel = self.action.panel
+        panel.save_enabled_fields(['tags', '#cloud_tags', '#cloud_series'])
         panel.populate_fields()
         panel.field.setCurrentIndex(panel.field.findData('#cloud_tags'))
         self.assertEqual(panel.counts, [('自訂甲', 1)])
