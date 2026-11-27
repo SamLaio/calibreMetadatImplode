@@ -1,6 +1,6 @@
 # calibreMetadatImplode
 
-本專案將二十六個 calibre 外掛並排維護，整合上游程式、正體中文資源與本地修正。各外掛可獨立使用；操作、設定、限制、安裝與打包方式請點各外掛名稱閱讀其 README。
+本專案將二十七個 calibre 外掛並排維護，整合上游程式、正體中文資源與本地修正。各外掛可獨立使用；操作、設定、限制、安裝與打包方式請點各外掛名稱閱讀其 README。
 
 外掛首次加入、歷次升級與整合發行紀錄見 [CHANGELOG](./CHANGELOG.md)。
 
@@ -9,13 +9,15 @@
 | 項目 | 說明 |
 | --- | --- |
 | 專案來源 | [SamLaio/calibreMetadatImplode](https://github.com/SamLaio/calibreMetadatImplode)，本倉庫為整合與修訂來源；各外掛的原作者及授權保留於各自目錄。 |
-| 整合發行版號 | **[v1.3.32（2026-11-23）](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.32)**。這是整套發行附件的版號，與各外掛在 calibre 顯示的版號分開管理。 |
-| 專案層修改 | 將外掛整理為各自的 `src/`，使用 `build_release.py` 統一輸出二十六個獨立安裝包到 `dist/`；排除隱藏檔、快取及 `.po` 翻譯來源。Columns Helper、CrossPoint Reader、Diaps Editing Toolbag、Extract ISBN、Generate Cover、Goodreads Sync、Hardcover Sync 、Manage Series 與 Shortcuts Helper 的翻譯在打包時分別編譯。 |
-| 本次變更 | CrossPoint Reader 0.2.8.2 同步上游 EPUB 閱讀位置對照與拆分修正； GitHub Plugin Updater 0.3.3 將未安裝項目的狀態簡化為「未安裝」；保留自動備份開關、GitHub Token 與限流提示。 |
+| 整合發行版號 | **[v1.3.33（2026-11-27）](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.33)**。這是整套發行附件的版號，與各外掛在 calibre 顯示的版號分開管理。 |
+| 專案層修改 | 將外掛整理為各自的 `src/`，使用 `build_release.py` 統一輸出二十七個獨立安裝包到 `dist/`；排除隱藏檔、快取及 `.po` 翻譯來源。Columns Helper、CrossPoint Reader、Diaps Editing Toolbag、Extract ISBN、Generate Cover、Goodreads Sync、Hardcover Sync 、Manage Series 與 Shortcuts Helper 的翻譯在打包時分別編譯。 |
+| 本次變更 | 新增 Tag Cloud 0.1：左側詞雲、標籤／系列／作者與自訂欄位選擇、點選篩書及可自訂隨機配色。 |
 
 ## 各外掛簡介、來源與版號
 
 各列表依名稱字母升序排列；修改摘要採相同分類與順序。
+
+2026-11-27 新增並核對 Tag Cloud 0.1 的程式宣告、作者、來源、說明與安裝包；其餘外掛沿用既有基準。
 
 文件核對日期：**2026-11-22**。二十六支外掛的名稱、作者、版號、安裝包與本地說明已對照目前程式；上游採表列固定基準，歷次上游更新與整合紀錄見 [CHANGELOG](./CHANGELOG.md)。
 
@@ -32,6 +34,7 @@
 | [GitHub Plugin Updater](./GitHub%20Plugin%20Updater/README.md) | 追蹤多個公開 GitHub 庫，先比身分檔與清單的內容 SHA，再比版號；勾選下載更新，可選自動備份。 | 本倉庫自行開發，SamLiao & Codex；思路參考 Obtainium。 | **0.3.3**；簡化未安裝狀態文字，保留自動備份開關及 Token 功能。 |
 | [Plugin Backup](./Plugin%20Backup/README.md) | 勾選或一次全部匯出／批次匯入第三方外掛與啟用狀態，可選是否包含設定；入口位於外掛偏好設定底部。 | 本倉庫自行開發，SamLiao & Codex。 | **0.1**。 |
 | [Skip ASCII Text Plugin](./Skip%20ASCII%20Text%20Plugin/README.md) | 保留檔名中的中文等原文字元，略過 ASCII 轉寫。 | 本倉庫獨立重寫，SamLiao & Codex；功能參考 [shiratori3/calibre-plugins v1.0.0](https://gitee.com/shiratori3/calibre-plugins/releases/tag/v1.0.0)，程式作者欄 Billy Zhou，原版採 BSD 3-Clause。 | **1.0.1**，本倉庫重寫版。 |
+| [Tag Cloud](./Tag%20Cloud/README.md) | 左側可調高度的詞雲，支援標籤、系列、作者與相容自訂欄位，點選篩書與自訂配色。 | 本倉庫自行開發，SamLiao & Codex；無獨立上游。 | **0.1**。 |
 | [Toolbar Manager](./Toolbar%20Manager/README.md) | 右鍵調整工具列按鈕，開啟外掛首頁、選項或移除外掛。 | 本倉庫自行開發；SamLiao & Codex。 | **1.0.0**。 |
 | [Traditional Chinese Supplement](./Traditional%20Chinese%20Supplement/README.md) | 補齊指定官方與第三方外掛視窗的正體中文顯示文字。 | 本倉庫自行開發；SamLiao & Codex，核對 calibre 9.18／9.19 與相關外掛介面。 | **1.2.1**；補齊主視窗資料夾／書本詳細資料選單，保留偏好設定、動態視窗、快捷鍵、範本與書本檢查翻譯，無額外工具列按鈕。 |
 ### 上游修訂外掛
@@ -75,6 +78,7 @@
 | GitHub Plugin Updater | 新增來源管理、固定 ID 綁定、JSON-only 檢查、身分 SHA 優先、提示同版差異與降版、勾選強制安裝、備份與失敗回復；26 包加入身分檔與可重現打包，產生版本／SHA 清單。 |
 | Plugin Backup | 新增偏好設定底部入口、全選切換、兩列匯出／匯入按鈕；勾選模式只含所選外掛可辨識專用設定，全部模式可備份完整設定及工具列按鈕位置；提供相容性與校驗檢查、進度及失敗回復；保留本機書庫位置，通過 10 項格式測試、4 項安裝 API 測試與原生 GUI 往返驗證。 |
 | Skip ASCII Text Plugin | 沿用執行期間替換函式、保留 Unicode 而不改寫 calibre 安裝檔的方向；重寫核心與設定介面，作者為 SamLiao & Codex；修正位元組輸入、重複切換及函式還原，避免覆蓋後續外掛替換；保留舊設定識別，加入「文」字勾號圖示、附效果示意的正體中文設定視窗、測試與統一打包，移除原包程式及圖示。 |
+| Tag Cloud | 新增側欄詞雲、欄位選擇、交集／聯集篩書、虛擬書庫範圍、設定保存與可自訂隨機配色。 |
 | Toolbar Manager | 加入專用圖示及正體中文工具列右鍵管理；移除外掛前確認，保護必要入口並保留原有選單。 |
 | Traditional Chinese Supplement | 1.2.1 補齊主視窗資料夾與書本詳細資料動態選單；原有補翻偏好設定、工具列、快捷鍵、範本及編輯器文法／改寫介面；核對 43 個調校項目、184 個核心快捷鍵、196 段書本檢查訊息與 32 條啟用 CSS 規則，保留設定、輸入與修復行為。 |
 ### 上游修訂外掛
@@ -108,6 +112,7 @@
 
 | 外掛 | 驗證範圍 |
 | --- | --- |
+| Tag Cloud 0.1 | 4 項核心與 6 項 Qt／資料庫測試；隔離主視窗確認實際安裝包載入、側欄嵌入、標籤篩書與作者切換。 |
 | GitHub Plugin Updater | 0.3.2 通過 71 項測試及原生主視窗驗證；0.3.3 文字調整後通過 11 項核心與 3 項打包測試。涵蓋 SHA、來源綁定、Token、限流、自動備份及失敗回復。 |
 | Hardcover Sync 0.4.0.2 | 13 項隔離測試通過；原生主視窗確認舊版重現相同關閉例外，新版提前關閉與正常確認均無例外。 |
 | CrossPoint Reader 0.2.8.2 | 8 項位置對照、7 項連線與 4 項語言／設定／協定測試通過，含真實本機 HTTP 服務；Gutenberg 選用案例因網站維護未驗證，未以實體閱讀器驗收。 |
@@ -128,6 +133,6 @@
 
 ## GitHub 更新來源清單
 
-根目錄 [plugins.json](./plugins.json) 保存目前清單快照，含各支外掛的固定 ID、名稱、版號、內容 SHA-256 與下載用 ZIP SHA-256。`build_release.py` 固定 ZIP 時間戳、屬性與順序，輸出 26 個安裝包及 `dist/plugins.json`；內容相同不因重打包日期而改變 SHA。每次內容改動須更新受影響外掛版號，同步根目錄快照，並把清單與同批 ZIP 一起附在正式 Release。更新器以同一 Release 的清單為準；[格式與發布方式](./GitHub%20Plugin%20Updater/MANIFEST.md)。
+根目錄 [plugins.json](./plugins.json) 保存目前清單快照，含各支外掛的固定 ID、名稱、版號、內容 SHA-256 與下載用 ZIP SHA-256。`build_release.py` 固定 ZIP 時間戳、屬性與順序，輸出 27 個安裝包及 `dist/plugins.json`；內容相同不因重打包日期而改變 SHA。每次內容改動須更新受影響外掛版號，同步根目錄快照，並把清單與同批 ZIP 一起附在正式 Release。更新器以同一 Release 的清單為準；[格式與發布方式](./GitHub%20Plugin%20Updater/MANIFEST.md)。
 
 來源維護者請閱讀[來源庫建立與版本檢查指南](./GitHub%20Plugin%20Updater/SOURCE_GUIDE.md)，包含身分檔、JSON、發布順序、SHA／版號與勾選強制安裝流程。

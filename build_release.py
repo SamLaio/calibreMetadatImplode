@@ -14,6 +14,11 @@ import zipfile
 ROOT = Path(__file__).resolve().parent
 PROJECTS = [
     {
+        "name": "Tag Cloud",
+        "source": ROOT / "Tag Cloud" / "src",
+        "output": ROOT / "dist" / "TagCloud.zip",
+    },
+    {
         "name": "GitHub Plugin Updater",
         "source": ROOT / "GitHub Plugin Updater" / "src",
         "output": ROOT / "dist" / "GitHub Plugin Updater-zh_TW-release.zip",

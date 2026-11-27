@@ -2,7 +2,7 @@
 
 記錄各外掛何時加入本倉庫、升級版號及主要修改。整合發行版號與外掛版號分開管理；日期採臺灣時間（UTC+8），以 Git 與 GitHub 發行紀錄回補。各外掛的操作、來源及限制見各自 README。
 
-## 各外掛首次加入
+### 各外掛首次加入
 
 | 外掛 | 首次收錄／整合發行 | 日期 | 首次外掛版號 |
 | --- | --- | --- | --- |
@@ -32,6 +32,16 @@
 | Columns Helper | v1.3.25 | 2026-11-22 | 2.1.1.1 |
 | Diaps Editing Toolbag | v1.3.25 | 2026-11-22 | 0.5.0.1 |
 | Plugin Backup | v1.3.25 | 2026-11-22 | 0.1 |
+| Tag Cloud | v1.3.33 | 2026-11-27 | 0.1 |
+
+## [v1.3.33](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.33) — 2026-11-27
+
+### Tag Cloud 0.1
+
+- 新增自有外掛，作者 SamLiao & Codex；在左側分類樹下方顯示可調高度的詞雲。
+- 支援標籤、系列、作者與相容自訂欄位、搜尋、多選交集／聯集篩書，以及整庫／虛擬書庫範圍。
+- 設定可指定五個候選色、隨機配色或單色，並保存欄位與版面設定。
+- 統一建置新增 TagCloud.zip，更新 27 支外掛發行清單；需要 calibre 9.19 或以上。
 
 ## [v1.3.32](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.32) — 2026-11-23
 
