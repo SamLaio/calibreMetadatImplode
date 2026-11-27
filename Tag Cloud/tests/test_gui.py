@@ -136,15 +136,27 @@ class GuiTests(unittest.TestCase):
     def test_settings_colors_and_field(self):
         from qt.core import QTimer, QDialog, QComboBox, QCheckBox
         panel = self.action.panel
+        self.assertTrue(panel.field.isHidden())
+        self.assertTrue(panel.scope.isHidden())
+        self.assertTrue(panel.limit.isHidden())
+        self.assertTrue(panel.mode.isHidden())
+        self.assertTrue(panel.status.isHidden())
         def accept():
             dialog = next(w for w in QApplication.topLevelWidgets() if isinstance(w, QDialog))
             field = dialog.findChild(QComboBox)
             field.setCurrentIndex(field.findData('authors'))
+            choices = dialog.findChildren(QComboBox)
+            choices[1].setCurrentIndex(1)
+            choices[2].setCurrentText('100')
+            choices[3].setCurrentIndex(1)
             dialog.findChild(QCheckBox).setChecked(False)
             dialog.accept()
         QTimer.singleShot(0, accept)
         panel.configure()
         self.assertEqual(panel.field.currentData(), 'authors')
+        self.assertEqual(panel.scope.currentIndex(), 1)
+        self.assertEqual(panel.limit.currentText(), '100')
+        self.assertEqual(panel.mode.currentIndex(), 1)
         self.assertFalse(ui.prefs['random_colors'])
         self.assertIn(ui.prefs['colors'][0], panel.cloud.toHtml())
 

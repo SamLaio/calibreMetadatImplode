@@ -34,6 +34,13 @@
 | Plugin Backup | v1.3.25 | 2026-11-22 | 0.1 |
 | Tag Cloud | v1.3.33 | 2026-11-27 | 0.1 |
 
+## [v1.3.35](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.35) — 2026-11-27
+
+### Tag Cloud 0.1.2
+
+- 將欄位、統計範圍、顯示數量、多選符合模式、數量摘要與清除選取集中至設定視窗。
+- 側欄保留標題按鈕、搜尋與詞雲，增加可用顯示空間；設定按確定才套用。
+
 ## [v1.3.34](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.34) — 2026-11-27
 
 ### Tag Cloud 0.1.1
