@@ -34,6 +34,14 @@
 | Plugin Backup | v1.3.25 | 2026-11-22 | 0.1 |
 | Tag Cloud | v1.3.33 | 2026-11-27 | 0.1 |
 
+## [v1.3.35](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.35) — 2026-11-27
+
+### Tag Cloud 0.1.4
+
+- 新增「排序」：跟隨標籤瀏覽器／隨機排列；保留 calibre 的名稱、本數或評分排序設定，預設保持隨機排列。
+- 設定按確定後套用並保存；通過名稱／本數／評分排序、隨機位置穩定性與原有篩書測試。
+- 同步內外層 README、發行清單與說明；其餘 26 支外掛版號與內容不變。
+
 ## [v1.3.34](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.34) — 2026-11-27
 
 ### EpubSplit 3.12.0.2

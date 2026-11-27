@@ -144,6 +144,26 @@ class GuiTests(unittest.TestCase):
             panel.limit.setCurrentText(text)
             self.assertEqual(len(panel.names), size)
 
+    def test_browser_and_random_order(self):
+        from calibre.gui2 import config
+        panel = self.action.panel
+        original = config['sort_tags_by']
+        try:
+            panel.order.setCurrentIndex(0)
+            for mode in ('name', 'popularity', 'rating'):
+                config['sort_tags_by'] = mode
+                panel.reload()
+                expected = [tag.name for tag in self.db.new_api.get_categories(sort=mode)['tags']]
+                self.assertEqual(panel.names, expected)
+            panel.order.setCurrentIndex(1)
+            panel.order_seed = 42
+            panel.render()
+            names = list(panel.names)
+            panel.render()
+            self.assertEqual(panel.names, names)
+        finally:
+            config['sort_tags_by'] = original
+
     def test_native_search_history_and_clear(self):
         panel = self.action.panel
         panel.find.setText('歷史')

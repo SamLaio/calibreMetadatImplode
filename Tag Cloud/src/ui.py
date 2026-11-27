@@ -3,7 +3,7 @@ from qt.core import (
     QSplitter, QTextBrowser, QTimer, QToolButton, QVBoxLayout, QWidget, Qt,
     QDialog, QDialogButtonBox, QCheckBox, QColor, QColorDialog,
 )
-from calibre.gui2 import error_dialog, gprefs
+from calibre.gui2 import error_dialog, gprefs, config
 from calibre.gui2.actions import InterfaceAction
 from calibre.gui2.widgets import HistoryLineEdit
 from calibre.utils.config import JSONConfig
@@ -16,6 +16,7 @@ prefs = JSONConfig('plugins/tag_cloud')
 prefs.defaults.update(visible=True, sizes=[600, 300], limit=100, match_all=True, scope=0, field='tags')
 prefs.defaults.update(random_colors=True, colors=['#56b4e9', '#e69f00', '#009e73', '#cc79a7', '#d55e00'])
 prefs.defaults['click_mode'] = 'intersection'
+prefs.defaults['order'] = 'random'
 
 
 class CloudPanel(QWidget):
@@ -28,6 +29,7 @@ class CloudPanel(QWidget):
         self.base_query = None
         self.last_query = None
         self.order_seed = random.random()
+        self.category_order = {}
         layout = QVBoxLayout(self)
         layout.setContentsMargins(6, 4, 6, 4)
         header = QHBoxLayout()
@@ -90,11 +92,16 @@ class CloudPanel(QWidget):
         self.mode.addItems(['交集', '獨選'])
         self.mode.setCurrentIndex(1 if prefs['click_mode'] == 'single' else 0)
         self.mode.hide()
+        self.order = QComboBox(self)
+        self.order.addItems(['跟隨標籤瀏覽器', '隨機排列'])
+        self.order.setCurrentIndex(0 if prefs['order'] == 'browser' else 1)
+        self.order.hide()
         self.scope.currentIndexChanged.connect(self.reload)
         self.field.currentIndexChanged.connect(self.change_field)
         self.limit.currentIndexChanged.connect(self.render)
         self.find.editTextChanged.connect(self.render)
         self.mode.currentIndexChanged.connect(self.change_click_mode)
+        self.order.currentIndexChanged.connect(self.change_order)
 
     def populate_fields(self):
         self.field.blockSignals(True)
@@ -114,6 +121,10 @@ class CloudPanel(QWidget):
         self.find.save_history()
         self.render()
 
+    def change_order(self, *args):
+        prefs['order'] = 'browser' if self.order.currentIndex() == 0 else 'random'
+        self.render()
+
     def change_field(self, *args):
         self.clear()
         prefs['field'] = self.field.currentData()
@@ -121,7 +132,7 @@ class CloudPanel(QWidget):
 
     def configure(self):
         dialog = QDialog(self)
-        dialog.setWindowTitle('Tag Cloud 0.1.3 — 設定')
+        dialog.setWindowTitle('Tag Cloud 0.1.4 — 設定')
         layout = QVBoxLayout(dialog)
         layout.addWidget(QLabel('雲的統計與篩選欄位（標籤／系列／作者／自訂欄位）'))
         field = QComboBox(dialog)
@@ -131,7 +142,7 @@ class CloudPanel(QWidget):
         layout.addWidget(field)
         choices = []
         for label, original in (('統計範圍', self.scope), ('顯示詞彙數量', self.limit),
-                                ('點選動作', self.mode)):
+                                ('點選動作', self.mode), ('排序', self.order)):
             layout.addWidget(QLabel(label))
             choice = QComboBox(dialog)
             choice.setAccessibleName(label)
@@ -184,7 +195,9 @@ class CloudPanel(QWidget):
             # Empty search respects the virtual library, without the current search.
             ids = (db.search_getting_ids('', '') if self.scope.currentIndex() == 0
                    else db.new_api.all_book_ids())
-            self.counts = count_tags(db.new_api.all_field_for(self.field.currentData(), ids))
+            self.book_ids = frozenset(ids)
+            self.category_order = {}
+            self.counts = count_tags(db.new_api.all_field_for(self.field.currentData(), self.book_ids))
             prefs['scope'] = self.scope.currentIndex()
             self.render()
         except Exception as err:
@@ -196,9 +209,17 @@ class CloudPanel(QWidget):
         prefs['limit'] = text if text == '全部' else int(text)
         needle = self.find.text().casefold().strip()
         values = [(name, count) for name, count in self.counts if needle in name.casefold()]
+        if self.order.currentIndex() == 0:
+            key = (config['sort_tags_by'], self.field.currentData())
+            if key not in self.category_order:
+                categories = self.action.gui.current_db.new_api.get_categories(sort=key[0], book_ids=self.book_ids)
+                self.category_order[key] = {tag.name: index for index, tag in enumerate(categories.get(key[1], ()))}
+            positions = self.category_order[key]
+            values.sort(key=lambda item: positions.get(item[0], len(positions)))
         if text != '全部':
             values = values[:int(text)]
-        random.Random(self.order_seed).shuffle(values)
+        if self.order.currentIndex() == 1:
+            random.Random(self.order_seed).shuffle(values)
         self.names = [name for name, count in values]
         maximum = max((count for name, count in values), default=1)
         minimum = min((count for name, count in values), default=1)
@@ -316,6 +337,7 @@ class TagCloudAction(InterfaceAction):
                 from calibre_plugins.tag_cloud.sidebar import Sidebar
                 self.sidebar = Sidebar(self)
                 self.sidebar.relayout()
+                self.gui.tags_view.model().modelReset.connect(self.schedule_reload)
                 changed = False
                 for key in ('toolbar', 'toolbar-device', 'toolbar-child', 'menubar',
                             'menubar-device', 'searchbar', 'context-menu', 'context-menu-device',

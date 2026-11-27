@@ -9,9 +9,9 @@
 | 項目 | 說明 |
 | --- | --- |
 | 專案來源 | [SamLaio/calibreMetadatImplode](https://github.com/SamLaio/calibreMetadatImplode)，本倉庫為整合與修訂來源；各外掛的原作者及授權保留於各自目錄。 |
-| 整合發行版號 | **[v1.3.34（2026-11-27）](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.34)**。這是整套發行附件的版號，與各外掛在 calibre 顯示的版號分開管理。 |
+| 整合發行版號 | **[v1.3.35（2026-11-27）](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.35)**。這是整套發行附件的版號，與各外掛在 calibre 顯示的版號分開管理。 |
 | 專案層修改 | 將外掛整理為各自的 `src/`，使用 `build_release.py` 統一輸出二十七個獨立安裝包到 `dist/`；排除隱藏檔、快取及 `.po` 翻譯來源。Columns Helper、CrossPoint Reader、Diaps Editing Toolbag、Extract ISBN、Generate Cover、Goodreads Sync、Hardcover Sync 、Manage Series 與 Shortcuts Helper 的翻譯在打包時分別編譯。 |
-| 本次變更 | EpubSplit 3.12.0.2 修復版號格式造成啟動圖示中斷；Tag Cloud 0.1.3 加入自適應側欄、原生搜尋與交集／獨選；核對全部 27 支外掛版號與說明。 |
+| 本次變更 | Tag Cloud 0.1.4 新增跟隨標籤瀏覽器／隨機排列選項；其餘 26 支外掛版號與內容不變。 |
 
 ## 各外掛簡介、來源與版號
 
@@ -34,7 +34,7 @@
 | [GitHub Plugin Updater](./GitHub%20Plugin%20Updater/README.md) | 追蹤多個公開 GitHub 庫，先比身分檔與清單的內容 SHA，再比版號；勾選下載更新，可選自動備份。 | 本倉庫自行開發，SamLiao & Codex；思路參考 Obtainium。 | **0.3.3**；簡化未安裝狀態文字，保留自動備份開關及 Token 功能。 |
 | [Plugin Backup](./Plugin%20Backup/README.md) | 勾選或一次全部匯出／批次匯入第三方外掛與啟用狀態，可選是否包含設定；入口位於外掛偏好設定底部。 | 本倉庫自行開發，SamLiao & Codex。 | **0.1**。 |
 | [Skip ASCII Text Plugin](./Skip%20ASCII%20Text%20Plugin/README.md) | 保留檔名中的中文等原文字元，略過 ASCII 轉寫。 | 本倉庫獨立重寫，SamLiao & Codex；功能參考 [shiratori3/calibre-plugins v1.0.0](https://gitee.com/shiratori3/calibre-plugins/releases/tag/v1.0.0)，程式作者欄 Billy Zhou，原版採 BSD 3-Clause。 | **1.0.1**，本倉庫重寫版。 |
-| [Tag Cloud](./Tag%20Cloud/README.md) | 左側可調高度的詞雲，支援標籤、系列、作者與相容自訂欄位，點選篩書與自訂配色。 | 本倉庫自行開發，SamLiao & Codex；無獨立上游。 | **0.1.3**；底部獨立切換、側欄自適應及全部詞彙。 |
+| [Tag Cloud](./Tag%20Cloud/README.md) | 左側可調高度的詞雲，支援標籤、系列、作者與相容自訂欄位，點選篩書與自訂配色。 | 本倉庫自行開發，SamLiao & Codex；無獨立上游。 | **0.1.4**；新增跟隨標籤瀏覽器／隨機排列。 |
 | [Toolbar Manager](./Toolbar%20Manager/README.md) | 右鍵調整工具列按鈕，開啟外掛首頁、選項或移除外掛。 | 本倉庫自行開發；SamLiao & Codex。 | **1.0.0**。 |
 | [Traditional Chinese Supplement](./Traditional%20Chinese%20Supplement/README.md) | 補齊指定官方與第三方外掛視窗的正體中文顯示文字。 | 本倉庫自行開發；SamLiao & Codex，核對 calibre 9.18／9.19 與相關外掛介面。 | **1.2.1**；補齊主視窗資料夾／書本詳細資料選單，保留偏好設定、動態視窗、快捷鍵、範本與書本檢查翻譯，無額外工具列按鈕。 |
 ### 上游修訂外掛
@@ -113,7 +113,7 @@
 | 外掛 | 驗證範圍 |
 | --- | --- |
 | EpubSplit 3.12.0.2 | 實際安裝包初始化、圖示與完整版號測試通過；驗證二段／四段／六段顯示及四段／六段維護腳本修訂遞增。 |
-| Tag Cloud 0.1.3 | 4 項核心與 10 項 Qt／資料庫測試；隔離主視窗確認實際安裝包載入、側欄嵌入、標籤篩書與作者切換。 |
+| Tag Cloud 0.1.4 | 4 項核心與 11 項 Qt／資料庫測試；隔離主視窗確認實際安裝包載入、側欄嵌入、標籤篩書與作者切換。 |
 | GitHub Plugin Updater | 0.3.2 通過 71 項測試及原生主視窗驗證；0.3.3 文字調整後通過 11 項核心與 3 項打包測試。涵蓋 SHA、來源綁定、Token、限流、自動備份及失敗回復。 |
 | Hardcover Sync 0.4.0.2 | 13 項隔離測試通過；原生主視窗確認舊版重現相同關閉例外，新版提前關閉與正常確認均無例外。 |
 | CrossPoint Reader 0.2.8.2 | 8 項位置對照、7 項連線與 4 項語言／設定／協定測試通過，含真實本機 HTTP 服務；Gutenberg 選用案例因網站維護未驗證，未以實體閱讀器驗收。 |
