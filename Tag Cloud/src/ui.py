@@ -86,6 +86,8 @@ class CloudPanel(QWidget):
         self.cloud.setOpenLinks(False)
         self.cloud.setAccessibleName('標籤雲；點選標籤篩選書籍')
         self.cloud.anchorClicked.connect(self.clicked)
+        self.cloud.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        self.cloud.customContextMenuRequested.connect(self.show_context_menu)
         layout.addWidget(self.cloud)
         layout.addLayout(header)
         self.status = QLabel(self)
@@ -115,6 +117,10 @@ class CloudPanel(QWidget):
             if info['datatype'] is not None:
                 fields.append((key, (info['name'] or key) + ' (' + key + ')'))
         return fields
+
+    def show_context_menu(self, position):
+        from calibre_plugins.tag_cloud.context import show_menu
+        show_menu(self, position)
 
     def enabled_fields(self):
         library = self.action.gui.current_db.new_api.library_id
@@ -173,7 +179,7 @@ class CloudPanel(QWidget):
 
     def configure(self):
         dialog = QDialog(self)
-        dialog.setWindowTitle('Tag Cloud 0.1.5 — 設定')
+        dialog.setWindowTitle('Tag Cloud 0.1.6 — 設定')
         layout = QVBoxLayout(dialog)
         layout.addWidget(QLabel('雲的統計與篩選欄位'))
         field_row = QHBoxLayout()

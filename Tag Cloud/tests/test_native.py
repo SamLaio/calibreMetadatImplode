@@ -101,6 +101,43 @@ def verify():
         central.tag_browser_button.setChecked(True)
         panel.limit.setCurrentText('全部')
         assert len(panel.names) == len(panel.counts)
+        if os.environ.get('TAG_CLOUD_TEST_EDITS'):
+            from calibre_plugins.tag_cloud import context
+            from qt.core import QDialogButtonBox
+            def confirmed_operation(remove=False):
+                term = '原生測試標籤' if remove else '歷史'
+                ids = set(panel.term_books[term])
+                timer = QTimer()
+                timer.setInterval(30)
+                def respond():
+                    dialog = app.activeModalWidget()
+                    if isinstance(dialog, context.ValueDialog):
+                        dialog.editor.setText('原生測試標籤')
+                        dialog.accept()
+                    elif dialog is not None:
+                        buttons = dialog.findChild(QDialogButtonBox)
+                        yes = buttons.button(QDialogButtonBox.StandardButton.Yes) if buttons else None
+                        if yes is not None:
+                            dialog.grab().save(str(root / 'dist' / 'tag-cloud-edit-confirm.png'))
+                            yes.click()
+                            timer.stop()
+                timer.timeout.connect(respond)
+                timer.start()
+                def timeout():
+                    timer.stop()
+                    dialog = app.activeModalWidget()
+                    if dialog is not None:
+                        dialog.reject()
+                QTimer.singleShot(5000, timeout)
+                context.edit_term(panel, term, 'tags', gui.current_db, ids, remove=remove)
+                timer.stop()
+                return ids
+            ids = confirmed_operation()
+            assert all('原生測試標籤' in gui.current_db.new_api.field_for('tags', book_id) for book_id in ids)
+            assert all('台灣' in gui.current_db.new_api.field_for('tags', book_id) for book_id in ids)
+            confirmed_operation(remove=True)
+            assert all('原生測試標籤' not in gui.current_db.new_api.field_for('tags', book_id) for book_id in ids)
+            assert all('台灣' in gui.current_db.new_api.field_for('tags', book_id) for book_id in ids)
         gui.resize(1400, 900)
         action.splitter.setSizes([450, 320])
         app.processEvents()
@@ -108,6 +145,9 @@ def verify():
         result = {'success': True, 'checks': ['package load', 'four visibility states', 'bottom button', 'cloud-only resize', 'all words', 'tag search', 'authors', 'render']}
         result['packages'] = len(packages)
         result['interface_actions'] = expected_actions
+        if os.environ.get('TAG_CLOUD_TEST_EDITS'):
+            result['checks'].extend(['native edit dialog', 'native confirmation', 'metadata rename',
+                                     'metadata removal', 'unrelated values preserved'])
     except Exception:
         result = {'success': False, 'error': traceback.format_exc()}
     (profile / 'result.json').write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')

@@ -240,6 +240,77 @@ class GuiTests(unittest.TestCase):
         self.assertIsNone(panel.choose_fields(before, self.gui))
         self.assertEqual(panel.enabled_fields(), before)
 
+    def test_context_menu_edit_and_cancel(self):
+        from unittest.mock import Mock, patch
+        from qt.core import QTimer, Qt
+        from calibre_plugins.tag_cloud import context
+        panel = self.action.panel
+        self.assertEqual(panel.cloud.contextMenuPolicy(), Qt.ContextMenuPolicy.CustomContextMenu)
+        menu = context.make_menu(panel, '歷史')
+        actions = {a.data(): a for a in menu.actions() if a.data()}
+        self.assertEqual(set(actions), {'edit', 'remove'})
+        self.assertTrue(actions['edit'].isEnabled())
+        self.assertTrue(actions['remove'].isEnabled())
+        ids = set(panel.term_books['歷史'])
+        model = SimpleNamespace(refresh_ids=Mock(), research=Mock())
+        self.gui.library_view = SimpleNamespace(model=lambda: model)
+        self.gui.tags_view.recount = Mock()
+        def input_value():
+            dialog = next(w for w in QApplication.topLevelWidgets()
+                          if isinstance(w, context.ValueDialog) and w.isVisible())
+            dialog.editor.setText('新歷史')
+            dialog.accept()
+        QTimer.singleShot(0, input_value)
+        with patch.object(context, 'question_dialog', return_value=False):
+            context.edit_term(panel, '歷史', 'tags', self.db, ids)
+        self.assertTrue(all('歷史' in self.db.new_api.field_for('tags', book_id) for book_id in ids))
+        panel.selected = ['歷史']
+        panel.apply_search()
+        QTimer.singleShot(0, input_value)
+        with patch.object(context, 'question_dialog', return_value=True), patch.object(context, 'error_dialog') as error:
+            context.edit_term(panel, '歷史', 'tags', self.db, ids)
+        error.assert_not_called()
+        self.assertTrue(all('新歷史' in self.db.new_api.field_for('tags', book_id) for book_id in ids))
+        self.assertEqual(panel.selected, ['新歷史'])
+        self.assertEqual(self.db.new_api.search(self.gui.search.text), ids)
+
+    def test_context_readonly_and_comments_guard(self):
+        from calibre_plugins.tag_cloud import context
+        panel = self.action.panel
+        panel.save_enabled_fields(['id', 'title', 'comments'])
+        panel.populate_fields()
+        panel.field.setCurrentIndex(panel.field.findData('id'))
+        panel.reload()
+        actions = {a.data(): a for a in context.make_menu(panel, panel.names[0]).actions() if a.data()}
+        self.assertFalse(actions['edit'].isEnabled())
+        self.assertFalse(actions['remove'].isEnabled())
+        panel.field.setCurrentIndex(panel.field.findData('title'))
+        actions = {a.data(): a for a in context.make_menu(panel, panel.names[0]).actions() if a.data()}
+        self.assertTrue(actions['edit'].isEnabled())
+        self.assertFalse(actions['remove'].isEnabled())
+        ids = sorted(self.db.new_api.all_book_ids())
+        self.db.new_api.set_field('comments', {ids[0]: '<p>' + '甲' * 130 + 'A</p>',
+                                             ids[1]: '<p>' + '甲' * 130 + 'B</p>'})
+        panel.field.setCurrentIndex(panel.field.findData('comments'))
+        panel.reload()
+        actions = {a.data(): a for a in context.make_menu(panel, panel.names[0]).actions() if a.data()}
+        self.assertFalse(actions['edit'].isEnabled())
+        self.assertTrue(actions['remove'].isEnabled())
+
+    def test_context_library_switch_aborts_write(self):
+        from unittest.mock import patch
+        from calibre_plugins.tag_cloud import context
+        panel = self.action.panel
+        ids = set(panel.term_books['歷史'])
+        def switch(*args, **kwargs):
+            self.gui.current_db = None
+            return True
+        with patch.object(context, 'question_dialog', side_effect=switch), patch.object(context, 'error_dialog') as error:
+            context.edit_term(panel, '歷史', 'tags', self.db, ids, remove=True)
+        self.gui.current_db = self.db
+        self.assertTrue(error.called)
+        self.assertTrue(all('歷史' in self.db.new_api.field_for('tags', book_id) for book_id in ids))
+
     def test_native_search_history_and_clear(self):
         panel = self.action.panel
         panel.find.setText('歷史')
