@@ -56,6 +56,7 @@ class GuiTests(unittest.TestCase):
         layout = QVBoxLayout(host)
         layout.addWidget(self.gui.tags_view)
         self.bottom = QLineEdit(host)
+        host.tb_bar = self.bottom
         layout.addWidget(self.bottom)
         # Exercise real Qt layout integration with an isolated database.
         from qt.core import QObject
@@ -83,8 +84,9 @@ class GuiTests(unittest.TestCase):
 
     def test_sidebar_and_field_search(self):
         panel = self.action.panel
-        self.assertEqual(self.action.splitter.widget(0), self.gui.tags_view)
-        self.assertEqual(self.action.splitter.parentWidget().layout().indexOf(self.bottom), 1)
+        self.assertEqual(self.action.splitter.widget(0), self.action.tree_pane)
+        self.assertEqual(self.action.tree_pane.layout().indexOf(self.gui.tags_view), 0)
+        self.assertEqual(self.action.tree_pane.layout().indexOf(self.bottom), 1)
         self.assertEqual(dict(panel.counts)['歷史'], 2)
         from qt.core import QUrl
         panel.clicked(QUrl('tag:' + str(panel.names.index('歷史'))))
@@ -132,6 +134,47 @@ class GuiTests(unittest.TestCase):
         panel.selected = [names[0]]
         panel.render()
         self.assertEqual(panel.names, names)
+
+    def test_quantity_options(self):
+        panel = self.action.panel
+        panel.counts = [(str(n), n + 1) for n in range(550)]
+        self.assertEqual([panel.limit.itemText(i) for i in range(panel.limit.count())],
+                         ['50', '100', '200', '500', '全部'])
+        for text, size in [('50', 50), ('100', 100), ('200', 200), ('500', 500), ('全部', 550)]:
+            panel.limit.setCurrentText(text)
+            self.assertEqual(len(panel.names), size)
+
+    def test_native_search_history_and_clear(self):
+        panel = self.action.panel
+        panel.find.setText('歷史')
+        panel.search_button.click()
+        self.assertEqual(panel.names, ['歷史'])
+        self.assertIn('歷史', [panel.find.itemText(i) for i in range(panel.find.count())])
+        panel.clear_search.trigger()
+        self.assertEqual(panel.find.text(), '')
+        self.assertEqual(len(panel.names), len(panel.counts))
+        self.assertIn('歷史', [panel.find.itemText(i) for i in range(panel.find.count())])
+
+    def test_click_modes(self):
+        from qt.core import QUrl
+        panel = self.action.panel
+        panel.mode.setCurrentIndex(0)
+        def click(name):
+            panel.clicked(QUrl('tag:' + str(panel.names.index(name))))
+        click('歷史')
+        click('台灣')
+        self.assertEqual(set(panel.selected), {'歷史', '台灣'})
+        self.assertEqual(len(self.db.new_api.search(self.gui.search.text)), 1)
+        panel.mode.setCurrentIndex(1)
+        self.assertEqual(panel.selected, ['台灣'])
+        click('科幻')
+        self.assertEqual(panel.selected, ['科幻'])
+        self.assertEqual(len(self.db.new_api.search(self.gui.search.text)), 1)
+        click('歷史')
+        self.assertEqual(panel.selected, ['歷史'])
+        self.assertEqual(len(self.db.new_api.search(self.gui.search.text)), 2)
+        click('歷史')
+        self.assertEqual(panel.selected, [])
 
     def test_settings_colors_and_field(self):
         from qt.core import QTimer, QDialog, QComboBox, QCheckBox

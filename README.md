@@ -9,17 +9,17 @@
 | 項目 | 說明 |
 | --- | --- |
 | 專案來源 | [SamLaio/calibreMetadatImplode](https://github.com/SamLaio/calibreMetadatImplode)，本倉庫為整合與修訂來源；各外掛的原作者及授權保留於各自目錄。 |
-| 整合發行版號 | **[v1.3.35（2026-11-27）](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.35)**。這是整套發行附件的版號，與各外掛在 calibre 顯示的版號分開管理。 |
+| 整合發行版號 | **[v1.3.34（2026-11-27）](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.34)**。這是整套發行附件的版號，與各外掛在 calibre 顯示的版號分開管理。 |
 | 專案層修改 | 將外掛整理為各自的 `src/`，使用 `build_release.py` 統一輸出二十七個獨立安裝包到 `dist/`；排除隱藏檔、快取及 `.po` 翻譯來源。Columns Helper、CrossPoint Reader、Diaps Editing Toolbag、Extract ISBN、Generate Cover、Goodreads Sync、Hardcover Sync 、Manage Series 與 Shortcuts Helper 的翻譯在打包時分別編譯。 |
-| 本次變更 | Tag Cloud 0.1.2 將欄位、範圍、數量、符合模式、摘要與清除選取集中至設定；側欄保留搜尋與詞雲。 |
+| 本次變更 | EpubSplit 3.12.0.2 修復版號格式造成啟動圖示中斷；Tag Cloud 0.1.3 加入自適應側欄、原生搜尋與交集／獨選；核對全部 27 支外掛版號與說明。 |
 
 ## 各外掛簡介、來源與版號
 
 各列表依名稱字母升序排列；修改摘要採相同分類與順序。
 
-2026-11-27 核對 Tag Cloud 0.1.2 的程式宣告、作者、來源、說明與安裝包；其餘外掛沿用既有基準。
+2026-11-27 核對全部 27 支外掛的程式宣告、作者、來源、版號、內外層 README 與安裝包；檢查版號格式後修正 EpubSplit，其餘外掛沿用既有基準。
 
-文件核對日期：**2026-11-22**。二十六支外掛的名稱、作者、版號、安裝包與本地說明已對照目前程式；上游採表列固定基準，歷次上游更新與整合紀錄見 [CHANGELOG](./CHANGELOG.md)。
+文件核對日期：**2026-11-27**。二十七支外掛的名稱、作者、版號、安裝包與本地說明已對照目前程式；上游採表列固定基準，歷次上游更新與整合紀錄見 [CHANGELOG](./CHANGELOG.md)。
 
 2026-11-23 核對 17 支上游修訂外掛的官方索引、版本與來源；CrossPoint Reader 同步上游 0.2.8 後續提交，其餘來源未發現待合併更新。
 
@@ -34,7 +34,7 @@
 | [GitHub Plugin Updater](./GitHub%20Plugin%20Updater/README.md) | 追蹤多個公開 GitHub 庫，先比身分檔與清單的內容 SHA，再比版號；勾選下載更新，可選自動備份。 | 本倉庫自行開發，SamLiao & Codex；思路參考 Obtainium。 | **0.3.3**；簡化未安裝狀態文字，保留自動備份開關及 Token 功能。 |
 | [Plugin Backup](./Plugin%20Backup/README.md) | 勾選或一次全部匯出／批次匯入第三方外掛與啟用狀態，可選是否包含設定；入口位於外掛偏好設定底部。 | 本倉庫自行開發，SamLiao & Codex。 | **0.1**。 |
 | [Skip ASCII Text Plugin](./Skip%20ASCII%20Text%20Plugin/README.md) | 保留檔名中的中文等原文字元，略過 ASCII 轉寫。 | 本倉庫獨立重寫，SamLiao & Codex；功能參考 [shiratori3/calibre-plugins v1.0.0](https://gitee.com/shiratori3/calibre-plugins/releases/tag/v1.0.0)，程式作者欄 Billy Zhou，原版採 BSD 3-Clause。 | **1.0.1**，本倉庫重寫版。 |
-| [Tag Cloud](./Tag%20Cloud/README.md) | 左側可調高度的詞雲，支援標籤、系列、作者與相容自訂欄位，點選篩書與自訂配色。 | 本倉庫自行開發，SamLiao & Codex；無獨立上游。 | **0.1.2**；側欄選項集中至設定。 |
+| [Tag Cloud](./Tag%20Cloud/README.md) | 左側可調高度的詞雲，支援標籤、系列、作者與相容自訂欄位，點選篩書與自訂配色。 | 本倉庫自行開發，SamLiao & Codex；無獨立上游。 | **0.1.3**；底部獨立切換、側欄自適應及全部詞彙。 |
 | [Toolbar Manager](./Toolbar%20Manager/README.md) | 右鍵調整工具列按鈕，開啟外掛首頁、選項或移除外掛。 | 本倉庫自行開發；SamLiao & Codex。 | **1.0.0**。 |
 | [Traditional Chinese Supplement](./Traditional%20Chinese%20Supplement/README.md) | 補齊指定官方與第三方外掛視窗的正體中文顯示文字。 | 本倉庫自行開發；SamLiao & Codex，核對 calibre 9.18／9.19 與相關外掛介面。 | **1.2.1**；補齊主視窗資料夾／書本詳細資料選單，保留偏好設定、動態視窗、快捷鍵、範本與書本檢查翻譯，無額外工具列按鈕。 |
 ### 上游修訂外掛
@@ -50,7 +50,7 @@
 | [Count Pages](./Count%20Pages/README.md) | 計算或下載頁數、字數與可讀性統計，寫入自訂欄位。 | Grant Drake；[kiwidude68/calibre_plugins/count_pages，提交 `d46d919`](https://github.com/kiwidude68/calibre_plugins/tree/d46d9197ac2f78e98f2a774a6afbf8d54d9ce68a/count_pages)，基準 **1.15.3**。 | **1.15.3.1**，本倉庫修訂版。 |
 | [CrossPoint Reader](./CrossPoint%20Reader/README.md) | 將 CrossPoint 閱讀器作為無線裝置，傳送與讀取 EPUB 書單；先驗證服務再切換裝置介面。 | CrossPoint Reader；[官方 v0.2.8](https://github.com/crosspoint-reader/calibre-plugins/tree/54f73d7e31dedc66c987ba3801fce92d286eccfa)，MIT；基準 **0.2.8**。 | **0.2.8.2**，連線修正與 134 條原生正體中文。 |
 | [Diaps Editing Toolbag](./Diaps%20Editing%20Toolbag/README.md) | 在編輯書本中批次編輯 HTML 標籤、轉換西文智慧標點及 CSS cm／em 單位。 | DiapDealer（Doug Massay）；[dougmassay/toolbag-calibre-plugin，提交 `4589e1a`](https://github.com/dougmassay/toolbag-calibre-plugin/tree/4589e1ad30421d1a7698fc26464cb20336a61771)，基準 **0.5.0**。 | **0.5.0.1**；正體中文與 calibre 9.19 相容性修訂。 |
-| [EpubSplit](./EpubSplit/README.md) | 按目錄或章節將 EPUB 拆成多本新書。 | Jim Miller；[JimmXinu/EpubSplit，標籤 `v3.12.0`](https://github.com/JimmXinu/EpubSplit/tree/a0b31ea9c0c9b439329574c4752b24eaaab67f72)，基準 **3.12.0**。 | **3.12.0.1**，本倉庫修訂版。 |
+| [EpubSplit](./EpubSplit/README.md) | 按目錄或章節將 EPUB 拆成多本新書。 | Jim Miller；[JimmXinu/EpubSplit，標籤 `v3.12.0`](https://github.com/JimmXinu/EpubSplit/tree/a0b31ea9c0c9b439329574c4752b24eaaab67f72)，基準 **3.12.0**。 | **3.12.0.2**；修正四段版號造成初始化及圖示中斷。 |
 | [Extract ISBN](./Extract%20ISBN/README.md) | 從電子書內文擷取 ISBN，確認後更新書庫識別碼。 | Grant Drake；[kiwidude68/calibre_plugins/extract_isbn，提交 `2a2dbb2`](https://github.com/kiwidude68/calibre_plugins/tree/2a2dbb2469ec6e68179cd71ba943db240045d097/extract_isbn)，程式宣告 **1.6.7**。 | **1.6.7.1**，基於上游 1.6.7 的本倉庫修訂版。 |
 | [Find Duplicates](./Find%20Duplicates/README.md) | 依書目規則找重複書籍，也支援格式檔案的二進位比對。 | Grant Drake；[kiwidude68/calibre_plugins/find_duplicates，提交 `91b0f23`](https://github.com/kiwidude68/calibre_plugins/tree/91b0f23da54fa8f020ba387e1f13a1321706c0ff/find_duplicates)，基準 **1.10.11**；早期來源為 JimmXinu 分支。 | **1.10.11.1**，本倉庫修訂版。 |
 | [Generate Cover](./Generate%20Cover/README.md) | 用圖片與書目資料製作自訂封面。 | Grant Drake；[kiwidude68/calibre_plugins/generate_cover](https://github.com/kiwidude68/calibre_plugins/tree/cd41919f50ce650c45f652f05bbb4327f243a171/generate_cover)，基準 2.5.4。 | **2.5.4.2**，正體中文修訂版。 |
@@ -78,7 +78,7 @@
 | GitHub Plugin Updater | 新增來源管理、固定 ID 綁定、JSON-only 檢查、身分 SHA 優先、提示同版差異與降版、勾選強制安裝、備份與失敗回復；26 包加入身分檔與可重現打包，產生版本／SHA 清單。 |
 | Plugin Backup | 新增偏好設定底部入口、全選切換、兩列匯出／匯入按鈕；勾選模式只含所選外掛可辨識專用設定，全部模式可備份完整設定及工具列按鈕位置；提供相容性與校驗檢查、進度及失敗回復；保留本機書庫位置，通過 10 項格式測試、4 項安裝 API 測試與原生 GUI 往返驗證。 |
 | Skip ASCII Text Plugin | 沿用執行期間替換函式、保留 Unicode 而不改寫 calibre 安裝檔的方向；重寫核心與設定介面，作者為 SamLiao & Codex；修正位元組輸入、重複切換及函式還原，避免覆蓋後續外掛替換；保留舊設定識別，加入「文」字勾號圖示、附效果示意的正體中文設定視窗、測試與統一打包，移除原包程式及圖示。 |
-| Tag Cloud | 新增側欄詞雲、欄位選擇、交集／聯集篩書、虛擬書庫範圍、設定保存與可自訂隨機配色。 |
+| Tag Cloud | 底部雲朵圖示獨立控制詞雲，自適應分類樹開關；原生歷史搜尋、交集／獨選、欄位及配色設定、50／100／200／500／全部與強化字級差異。 |
 | Toolbar Manager | 加入專用圖示及正體中文工具列右鍵管理；移除外掛前確認，保護必要入口並保留原有選單。 |
 | Traditional Chinese Supplement | 1.2.1 補齊主視窗資料夾與書本詳細資料動態選單；原有補翻偏好設定、工具列、快捷鍵、範本及編輯器文法／改寫介面；核對 43 個調校項目、184 個核心快捷鍵、196 段書本檢查訊息與 32 條啟用 CSS 規則，保留設定、輸入與修復行為。 |
 ### 上游修訂外掛
@@ -90,7 +90,7 @@
 | Count Pages | 採用上游 1.15.3 的 Goodreads `.xml` 網址與語系更新；保留正體中文語系別名，補齊 12 個提示至 119 個介面翻譯；還原英文斷句模型並設為二進位，避免 Windows 換行破壞，加入離線回歸測試。 |
 | CrossPoint Reader | 0.2.8.2 同步上游閱讀位置對照與 EPUB 拆分修正；整合 0.2.8，嚴格辨識探索回覆、連線前檔案服務驗證、定期連線檢查、失敗冷卻、退出／停止狀態及原生 BookList；新增 134 條正體中文，11 項測試通過。 |
 | Diaps Editing Toolbag | 新增 71 條原生正體中文與兩份內建中文說明，修正 Qt 6、批次錯誤傳遞、目前檔案結果清單、Python 3 撇號例外詞及衝突快捷鍵；通過七項隔離測試及三項功能的原生編輯器儲存重開驗證。 |
-| EpubSplit | 解除 EPUB3 阻擋，加入 EPUB3 導覽解析及 EPUB3 輸出，依來源保留 EPUB2／EPUB3；加入 HTML 解析器備援、正體中文翻譯與說明。 |
+| EpubSplit | 修正啟動版號格式不支援本地修訂段、導致圖示與按鈕初始化中斷；解除 EPUB3 阻擋，加入 EPUB3 導覽解析及 EPUB3 輸出，依來源保留 EPUB2／EPUB3；加入 HTML 解析器備援、正體中文翻譯與說明。 |
 | Extract ISBN | 修正 ISBN-10 小寫 `x` 校驗、PDF 書尾掃描範圍與方向、缺少格式的錯誤摘要；新增 65 個正體中文介面翻譯、中文說明及 9 組測試，納入共用模組與統一打包。 |
 | Find Duplicates | 更新上游至 1.10.11 並整合語系；保留 179 個正體中文介面翻譯、語系別名、中文說明與描述調整。重複書籍比對核心未自行改寫。 |
 | Generate Cover | 同步上游塞爾維亞拉丁語翻譯與 2.5.4 文字量測、字重及圖片內距遷移；保留正體中文、自動縮字、背景切換、批次取消、設定匯入與路徑保護、封面 API 及三頁捲動區；補齊旋轉文字匯入與新增翻譯。 |
@@ -112,7 +112,8 @@
 
 | 外掛 | 驗證範圍 |
 | --- | --- |
-| Tag Cloud 0.1.2 | 4 項核心與 7 項 Qt／資料庫測試；隔離主視窗確認實際安裝包載入、側欄嵌入、標籤篩書與作者切換。 |
+| EpubSplit 3.12.0.2 | 實際安裝包初始化、圖示與完整版號測試通過；驗證二段／四段／六段顯示及四段／六段維護腳本修訂遞增。 |
+| Tag Cloud 0.1.3 | 4 項核心與 10 項 Qt／資料庫測試；隔離主視窗確認實際安裝包載入、側欄嵌入、標籤篩書與作者切換。 |
 | GitHub Plugin Updater | 0.3.2 通過 71 項測試及原生主視窗驗證；0.3.3 文字調整後通過 11 項核心與 3 項打包測試。涵蓋 SHA、來源綁定、Token、限流、自動備份及失敗回復。 |
 | Hardcover Sync 0.4.0.2 | 13 項隔離測試通過；原生主視窗確認舊版重現相同關閉例外，新版提前關閉與正常確認均無例外。 |
 | CrossPoint Reader 0.2.8.2 | 8 項位置對照、7 項連線與 4 項語言／設定／協定測試通過，含真實本機 HTTP 服務；Gutenberg 選用案例因網站維護未驗證，未以實體閱讀器驗收。 |
@@ -128,6 +129,8 @@
 | Traditional Chinese Supplement 1.2.1 | 本次通過 3 項主視窗選單與 11 項顯示回歸測試，以及原生主視窗驗證；1.2.0 的既有檢查範圍見各外掛更新紀錄。 |
 | Manage Series 1.5.5.1 | 七項隔離測試及實際安裝包的原生 GUI 寫回、關閉重開驗證通過，涵蓋系列編號、自訂欄位、取消及資料保護。 |
 | Skip ASCII Text Plugin 1.0.1 | 10 項隔離測試通過，涵蓋 Unicode、切換與函式還原。 |
+
+2026-11-27 同時安裝 27 個發行包至隔離書庫啟動 calibre 9.19，19 個主視窗介面外掛均載入；確認 EpubSplit 圖示、Tag Cloud 四種側欄狀態與獨立切換。
 
 驗證涵蓋上述操作；實際裝置傳輸及所有第三方外掛組合尚待驗證。
 

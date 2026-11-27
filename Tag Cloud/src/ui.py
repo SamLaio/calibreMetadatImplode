@@ -3,8 +3,9 @@ from qt.core import (
     QSplitter, QTextBrowser, QTimer, QToolButton, QVBoxLayout, QWidget, Qt,
     QDialog, QDialogButtonBox, QCheckBox, QColor, QColorDialog,
 )
-from calibre.gui2 import error_dialog
+from calibre.gui2 import error_dialog, gprefs
 from calibre.gui2.actions import InterfaceAction
+from calibre.gui2.widgets import HistoryLineEdit
 from calibre.utils.config import JSONConfig
 from calibre_plugins.tag_cloud.core import count_tags, font_size, tag_query
 from html import escape
@@ -12,8 +13,9 @@ import hashlib
 import random
 
 prefs = JSONConfig('plugins/tag_cloud')
-prefs.defaults.update(visible=True, sizes=[600, 300], limit=60, match_all=True, scope=0, field='tags')
+prefs.defaults.update(visible=True, sizes=[600, 300], limit=100, match_all=True, scope=0, field='tags')
 prefs.defaults.update(random_colors=True, colors=['#56b4e9', '#e69f00', '#009e73', '#cc79a7', '#d55e00'])
+prefs.defaults['click_mode'] = 'intersection'
 
 
 class CloudPanel(QWidget):
@@ -29,24 +31,18 @@ class CloudPanel(QWidget):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(6, 4, 6, 4)
         header = QHBoxLayout()
-        header.addWidget(QLabel('標籤雲 0.1.2'))
-        header.addStretch()
         refresh = QToolButton(self)
-        refresh.setText('更新')
+        refresh.setIcon(QIcon.ic('view-refresh.png'))
+        refresh.setAccessibleName('重新統計標籤')
         refresh.setToolTip('重新統計標籤')
         refresh.clicked.connect(self.reload)
         header.addWidget(refresh)
         settings = QToolButton(self)
-        settings.setText('設定')
+        settings.setIcon(QIcon.ic('gear.png'))
+        settings.setAccessibleName('標籤雲設定')
         settings.setToolTip('設定欄位與字體顏色')
         settings.clicked.connect(self.configure)
         header.addWidget(settings)
-        close = QToolButton(self)
-        close.setText('×')
-        close.setToolTip('隱藏標籤雲；可由工具列重新開啟')
-        close.clicked.connect(lambda: action.qaction.setChecked(False))
-        header.addWidget(close)
-        layout.addLayout(header)
         self.field = QComboBox(self)
         self.field.setAccessibleName('統計欄位')
         self.field.hide()
@@ -56,33 +52,49 @@ class CloudPanel(QWidget):
         self.scope.setCurrentIndex(prefs['scope'])
         self.scope.setAccessibleName('統計範圍')
         self.limit = QComboBox(self)
-        self.limit.addItems(['40', '60', '100', '200'])
-        self.limit.setCurrentText(str(prefs['limit']))
+        self.limit.addItems(['50', '100', '200', '500', '全部'])
+        saved_limit = str(prefs['limit'])
+        self.limit.setCurrentText(saved_limit if saved_limit in ('50', '100', '200', '500', '全部') else '100')
         self.limit.setAccessibleName('顯示標籤數量')
         self.scope.hide()
         self.limit.hide()
-        self.find = QLineEdit(self)
-        self.find.setPlaceholderText('搜尋標籤……')
-        self.find.setClearButtonEnabled(True)
+        self.find = HistoryLineEdit(self)
+        self.find.initialize('tag_cloud_search')
+        self.find.setMinimumContentsLength(5)
+        self.find.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
+        self.find.lineEdit().setPlaceholderText('搜尋標籤……')
+        self.clear_search = self.find.lineEdit().addAction(QIcon.ic('window-close.png'), QLineEdit.ActionPosition.LeadingPosition)
+        self.clear_search.setToolTip('清除搜尋')
+        self.clear_search.triggered.connect(lambda: self.find.setText(''))
         self.find.setAccessibleName('搜尋標籤')
-        layout.addWidget(self.find)
+        header.insertWidget(0, self.find, 1)
+        self.search_button = QToolButton(self)
+        self.search_button.setAutoRaise(True)
+        self.search_button.setIcon(QIcon.ic('search.png'))
+        self.search_button.setToolTip('搜尋標籤（Enter）')
+        self.search_button.setAccessibleName('搜尋標籤')
+        self.search_button.clicked.connect(self.search_words)
+        header.insertWidget(1, self.search_button)
+        self.find.lineEdit().returnPressed.connect(self.search_words)
+        self.find.textActivated.connect(self.search_words)
         self.cloud = QTextBrowser(self)
         self.cloud.setOpenLinks(False)
         self.cloud.setAccessibleName('標籤雲；點選標籤篩選書籍')
         self.cloud.anchorClicked.connect(self.clicked)
         layout.addWidget(self.cloud)
+        layout.addLayout(header)
         self.status = QLabel(self)
         self.status.setWordWrap(True)
         self.status.hide()
         self.mode = QComboBox(self)
-        self.mode.addItems(['全部符合', '任一符合'])
-        self.mode.setCurrentIndex(0 if prefs['match_all'] else 1)
+        self.mode.addItems(['交集', '獨選'])
+        self.mode.setCurrentIndex(1 if prefs['click_mode'] == 'single' else 0)
         self.mode.hide()
         self.scope.currentIndexChanged.connect(self.reload)
         self.field.currentIndexChanged.connect(self.change_field)
         self.limit.currentIndexChanged.connect(self.render)
-        self.find.textChanged.connect(self.render)
-        self.mode.currentIndexChanged.connect(self.apply_search)
+        self.find.editTextChanged.connect(self.render)
+        self.mode.currentIndexChanged.connect(self.change_click_mode)
 
     def populate_fields(self):
         self.field.blockSignals(True)
@@ -98,6 +110,10 @@ class CloudPanel(QWidget):
         self.field.setCurrentIndex(max(0, index))
         self.field.blockSignals(False)
 
+    def search_words(self, *args):
+        self.find.save_history()
+        self.render()
+
     def change_field(self, *args):
         self.clear()
         prefs['field'] = self.field.currentData()
@@ -105,7 +121,7 @@ class CloudPanel(QWidget):
 
     def configure(self):
         dialog = QDialog(self)
-        dialog.setWindowTitle('Tag Cloud 0.1.2 — 設定')
+        dialog.setWindowTitle('Tag Cloud 0.1.3 — 設定')
         layout = QVBoxLayout(dialog)
         layout.addWidget(QLabel('雲的統計與篩選欄位（標籤／系列／作者／自訂欄位）'))
         field = QComboBox(dialog)
@@ -115,7 +131,7 @@ class CloudPanel(QWidget):
         layout.addWidget(field)
         choices = []
         for label, original in (('統計範圍', self.scope), ('顯示詞彙數量', self.limit),
-                                ('多選符合模式', self.mode)):
+                                ('點選動作', self.mode)):
             layout.addWidget(QLabel(label))
             choice = QComboBox(dialog)
             choice.setAccessibleName(label)
@@ -176,10 +192,12 @@ class CloudPanel(QWidget):
             self.status.setText(str(err))
 
     def render(self, *args):
-        prefs['limit'] = int(self.limit.currentText())
+        text = self.limit.currentText()
+        prefs['limit'] = text if text == '全部' else int(text)
         needle = self.find.text().casefold().strip()
         values = [(name, count) for name, count in self.counts if needle in name.casefold()]
-        values = values[:prefs['limit']]
+        if text != '全部':
+            values = values[:int(text)]
         random.Random(self.order_seed).shuffle(values)
         self.names = [name for name, count in values]
         maximum = max((count for name, count in values), default=1)
@@ -204,13 +222,21 @@ class CloudPanel(QWidget):
         name = self.names[int(url.path())]
         if name in self.selected:
             self.selected.remove(name)
+        elif self.mode.currentIndex() == 1:
+            self.selected = [name]
         else:
             self.selected.append(name)
         self.apply_search()
         self.render()
 
+    def change_click_mode(self, *args):
+        prefs['click_mode'] = 'single' if self.mode.currentIndex() == 1 else 'intersection'
+        if self.mode.currentIndex() == 1:
+            self.selected = self.selected[-1:]
+        self.apply_search()
+        self.render()
+
     def apply_search(self, *args):
-        prefs['match_all'] = self.mode.currentIndex() == 0
         search = self.action.gui.search
         current = str(search.currentText())
         if not self.selected:
@@ -220,7 +246,7 @@ class CloudPanel(QWidget):
             return
         if self.last_query is None or current != self.last_query:
             self.base_query = current
-        query = tag_query(self.selected, prefs['match_all'], self.field.currentData())
+        query = tag_query(self.selected, True, self.field.currentData())
         if self.base_query:
             query = '(' + self.base_query + ') and (' + query + ')'
         self.last_query = query
@@ -235,16 +261,20 @@ class CloudPanel(QWidget):
         self.selected = []
         self.base_query = self.last_query = None
         self.populate_fields()
-        self.find.clear()
+        self.find.setText('')
         self.reload()
 
 
 class TagCloudAction(InterfaceAction):
     name = 'Tag Cloud'
     action_spec = ('標籤雲', None, '顯示或隱藏左側標籤雲', None)
+    dont_add_to = frozenset(('toolbar', 'toolbar-device', 'toolbar-child', 'menubar',
+                             'menubar-device', 'context-menu', 'context-menu-device',
+                             'context-menu-split', 'context-menu-cover-browser', 'searchbar'))
 
     def genesis(self):
         self.panel = None
+        self.qaction.setVisible(False)
         self.qaction.setIcon(QIcon.ic('tags.png'))
         self.qaction.setCheckable(True)
         self.qaction.toggled.connect(self.toggle)
@@ -259,7 +289,16 @@ class TagCloudAction(InterfaceAction):
             self.panel = CloudPanel(self)
             self.splitter = QSplitter(Qt.Orientation.Vertical, host)
             layout.replaceWidget(view, self.splitter)
-            self.splitter.addWidget(view)
+            self.tree_pane = QWidget(self.splitter)
+            tree_layout = QVBoxLayout(self.tree_pane)
+            tree_layout.setContentsMargins(0, 0, 0, 0)
+            tree_layout.setSpacing(0)
+            tree_layout.addWidget(view)
+            bar = getattr(host, 'tb_bar', None)
+            if bar is not None:
+                layout.removeWidget(bar)
+                tree_layout.addWidget(bar)
+            self.splitter.addWidget(self.tree_pane)
             self.splitter.addWidget(self.panel)
             self.splitter.setCollapsible(0, False)
             self.splitter.setCollapsible(1, False)
@@ -273,6 +312,21 @@ class TagCloudAction(InterfaceAction):
             self.qaction.setChecked(prefs['visible'])
             self.panel.setVisible(prefs['visible'])
             self.panel.reload()
+            if hasattr(self.gui, 'layout_container'):
+                from calibre_plugins.tag_cloud.sidebar import Sidebar
+                self.sidebar = Sidebar(self)
+                self.sidebar.relayout()
+                changed = False
+                for key in ('toolbar', 'toolbar-device', 'toolbar-child', 'menubar',
+                            'menubar-device', 'searchbar', 'context-menu', 'context-menu-device',
+                            'context-menu-cover-browser', 'context-menu-split'):
+                    key = 'action-layout-' + key
+                    items = gprefs.get(key)
+                    if items and self.name in items:
+                        gprefs[key] = tuple(item for item in items if item != self.name)
+                        changed = True
+                if changed:
+                    self.gui.bars_manager.apply_settings()
         except Exception as err:
             self.qaction.setEnabled(False)
             error_dialog(self.gui, '標籤雲', '無法建立側欄標籤雲。', det_msg=str(err), show=True)
@@ -281,7 +335,7 @@ class TagCloudAction(InterfaceAction):
         self.timer.start()
 
     def save_sizes(self, *args):
-        if self.panel.isVisible():
+        if self.panel.isVisible() and not self.tree_pane.isHidden():
             prefs['sizes'] = self.splitter.sizes()
 
     def toggle(self, visible):
@@ -290,6 +344,10 @@ class TagCloudAction(InterfaceAction):
             self.panel.setVisible(visible)
             if visible:
                 self.panel.reload()
+            if hasattr(self, 'sidebar'):
+                self.sidebar.relayout()
+                if visible and not self.tree_pane.isHidden():
+                    self.splitter.setSizes(prefs['sizes'])
 
     def library_changed(self, db):
         if self.panel is not None:

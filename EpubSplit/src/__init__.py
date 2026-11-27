@@ -48,7 +48,7 @@ class EpubSplitBase(InterfaceActionBase):
     description         = _('Split an EPUB into new books from selected TOC sections or chapters.')
     supported_platforms = ['windows', 'osx', 'linux']
     author              = 'Jim Miller'
-    version             = (3, 12, 0, 1)
+    version             = (3, 12, 0, 2)
     minimum_calibre_version = (3, 48, 0)
 
     #: This field defines the GUI plugin class that contains all the code

@@ -1,6 +1,6 @@
 # EpubSplit
 
-版本：**3.12.0.1（本倉庫修訂版）**；最低 calibre：**3.48.0**；作者：**Jim Miller**；授權：GPL v3。上游固定基準為官方 3.12.0。
+版本：**3.12.0.2（本倉庫修訂版）**；最低 calibre：**3.48.0**；作者：**Jim Miller**；授權：GPL v3。上游固定基準為官方 3.12.0。
 
 `EpubSplit` 是把一本 EPUB 拆成多本新書的 calibre 外掛。
 它特別適合處理合集、雜誌、連載或長篇作品，讓你可以把同一本 EPUB 依章節或 TOC 節點拆成獨立條目。
@@ -44,3 +44,9 @@ python build_release.py
 發布 zip 會輸出到 `dist/EpubSplit-zh_TW-release.zip`。
 
 更新紀錄見 [CHANGELOG](./CHANGELOG.md)。
+
+## 更新紀錄
+
+- **3.12.0.2（2026-11-27）**：修正初始化僅接受三段版號而中斷的問題，完整顯示上游基準與本地修訂版號，恢復工具列圖示及按鈕連線；維護腳本支援任意段數，保留完整上游基準、只遞增最後本地修訂段，並修正 Windows 跨磁碟暫存檔取代問題。
+
+`src/version_update.py` 是版號維護工具：`test`／`release` 均只遞增最後一段本地修訂次數，也可明確傳入完整數字段；更新後仍須同步說明並使用根目錄 `build_release.py` 打包。

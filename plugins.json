@@ -8,7 +8,7 @@
       "version": [
         0,
         1,
-        2
+        3
       ],
       "minimum_calibre_version": [
         9,
@@ -22,9 +22,9 @@
       ],
       "id": "samlaio.tag-cloud",
       "asset": "TagCloud.zip",
-      "size": 5928,
-      "sha256": "c12d00b0c40f6c5190954adeaf86ce2c7650e6258fc4f9493881e840f1eca764",
-      "package_sha256": "e5e9e706afaa2593dabed5280e1d45e790c88f5340f236bcde94aafa0425a6f9"
+      "size": 8133,
+      "sha256": "d2996891c5db9605949125ba23fa7ba14fdc6417181d3db657aadad5a60773be",
+      "package_sha256": "c5471d48e9e420cfeae3ba42c2d4b9bbe48d9534ffcd79b507e03ce052ad9a5c"
     },
     {
       "name": "GitHub Plugin Updater",
@@ -571,7 +571,7 @@
         3,
         12,
         0,
-        1
+        2
       ],
       "minimum_calibre_version": [
         3,
@@ -585,9 +585,9 @@
       ],
       "id": "samlaio.epubsplit",
       "asset": "EpubSplit-zh_TW-release.zip",
-      "size": 562441,
-      "sha256": "54226df28dd3d188540295b4de2ee84f05e6c2e5d2e9f684e60169b959754457",
-      "package_sha256": "03ea3e17a65bbc5fb44d95ff5d0a385864a5eecd1c669e437ad3ee821ea02a9a"
+      "size": 563010,
+      "sha256": "0a49c89bcb893df847cbc1fe210fc39cf84298f29b47ead23d262e63dbf0d66a",
+      "package_sha256": "b2f6516c8664a91c2de75a673eb7fc097ded4b6f6769ad697f159f7d16ab2a46"
     },
     {
       "name": "Count Pages",

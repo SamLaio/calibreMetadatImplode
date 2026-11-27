@@ -87,7 +87,7 @@ class EpubSplitPlugin(InterfaceAction):
         set_plugin_icon_resources(self.name, icon_resources)
 
         base = self.interface_action_base_plugin
-        self.version = base.name+" v%d.%d.%d"%base.version
+        self.version = base.name + ' v' + '.'.join(map(str, base.version))
 
         # Set the icon for this interface action.
         # We use our own get_icon, originally inherited from kiwidude,
