@@ -8,7 +8,7 @@
       "version": [
         0,
         1,
-        11
+        12
       ],
       "minimum_calibre_version": [
         9,
@@ -22,9 +22,9 @@
       ],
       "id": "samlaio.virtual-library-builder",
       "asset": "VirtualLibraryBuilder.zip",
-      "size": 718997,
-      "sha256": "6910ca86fd163afda5ea7cff40d80e2b557a07941fbc6b660eb5b6aa27629e52",
-      "package_sha256": "68e2aa086e3985aa8ed082955bbe61ffc31ca524b03157dbd9a901c92c7ef031"
+      "size": 721274,
+      "sha256": "f2361324a45fa5bfe91bc5ab3c6d0e156e0270444066a3dee27b13454a1b7e57",
+      "package_sha256": "9ef4c3b77a89b1e567ae08dfed43fa60275e6e1ac258fa52b7dc184cc9c7aa93"
     },
     {
       "name": "Tag Cloud",

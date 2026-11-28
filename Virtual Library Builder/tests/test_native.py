@@ -52,6 +52,21 @@ def verify():
         assert action.popup_type == ui.QToolButton.ToolButtonPopupMode.MenuButtonPopup
         assert '條件篩選器' in [a.text() for a in action.qaction.menu().actions()]
         if not os.environ.get('VLB_RESTART'):
+            assert 'library_builder_quick_find' in gui.keyboard.shortcuts
+            assert action.find_action.shortcut().isEmpty()
+            action.find_action.trigger()
+            find = action.quick_find_dialog
+            find.field.setCurrentIndex(find.field.findData('title'))
+            find.text.setText('甲')
+            find.search()
+            app.processEvents()
+            assert find.isVisible() and not find.isModal()
+            assert gui.library_view.model().rowCount() == 1
+            action.show_find()
+            assert action.quick_find_dialog is find
+            assert find.text.selectedText() == '甲'
+            find.close()
+            gui.search.set_search_string('')
             with patch.object(ui, 'BuilderDialog') as builder:
                 action.qaction.trigger()
                 builder.assert_called_once_with(gui)
@@ -135,7 +150,7 @@ def verify():
             result = {'success': True, 'restart': True, 'order': expected_order}
         else:
             d = ui.BuilderDialog(gui)
-            assert d.windowTitle() == '書庫建立器 0.1.11'
+            assert d.windowTitle() == '書庫建立器 0.1.12'
             assert not d.windowIcon().isNull()
             gui.grab().save(str(root / 'dist' / 'library-builder-toolbar.png'))
             d.show()
@@ -240,7 +255,7 @@ def verify():
             remove.close()
             gui.virtual_library_menu_about_to_show()
             assert any(a.text() == '測試科幻書庫' for a in gui.virtual_library_menu.actions())
-            result = {'success': True, 'checks': ['package load', 'toolbar icon', 'condition preview', 'native VL creation', 'native switch', 'batch entire library', 'native menu', 'load existing', 'edit existing without duplicate', 'advanced expression edit', 'delete active VL without deleting books', 'rename active VL', 'native tab ordering', 'relative date helper', 'stable mode geometry', 'split toolbar action routing', 'native search filter', 'virtual library scope retained', 'filter stays open', 'filter restores conditions', 'non-modal filter', 'main view remains usable', 'single filter window', 'create library from filter', 'native name dialog']}
+            result = {'success': True, 'checks': ['package load', 'toolbar icon', 'condition preview', 'native VL creation', 'native switch', 'batch entire library', 'native menu', 'load existing', 'edit existing without duplicate', 'advanced expression edit', 'delete active VL without deleting books', 'rename active VL', 'native tab ordering', 'relative date helper', 'stable mode geometry', 'split toolbar action routing', 'native search filter', 'virtual library scope retained', 'filter stays open', 'filter restores conditions', 'non-modal filter', 'main view remains usable', 'single filter window', 'create library from filter', 'native name dialog', 'quick find shortcut registration', 'quick find search', 'quick find single window']}
     except Exception:
         result = {'success': False, 'error': traceback.format_exc()}
     (profile / ('restart-result.json' if os.environ.get('VLB_RESTART') else 'result.json')).write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')

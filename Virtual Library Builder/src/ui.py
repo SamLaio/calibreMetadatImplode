@@ -25,6 +25,11 @@ class BuilderAction(InterfaceAction):
         self.menu = QMenu(self.gui)
         self.menu.addAction(self.qaction.icon(), '開啟書庫建立器', self.show_builder)
         self.filter_action = self.menu.addAction(QIcon.ic('search.png'), '條件篩選器', self.show_filter)
+        self.find_action = self.menu.addAction(QIcon.ic('search.png'), '快速尋找', self.show_find)
+        self.find_action.setShortcutContext(Qt.ShortcutContext.ApplicationShortcut)
+        self.gui.addAction(self.find_action)
+        self.gui.keyboard.register_shortcut('library_builder_quick_find', '快速尋找',
+                                           default_keys=(), action=self.find_action, group='書庫建立器')
         self.qaction.setMenu(self.menu)
 
     def show_builder(self):
@@ -51,10 +56,27 @@ class BuilderAction(InterfaceAction):
         self.search_filter_dialog.raise_()
         self.search_filter_dialog.activateWindow()
 
+    def show_find(self):
+        if self.gui.current_view() is not self.gui.library_view:
+            return info_dialog(self.gui, '快速尋找', '請先切回書庫。', show=True)
+        from calibre_plugins.virtual_library_builder.quick_find import QuickFind
+        dialog = getattr(self, 'quick_find_dialog', None)
+        if dialog is None or dialog.db is not self.gui.current_db:
+            if dialog is not None:
+                dialog.close()
+                dialog.deleteLater()
+            self.quick_find_dialog = dialog = QuickFind(self.gui)
+        dialog.showNormal()
+        dialog.raise_()
+        dialog.activateWindow()
+        dialog.text.setFocus()
+        dialog.text.selectAll()
+
     def shutting_down(self):
-        dialog = getattr(self, 'search_filter_dialog', None)
-        if dialog is not None:
-            dialog.close()
+        for name in ('search_filter_dialog', 'quick_find_dialog'):
+            dialog = getattr(self, name, None)
+            if dialog is not None:
+                dialog.close()
         return True
 
 
@@ -67,7 +89,7 @@ class BuilderDialog(QDialog):
         self.rows = []
         self.editing = None
         self.loaded_search = None
-        self.setWindowTitle('書庫建立器 0.1.11')
+        self.setWindowTitle('書庫建立器 0.1.12')
         action = getattr(gui, 'iactions', {}).get('Virtual Library Builder')
         if action is not None:
             self.setWindowIcon(action.qaction.icon())

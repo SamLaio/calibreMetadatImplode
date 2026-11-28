@@ -620,6 +620,60 @@ class Tests(unittest.TestCase):
         self.assertNotIn('不應建立', self.db.new_api.pref('virtual_libraries', {}))
         d.close()
 
+    def test_quick_find_common_and_specific_fields(self):
+        from calibre_plugins.virtual_library_builder.quick_find import find_fields, quick_query
+        fields = find_fields(self.db)
+        self.assertEqual(len(self.db.new_api.search(quick_query(fields, '*', '作者甲'))), 2)
+        self.assertEqual(len(self.db.new_api.search(quick_query(fields, 'title', '甲', True))), 1)
+        self.assertEqual(len(self.db.new_api.search(quick_query(fields, 'tags', '幻'))), 2)
+        with self.assertRaises(ValueError):
+            quick_query(fields, '*', '')
+        with self.assertRaises(ValueError):
+            quick_query(fields, '#missing', '文字')
+
+    def test_quick_find_isbn(self):
+        from calibre_plugins.virtual_library_builder.quick_find import find_fields, quick_query
+        book_id = min(self.db.new_api.all_book_ids())
+        self.db.new_api.set_field('identifiers', {book_id: {'isbn': '9780306406157'}})
+        fields = find_fields(self.db)
+        for field, text, exact in [('isbn', '978-0-306-40615-7', True), ('*', '978-0-306-40615-7', True), ('isbn', '9780306', False)]:
+            self.assertEqual(self.db.new_api.search(quick_query(fields, field, text, exact)), {book_id})
+        with self.assertRaises(ValueError):
+            quick_query(fields, 'isbn', 'not-isbn')
+
+    def test_quick_find_actual_translator_column(self):
+        from calibre_plugins.virtual_library_builder.quick_find import find_fields, quick_query
+        self.db.create_custom_column('translate', '翻譯者', 'text', False)
+        self.db.close()
+        self.db = LibraryDatabase(self.temporary.name)
+        self.gui.current_db = self.db
+        book_id = min(self.db.new_api.all_book_ids())
+        self.db.new_api.set_field('#translate', {book_id: '譯者甲'})
+        fields = find_fields(self.db)
+        self.assertIn('#translate', fields)
+        for field in ('*', '#translate'):
+            self.assertEqual(self.db.new_api.search(quick_query(fields, field, '譯者甲')), {book_id})
+
+    def test_quick_find_window_search_and_stale_library(self):
+        from calibre_plugins.virtual_library_builder.quick_find import QuickFind
+        self.gui.search = SimpleNamespace(set_search_string=Mock())
+        d = QuickFind(self.gui)
+        d.show()
+        self.app.processEvents()
+        self.assertFalse(d.isModal())
+        d.text.setText('科幻')
+        d.field.setCurrentIndex(d.field.findData('tags'))
+        d.search()
+        self.gui.search.set_search_string.assert_called_once()
+        self.assertTrue(d.isVisible())
+        self.gui.search.set_search_string.reset_mock()
+        self.gui.current_db = None
+        with patch('calibre_plugins.virtual_library_builder.quick_find.error_dialog') as error:
+            d.search()
+        error.assert_called_once()
+        self.gui.search.set_search_string.assert_not_called()
+        d.close()
+
 
 if __name__ == '__main__':
     result = unittest.TextTestRunner().run(unittest.defaultTestLoader.loadTestsFromTestCase(Tests))
