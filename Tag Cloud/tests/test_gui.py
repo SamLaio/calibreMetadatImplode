@@ -34,6 +34,7 @@ class GuiTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.app = QApplication.instance() or QApplication([])
+        cls.app.setQuitOnLastWindowClosed(False)
 
     def setUp(self):
         from calibre.utils.config import config_dir
@@ -73,6 +74,8 @@ class GuiTests(unittest.TestCase):
         self.gui.library_view = SimpleNamespace(model=lambda: SimpleNamespace(count_changed_signal=Signal()))
         ui.prefs['field'] = 'tags'
         ui.prefs['visible'] = True
+        ui.prefs['display_mode'] = 'sidebar'
+        ui.prefs['floating_geometry'] = ''
         ui.prefs['enabled_fields'] = {}
         self.action.initialization_complete()
 
@@ -127,6 +130,62 @@ class GuiTests(unittest.TestCase):
         self.assertEqual(panel.selected, [])
         self.assertEqual(panel.field.currentData(), 'tags')
 
+    def test_floating_mode_preserves_panel_and_selection(self):
+        action = self.action
+        panel = action.panel
+        panel.selected = ['歷史']
+        panel.apply_search()
+        query = self.gui.search.text
+        action.set_display_mode('floating')
+        self.app.processEvents()
+        window = action.presentation.window
+        self.assertIs(action.panel, panel)
+        self.assertIs(panel.parentWidget(), window)
+        self.assertTrue(window.isVisible())
+        self.assertEqual(panel.selected, ['歷史'])
+        window.resize(620, 480)
+        window.close()
+        self.app.processEvents()
+        self.assertFalse(window.isVisible())
+        self.assertFalse(action.qaction.isChecked())
+        self.assertTrue(ui.prefs['floating_geometry'])
+        action.toggle_cloud()
+        self.app.processEvents()
+        self.assertTrue(window.isVisible())
+        self.assertEqual(self.gui.search.text, query)
+        action.set_display_mode('sidebar')
+        self.assertFalse(window.isVisible())
+        self.assertIs(action.splitter.widget(1), panel)
+        self.assertEqual(panel.selected, ['歷史'])
+
+    def test_shortcut_preserves_display_mode(self):
+        action = self.action
+        for mode in ('sidebar', 'floating'):
+            action.set_display_mode(mode)
+            action.qaction.setChecked(True)
+            for expected in (False, True):
+                action.toggle_cloud()
+                self.app.processEvents()
+                self.assertEqual(action.qaction.isChecked(), expected)
+                self.assertEqual(action.display_mode(), mode)
+                self.assertEqual(action.presentation.window.isVisible(), expected and mode == 'floating')
+                parent = action.splitter if mode == 'sidebar' else action.presentation.window
+                self.assertIs(action.panel.parentWidget(), parent)
+
+    def test_floating_shortcut_registered_without_default_key(self):
+        from unittest.mock import Mock
+        from qt.core import QObject, Qt
+        action = ui.TagCloudAction.__new__(ui.TagCloudAction)
+        QObject.__init__(action)
+        action.gui = self.gui
+        action.qaction = QAction(self.gui)
+        self.gui.keyboard = SimpleNamespace(register_shortcut=Mock())
+        action.genesis()
+        call = self.gui.keyboard.register_shortcut.call_args
+        self.assertEqual(call.args[:2], ('tag_cloud_toggle_floating', '顯示／隱藏標籤雲'))
+        self.assertEqual(call.kwargs['default_keys'], ())
+        self.assertEqual(action.floating_action.shortcutContext(), Qt.ShortcutContext.ApplicationShortcut)
+
     def test_random_order_stays_stable_on_selection(self):
         panel = self.action.panel
         panel.order_seed = 42
@@ -156,6 +215,7 @@ class GuiTests(unittest.TestCase):
     def test_quantity_options(self):
         panel = self.action.panel
         panel.counts = [(str(n), n + 1) for n in range(550)]
+        panel.render()
         self.assertEqual([panel.limit.itemText(i) for i in range(panel.limit.count())],
                          ['50', '100', '200', '500', '全部'])
         for text, size in [('50', 50), ('100', 100), ('200', 200), ('500', 500), ('全部', 550)]:
@@ -352,7 +412,7 @@ class GuiTests(unittest.TestCase):
         self.assertTrue(panel.mode.isHidden())
         self.assertTrue(panel.status.isHidden())
         def accept():
-            dialog = next(w for w in QApplication.topLevelWidgets() if isinstance(w, QDialog))
+            dialog = next(w for w in QApplication.topLevelWidgets() if isinstance(w, QDialog) and w.isVisible())
             field = dialog.findChild(QComboBox)
             field.setCurrentIndex(field.findData('authors'))
             choices = dialog.findChildren(QComboBox)

@@ -47,7 +47,7 @@ class Sidebar:
             self.original_moves[name] = original
             def move(handle, pos, original=original):
                 tree = central.is_visible.tag_browser
-                if handle is central.left_handle and not tree and action.qaction.isChecked():
+                if handle is central.left_handle and not tree and action.qaction.isChecked() and action.display_mode() == 'sidebar':
                     # Moving the shared pane must not turn the classification tree on.
                     try:
                         original(handle, QPointF(max(50, pos.x()), pos.y()))
@@ -75,7 +75,7 @@ class Sidebar:
         central = self.central
         state = central.is_visible
         tree = state.tag_browser
-        cloud = self.action.qaction.isChecked()
+        cloud = self.action.qaction.isChecked() and self.action.display_mode() == 'sidebar'
         if cloud:
             if central.is_wide:
                 central.size_panel_on_initial_show_wide('tag_browser')
@@ -83,7 +83,8 @@ class Sidebar:
                 central.size_panel_on_initial_show_narrow('tag_browser')
         self.tree.setVisible(tree)
         self.bar.setVisible(tree)
-        self.action.panel.setVisible(cloud)
+        if self.action.display_mode() == 'sidebar':
+            self.action.panel.setVisible(cloud)
         # Only geometry uses the combined visibility; saved calibre settings stay intact.
         state.tag_browser = tree or cloud
         try:

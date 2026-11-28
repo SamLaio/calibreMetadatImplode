@@ -34,6 +34,15 @@
 | Plugin Backup | v1.3.25 | 2026-11-22 | 0.1 |
 | Tag Cloud | v1.3.33 | 2026-11-27 | 0.1 |
 
+## [v1.3.38](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.38) — 2026-11-28
+
+### Tag Cloud 0.1.7
+
+- 新增側欄／浮動視窗模式，切換保留選取與搜尋；保存浮窗位置與大小。
+- 新增 calibre 原生快捷鍵設定入口，預設不占用按鍵；僅切換顯示／隱藏，沿用目前模式。關閉或 Esc 僅隱藏浮窗。
+- 補上側欄與浮窗實際畫面，更新內外層 README；通過 5 項核心、21 項 Qt／資料庫、11 項書目寫回測試，以及主視窗快捷鍵與重開保存驗證。
+- 其餘 26 支外掛版號與內容不變；發行提供 27 個獨立安裝包及 plugins.json，說明不重複標題。
+
 ## [v1.3.37](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.37) — 2026-11-28
 
 ### Tag Cloud 0.1.6

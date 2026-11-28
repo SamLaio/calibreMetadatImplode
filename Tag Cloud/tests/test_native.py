@@ -14,7 +14,7 @@ if not profile.resolve().is_relative_to((root / 'dist').resolve()):
     raise RuntimeError('測試僅能使用 dist 下的隔離設定。')
 library = profile / 'Library'
 db = LibraryDatabase(str(library))
-for index in range(60):
+for index in range(60 if not db.new_api.all_book_ids() else 0):
     mi = Metadata('測試書籍 ' + str(index), ['作者' + str(index % 6)])
     mi.tags = ['歷史', '台灣'] if index % 3 else ['科幻', '推理', '文學']
     mi.series = '測試系列 ' + str(index % 4)
@@ -61,6 +61,16 @@ def verify():
         assert 'EpubSplit' in gprefs['action-layout-toolbar']
         assert 'Tag Cloud' not in gprefs['action-layout-toolbar']
         panel = action.panel
+        if os.environ.get('TAG_CLOUD_FLOAT_RESTART'):
+            assert action.display_mode() == 'floating'
+            window = action.presentation.window
+            assert window.isVisible() and panel.parentWidget() is window
+            assert window.width() == 640 and window.height() == 520
+            assert action.qaction.isChecked()
+            (profile / 'restart-result.json').write_text(json.dumps({'success': True, 'width': window.width(),
+                                                                    'height': window.height()}), encoding='utf-8')
+            gui.quit()
+            return
         assert action.qaction.isEnabled() and panel.isVisible()
         assert not action.qaction.isVisible()
         assert action.sidebar.button.isVisible()
@@ -101,6 +111,79 @@ def verify():
         central.tag_browser_button.setChecked(True)
         panel.limit.setCurrentText('全部')
         assert len(panel.names) == len(panel.counts)
+        if os.environ.get('TAG_CLOUD_TEST_FLOATING'):
+            from qt.core import QKeySequence, QKeyEvent, QEvent, Qt, QWidget
+            assert 'tag_cloud_toggle_floating' in gui.keyboard.shortcuts
+            assert action.floating_action.shortcut().isEmpty()
+            panel.selected = ['歷史']
+            panel.apply_search()
+            search = gui.search.currentText()
+            action.floating_action.setShortcut(QKeySequence('Ctrl+Alt+Shift+F12'))
+            gui.activateWindow()
+            app.processEvents()
+            modifiers = Qt.KeyboardModifier.ControlModifier | Qt.KeyboardModifier.AltModifier | Qt.KeyboardModifier.ShiftModifier
+            def key_click(widget):
+                app.sendEvent(widget, QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F12, modifiers))
+                app.sendEvent(widget, QKeyEvent(QEvent.Type.KeyRelease, Qt.Key.Key_F12, modifiers))
+            action.set_display_mode('sidebar')
+            action.qaction.setChecked(True)
+            key_click(gui)
+            app.processEvents()
+            assert not action.qaction.isChecked() and action.display_mode() == 'sidebar'
+            key_click(gui)
+            app.processEvents()
+            assert action.qaction.isChecked() and action.display_mode() == 'sidebar'
+            assert panel.parentWidget() is action.splitter
+            action.set_display_mode('floating')
+            window = action.presentation.window
+            assert action.display_mode() == 'floating' and window.isVisible()
+            assert panel.parentWidget() is window
+            assert panel.selected == ['歷史'] and gui.search.currentText() == search
+            central.tag_browser_button.setChecked(False)
+            central.relayout()
+            assert not central.tag_browser.isVisible() and window.isVisible()
+            window.activateWindow()
+            app.processEvents()
+            key_click(window)
+            app.processEvents()
+            assert not window.isVisible()
+            gui.activateWindow()
+            app.processEvents()
+            key_click(gui)
+            app.processEvents()
+            assert window.isVisible()
+            window.close()
+            assert not action.qaction.isChecked() and panel.selected == ['歷史']
+            action.toggle_cloud()
+            action.set_display_mode('sidebar')
+            assert action.splitter.widget(1) is panel and not window.isVisible()
+            preferences_checked = []
+            check_timer = QTimer()
+            check_timer.setInterval(40)
+            def check_preferences():
+                dialog = app.activeModalWidget()
+                if dialog is not None:
+                    modules = [type(widget).__module__ for widget in dialog.findChildren(QWidget)]
+                    if any('keyboard' in module for module in modules):
+                        preferences_checked.append(True)
+                        dialog.reject()
+                        check_timer.stop()
+            check_timer.timeout.connect(check_preferences)
+            check_timer.start()
+            def cancel_preferences():
+                check_timer.stop()
+                dialog = app.activeModalWidget()
+                if dialog is not None:
+                    dialog.reject()
+            QTimer.singleShot(5000, cancel_preferences)
+            action.configure_cloud_shortcut()
+            assert preferences_checked
+            action.set_display_mode('floating')
+            window.resize(640, 520)
+            window.move(80, 60)
+            window.save_geometry()
+            app.processEvents()
+            window.grab().save(str(root / 'dist' / 'tag-cloud-floating.png'))
         if os.environ.get('TAG_CLOUD_TEST_EDITS'):
             from calibre_plugins.tag_cloud import context
             from qt.core import QDialogButtonBox
@@ -145,6 +228,9 @@ def verify():
         result = {'success': True, 'checks': ['package load', 'four visibility states', 'bottom button', 'cloud-only resize', 'all words', 'tag search', 'authors', 'render']}
         result['packages'] = len(packages)
         result['interface_actions'] = expected_actions
+        if os.environ.get('TAG_CLOUD_TEST_FLOATING'):
+            result['checks'].extend(['floating panel transfer', 'real shortcut key', 'native shortcut preferences',
+                                     'selection preserved', 'sidebar hidden when floating', 'window close hides'])
         if os.environ.get('TAG_CLOUD_TEST_EDITS'):
             result['checks'].extend(['native edit dialog', 'native confirmation', 'metadata rename',
                                      'metadata removal', 'unrelated values preserved'])

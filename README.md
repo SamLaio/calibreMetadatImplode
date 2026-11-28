@@ -9,15 +9,15 @@
 | 項目 | 說明 |
 | --- | --- |
 | 專案來源 | [SamLaio/calibreMetadatImplode](https://github.com/SamLaio/calibreMetadatImplode)，本倉庫為整合與修訂來源；各外掛的原作者及授權保留於各自目錄。 |
-| 整合發行版號 | **[v1.3.37（2026-11-28）](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.37)**。這是整套發行附件的版號，與各外掛在 calibre 顯示的版號分開管理。 |
+| 整合發行版號 | **[v1.3.38（2026-11-28）](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.38)**。這是整套發行附件的版號，與各外掛在 calibre 顯示的版號分開管理。 |
 | 專案層修改 | 將外掛整理為各自的 `src/`，使用 `build_release.py` 統一輸出二十七個獨立安裝包到 `dist/`；排除隱藏檔、快取及 `.po` 翻譯來源。Columns Helper、CrossPoint Reader、Diaps Editing Toolbag、Extract ISBN、Generate Cover、Goodreads Sync、Hardcover Sync 、Manage Series 與 Shortcuts Helper 的翻譯在打包時分別編譯。 |
-| 本次變更 | Tag Cloud 0.1.6 新增依欄位修改／移除的右鍵選單，提供影響本數確認、型別輸入、資料變更檢查與失敗還原；其餘 26 支外掛版號與內容不變。 |
+| 本次變更 | Tag Cloud 0.1.7 新增浮動視窗與可設定快捷鍵，保存選取、搜尋及視窗位置大小；快捷鍵僅切換顯示／隱藏，沿用目前模式，其餘 26 支外掛不變。 |
 
 ## 各外掛簡介、來源與版號
 
 各列表依名稱字母升序排列；修改摘要採相同分類與順序。
 
-2026-11-28 核對全部 27 支外掛的程式宣告、作者、來源、版號、內外層 README 與安裝包；本次僅 Tag Cloud 升級為 0.1.6，其餘外掛沿用既有基準。
+2026-11-28 核對全部 27 支外掛的程式宣告、作者、來源、版號、內外層 README 與安裝包；本次 Tag Cloud 升級為 0.1.7，其餘外掛沿用既有基準。
 
 文件核對日期：**2026-11-28**。二十七支外掛的名稱、作者、版號、安裝包與本地說明已對照目前程式；上游採表列固定基準，歷次上游更新與整合紀錄見 [CHANGELOG](./CHANGELOG.md)。
 
@@ -34,7 +34,7 @@
 | [GitHub Plugin Updater](./GitHub%20Plugin%20Updater/README.md) | 追蹤多個公開 GitHub 庫，先比身分檔與清單的內容 SHA，再比版號；勾選下載更新，可選自動備份。 | 本倉庫自行開發，SamLiao & Codex；思路參考 Obtainium。 | **0.3.3**；簡化未安裝狀態文字，保留自動備份開關及 Token 功能。 |
 | [Plugin Backup](./Plugin%20Backup/README.md) | 勾選或一次全部匯出／批次匯入第三方外掛與啟用狀態，可選是否包含設定；入口位於外掛偏好設定底部。 | 本倉庫自行開發，SamLiao & Codex。 | **0.1**。 |
 | [Skip ASCII Text Plugin](./Skip%20ASCII%20Text%20Plugin/README.md) | 保留檔名中的中文等原文字元，略過 ASCII 轉寫。 | 本倉庫獨立重寫，SamLiao & Codex；功能參考 [shiratori3/calibre-plugins v1.0.0](https://gitee.com/shiratori3/calibre-plugins/releases/tag/v1.0.0)，程式作者欄 Billy Zhou，原版採 BSD 3-Clause。 | **1.0.1**，本倉庫重寫版。 |
-| [Tag Cloud](./Tag%20Cloud/README.md) | 左側書目詞雲，支援勾選來源欄位、點選篩書、已選詞置前與自訂配色。 | 本倉庫自行開發，SamLiao & Codex；無獨立上游。 | **0.1.6**；新增依欄位修改／移除的右鍵選單。 |
+| [Tag Cloud](./Tag%20Cloud/README.md) | 側欄／浮動書目詞雲，支援欄位勾選、點選篩書、已選詞置前與自訂配色。 | 本倉庫自行開發，SamLiao & Codex；無獨立上游。 | **0.1.7**；新增浮動視窗與快捷鍵設定，保留依欄位修改／移除。 |
 | [Toolbar Manager](./Toolbar%20Manager/README.md) | 右鍵調整工具列按鈕，開啟外掛首頁、選項或移除外掛。 | 本倉庫自行開發；SamLiao & Codex。 | **1.0.0**。 |
 | [Traditional Chinese Supplement](./Traditional%20Chinese%20Supplement/README.md) | 補齊指定官方與第三方外掛視窗的正體中文顯示文字。 | 本倉庫自行開發；SamLiao & Codex，核對 calibre 9.18／9.19 與相關外掛介面。 | **1.2.1**；補齊主視窗資料夾／書本詳細資料選單，保留偏好設定、動態視窗、快捷鍵、範本與書本檢查翻譯，無額外工具列按鈕。 |
 ### 上游修訂外掛
@@ -78,7 +78,7 @@
 | GitHub Plugin Updater | 新增來源管理、固定 ID 綁定、JSON-only 檢查、身分 SHA 優先、提示同版差異與降版、勾選強制安裝、備份與失敗回復；26 包加入身分檔與可重現打包，產生版本／SHA 清單。 |
 | Plugin Backup | 新增偏好設定底部入口、全選切換、兩列匯出／匯入按鈕；勾選模式只含所選外掛可辨識專用設定，全部模式可備份完整設定及工具列按鈕位置；提供相容性與校驗檢查、進度及失敗回復；保留本機書庫位置，通過 10 項格式測試、4 項安裝 API 測試與原生 GUI 往返驗證。 |
 | Skip ASCII Text Plugin | 沿用執行期間替換函式、保留 Unicode 而不改寫 calibre 安裝檔的方向；重寫核心與設定介面，作者為 SamLiao & Codex；修正位元組輸入、重複切換及函式還原，避免覆蓋後續外掛替換；保留舊設定識別，加入「文」字勾號圖示、附效果示意的正體中文設定視窗、測試與統一打包，移除原包程式及圖示。 |
-| Tag Cloud | 底部雲朵圖示獨立控制詞雲，自適應分類樹開關；原生歷史搜尋、交集／獨選、欄位及配色設定、50／100／200／500／全部與強化字級差異。 |
+| Tag Cloud | 齒輪可選側欄／浮動視窗，快捷鍵沿用目前模式切換顯示／隱藏；[操作與顯示範例](./Tag%20Cloud/README.md#浮動視窗與快捷鍵)。底部雲朵圖示獨立控制詞雲，自適應分類樹開關；原生歷史搜尋、交集／獨選、欄位及配色設定、50／100／200／500／全部與強化字級差異。 |
 | Toolbar Manager | 加入專用圖示及正體中文工具列右鍵管理；移除外掛前確認，保護必要入口並保留原有選單。 |
 | Traditional Chinese Supplement | 1.2.1 補齊主視窗資料夾與書本詳細資料動態選單；原有補翻偏好設定、工具列、快捷鍵、範本及編輯器文法／改寫介面；核對 43 個調校項目、184 個核心快捷鍵、196 段書本檢查訊息與 32 條啟用 CSS 規則，保留設定、輸入與修復行為。 |
 ### 上游修訂外掛
@@ -113,7 +113,7 @@
 | 外掛 | 驗證範圍 |
 | --- | --- |
 | EpubSplit 3.12.0.2 | 實際安裝包初始化、圖示與完整版號測試通過；驗證二段／四段／六段顯示及四段／六段維護腳本修訂遞增。 |
-| Tag Cloud 0.1.6 | 5 項核心、18 項 Qt／資料庫、11 項書目寫回測試；實際主視窗通過修改／移除確認與其他值保留，重開隔離書庫驗證寫入持久保存。 |
+| Tag Cloud 0.1.7 | 5 項核心、21 項 Qt／資料庫、11 項書目寫回測試；浮窗切換、實際快捷鍵、原生快捷鍵設定及重開後視窗大小保存；實際主視窗通過修改／移除確認與其他值保留，重開隔離書庫驗證寫入持久保存。 |
 | Tag Cloud 0.1.5 | 5 項核心與 15 項 Qt／資料庫測試；隔離主視窗確認實際安裝包載入、側欄嵌入、標籤篩書與作者切換。 |
 | GitHub Plugin Updater | 0.3.2 通過 71 項測試及原生主視窗驗證；0.3.3 文字調整後通過 11 項核心與 3 項打包測試。涵蓋 SHA、來源綁定、Token、限流、自動備份及失敗回復。 |
 | Hardcover Sync 0.4.0.2 | 13 項隔離測試通過；原生主視窗確認舊版重現相同關閉例外，新版提前關閉與正常確認均無例外。 |

@@ -5,9 +5,9 @@ __license__ = 'GPL v3'
 
 class TagCloud(InterfaceActionBase):
     name = 'Tag Cloud'
-    description = '在左側顯示書目詞雲，可勾選來源欄位、點選篩書與自訂配色。'
+    description = '以側欄或浮動視窗顯示書目詞雲，支援欄位選擇、篩書與書目修改。'
     author = 'SamLiao & Codex'
-    version = (0, 1, 6)
+    version = (0, 1, 7)
     minimum_calibre_version = (9, 19, 0)
     supported_platforms = ['windows', 'osx', 'linux']
     actual_plugin = 'calibre_plugins.tag_cloud.ui:TagCloudAction'

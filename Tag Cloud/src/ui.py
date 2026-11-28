@@ -3,6 +3,7 @@ from qt.core import (
     QSplitter, QTextBrowser, QTimer, QToolButton, QVBoxLayout, QWidget, Qt,
     QDialog, QDialogButtonBox, QCheckBox, QColor, QColorDialog,
     QListWidget, QListWidgetItem,
+    QAction,
 )
 from calibre.gui2 import error_dialog, gprefs, config
 from calibre.gui2.actions import InterfaceAction
@@ -20,6 +21,7 @@ prefs.defaults.update(random_colors=True, colors=['#56b4e9', '#e69f00', '#009e73
 prefs.defaults['click_mode'] = 'intersection'
 prefs.defaults['order'] = 'random'
 prefs.defaults['enabled_fields'] = {}
+prefs.defaults.update(display_mode='sidebar', floating_geometry='')
 
 
 class CloudPanel(QWidget):
@@ -179,7 +181,7 @@ class CloudPanel(QWidget):
 
     def configure(self):
         dialog = QDialog(self)
-        dialog.setWindowTitle('Tag Cloud 0.1.6 — 設定')
+        dialog.setWindowTitle('Tag Cloud 0.1.7 — 設定')
         layout = QVBoxLayout(dialog)
         layout.addWidget(QLabel('雲的統計與篩選欄位'))
         field_row = QHBoxLayout()
@@ -212,6 +214,21 @@ class CloudPanel(QWidget):
             choice.setCurrentIndex(original.currentIndex())
             layout.addWidget(choice)
             choices.append((original, choice))
+        layout.addWidget(QLabel('顯示模式'))
+        display_mode = QComboBox(dialog)
+        display_mode.setObjectName('tag_cloud_display_mode')
+        display_mode.setAccessibleName('顯示模式')
+        display_mode.addItems(['側欄', '浮動視窗'])
+        display_mode.setCurrentIndex(1 if self.action.display_mode() == 'floating' else 0)
+        layout.addWidget(display_mode)
+        shortcuts = QPushButton('套用並設定快捷鍵…', dialog)
+        layout.addWidget(shortcuts)
+        open_shortcuts = False
+        def edit_shortcuts():
+            nonlocal open_shortcuts
+            open_shortcuts = True
+            dialog.accept()
+        shortcuts.clicked.connect(edit_shortcuts)
         random_colors = QCheckBox('隨機指定每個詞的字體顏色（同一詞保持固定）', dialog)
         random_colors.setChecked(prefs['random_colors'])
         layout.addWidget(random_colors)
@@ -255,6 +272,9 @@ class CloudPanel(QWidget):
             if clear.isChecked():
                 self.clear()
             self.reload()
+            self.action.set_display_mode('floating' if display_mode.currentIndex() == 1 else 'sidebar')
+            if open_shortcuts:
+                QTimer.singleShot(0, self.action.configure_cloud_shortcut)
 
     def reload(self, *args):
         try:
@@ -392,6 +412,12 @@ class TagCloudAction(InterfaceAction):
         self.qaction.setIcon(QIcon.ic('tags.png'))
         self.qaction.setCheckable(True)
         self.qaction.toggled.connect(self.toggle)
+        self.floating_action = QAction('顯示／隱藏標籤雲', self.gui)
+        self.floating_action.setShortcutContext(Qt.ShortcutContext.ApplicationShortcut)
+        self.gui.addAction(self.floating_action)
+        self.floating_action.triggered.connect(self.toggle_cloud)
+        self.gui.keyboard.register_shortcut('tag_cloud_toggle_floating', '顯示／隱藏標籤雲',
+                                           default_keys=(), action=self.floating_action, group='Tag Cloud')
 
     def initialization_complete(self):
         try:
@@ -442,6 +468,8 @@ class TagCloudAction(InterfaceAction):
                         changed = True
                 if changed:
                     self.gui.bars_manager.apply_settings()
+            from calibre_plugins.tag_cloud.floating import Presentation
+            self.presentation = Presentation(self, prefs)
         except Exception as err:
             self.qaction.setEnabled(False)
             error_dialog(self.gui, '標籤雲', '無法建立側欄標籤雲。', det_msg=str(err), show=True)
@@ -450,19 +478,40 @@ class TagCloudAction(InterfaceAction):
         self.timer.start()
 
     def save_sizes(self, *args):
-        if self.panel.isVisible() and not self.tree_pane.isHidden():
+        if self.panel.parentWidget() is self.splitter and self.panel.isVisible() and not self.tree_pane.isHidden():
             prefs['sizes'] = self.splitter.sizes()
 
     def toggle(self, visible):
         prefs['visible'] = visible
         if self.panel is not None:
-            self.panel.setVisible(visible)
+            if hasattr(self, 'presentation'):
+                self.presentation.update_visibility()
+            else:
+                self.panel.setVisible(visible)
             if visible:
                 self.panel.reload()
             if hasattr(self, 'sidebar'):
                 self.sidebar.relayout()
-                if visible and not self.tree_pane.isHidden():
+                if visible and self.display_mode() == 'sidebar' and not self.tree_pane.isHidden():
                     self.splitter.setSizes(prefs['sizes'])
+
+    def display_mode(self):
+        return prefs['display_mode']
+
+    def set_display_mode(self, mode):
+        self.presentation.set_mode(mode)
+
+    def toggle_cloud(self, *args):
+        if hasattr(self, 'presentation'):
+            self.presentation.toggle_cloud()
+
+    def configure_cloud_shortcut(self):
+        self.gui.iactions['Preferences'].do_config(initial_plugin=('Advanced', 'Keyboard'), close_after_initial=True)
+
+    def shutting_down(self):
+        if hasattr(self, 'presentation'):
+            self.presentation.shutdown()
+        return True
 
     def library_changed(self, db):
         if self.panel is not None:
