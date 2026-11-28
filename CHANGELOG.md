@@ -33,6 +33,18 @@
 | Diaps Editing Toolbag | v1.3.25 | 2026-11-22 | 0.5.0.1 |
 | Plugin Backup | v1.3.25 | 2026-11-22 | 0.1 |
 | Tag Cloud | v1.3.33 | 2026-11-27 | 0.1 |
+| Virtual Library Builder | v1.3.39 | 2026-11-28 | 0.1.6 |
+
+## [v1.3.39](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.39) — 2026-11-28
+
+### 書庫建立器 0.1.6
+
+- 新增原生虛擬書庫建立、修改、刪除與更名；同名保護，刪除只移除設定、不刪書。
+- 支援整庫預覽、欄位值批次建立、上移／下移並保存原生分頁順序。
+- 主畫面與產生器共用完整條件表格，逐列 AND／OR 由上往下組合，支援相對日期與原始搜尋式。
+- 單一書庫直接儲存，批次及刪除保留確認；固定模式切換版面，加高預設視窗。
+- 介面採「書庫建立器」名稱與兩層、左虛線右彩色書架圖示。
+- 通過 30 項隔離測試與實際安裝包主視窗驗證；其餘 27 支外掛不變，提供 28 個安裝包及 plugins.json。
 
 ## [v1.3.38](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.38) — 2026-11-28
 

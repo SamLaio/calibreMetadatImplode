@@ -1,6 +1,6 @@
 # calibreMetadatImplode
 
-本專案將二十七個 calibre 外掛並排維護，整合上游程式、正體中文資源與本地修正。各外掛可獨立使用；操作、設定、限制、安裝與打包方式請點各外掛名稱閱讀其 README。
+本專案將二十八個 calibre 外掛並排維護，整合上游程式、正體中文資源與本地修正。各外掛可獨立使用；操作、設定、限制、安裝與打包方式請點各外掛名稱閱讀其 README。
 
 外掛首次加入、歷次升級與整合發行紀錄見 [CHANGELOG](./CHANGELOG.md)。
 
@@ -9,17 +9,18 @@
 | 項目 | 說明 |
 | --- | --- |
 | 專案來源 | [SamLaio/calibreMetadatImplode](https://github.com/SamLaio/calibreMetadatImplode)，本倉庫為整合與修訂來源；各外掛的原作者及授權保留於各自目錄。 |
-| 整合發行版號 | **[v1.3.38（2026-11-28）](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.38)**。這是整套發行附件的版號，與各外掛在 calibre 顯示的版號分開管理。 |
-| 專案層修改 | 將外掛整理為各自的 `src/`，使用 `build_release.py` 統一輸出二十七個獨立安裝包到 `dist/`；排除隱藏檔、快取及 `.po` 翻譯來源。Columns Helper、CrossPoint Reader、Diaps Editing Toolbag、Extract ISBN、Generate Cover、Goodreads Sync、Hardcover Sync 、Manage Series 與 Shortcuts Helper 的翻譯在打包時分別編譯。 |
-| 本次變更 | Tag Cloud 0.1.7 新增浮動視窗與可設定快捷鍵，保存選取、搜尋及視窗位置大小；快捷鍵僅切換顯示／隱藏，沿用目前模式，其餘 26 支外掛不變。 |
+| 整合發行版號 | **[v1.3.39（2026-11-28）](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.39)**。這是整套發行附件的版號，與各外掛在 calibre 顯示的版號分開管理。 |
+| 專案層修改 | 將外掛整理為各自的 `src/`，使用 `build_release.py` 統一輸出二十八個獨立安裝包到 `dist/`；排除隱藏檔、快取及 `.po` 翻譯來源。Columns Helper、CrossPoint Reader、Diaps Editing Toolbag、Extract ISBN、Generate Cover、Goodreads Sync、Hardcover Sync 、Manage Series 與 Shortcuts Helper 的翻譯在打包時分別編譯。 |
+| 本次變更 | 新增書庫建立器（Virtual Library Builder）0.1.6，支援原生虛擬書庫新增、修改、刪除、更名、排序、批次建立與進階條件；其餘 27 支外掛不變。 |
+
 
 ## 各外掛簡介、來源與版號
 
 各列表依名稱字母升序排列；修改摘要採相同分類與順序。
 
-2026-11-28 核對全部 27 支外掛的程式宣告、作者、來源、版號、內外層 README 與安裝包；本次 Tag Cloud 升級為 0.1.7，其餘外掛沿用既有基準。
+2026-11-28 核對 28 支外掛的程式宣告、版號、內外層 README 與安裝包；本次新增書庫建立器 0.1.6，其餘 27 支沿用既有來源與版號。
 
-文件核對日期：**2026-11-28**。二十七支外掛的名稱、作者、版號、安裝包與本地說明已對照目前程式；上游採表列固定基準，歷次上游更新與整合紀錄見 [CHANGELOG](./CHANGELOG.md)。
+文件核對日期：**2026-11-28**。二十八支外掛的名稱、作者、版號、安裝包與本地說明已對照目前程式；上游採表列固定基準，歷次上游更新與整合紀錄見 [CHANGELOG](./CHANGELOG.md)。
 
 2026-11-23 核對 17 支上游修訂外掛的官方索引、版本與來源；CrossPoint Reader 同步上游 0.2.8 後續提交，其餘來源未發現待合併更新。
 
@@ -37,6 +38,7 @@
 | [Tag Cloud](./Tag%20Cloud/README.md) | 側欄／浮動書目詞雲，支援欄位勾選、點選篩書、已選詞置前與自訂配色。 | 本倉庫自行開發，SamLiao & Codex；無獨立上游。 | **0.1.7**；新增浮動視窗與快捷鍵設定，保留依欄位修改／移除。 |
 | [Toolbar Manager](./Toolbar%20Manager/README.md) | 右鍵調整工具列按鈕，開啟外掛首頁、選項或移除外掛。 | 本倉庫自行開發；SamLiao & Codex。 | **1.0.0**。 |
 | [Traditional Chinese Supplement](./Traditional%20Chinese%20Supplement/README.md) | 補齊指定官方與第三方外掛視窗的正體中文顯示文字。 | 本倉庫自行開發；SamLiao & Codex，核對 calibre 9.18／9.19 與相關外掛介面。 | **1.2.1**；補齊主視窗資料夾／書本詳細資料選單，保留偏好設定、動態視窗、快捷鍵、範本與書本檢查翻譯，無額外工具列按鈕。 |
+| [書庫建立器（Virtual Library Builder）](./Virtual%20Library%20Builder/README.md) | 建立、修改及刪除原生虛擬書庫，支援進階條件、整庫預覽與批次建立。 | 本倉庫自行開發，SamLiao & Codex；無獨立上游。 | **0.1.6**；顯示名稱改為「書庫建立器」，採用左虛線、右彩色的兩層書架圖示。 |
 ### 上游修訂外掛
 
 #### 版號慣例
@@ -137,7 +139,7 @@
 
 ## GitHub 更新來源清單
 
-根目錄 [plugins.json](./plugins.json) 保存目前清單快照，含各支外掛的固定 ID、名稱、版號、內容 SHA-256 與下載用 ZIP SHA-256。`build_release.py` 固定 ZIP 時間戳、屬性與順序，輸出 27 個安裝包及 `dist/plugins.json`；內容相同不因重打包日期而改變 SHA。每次內容改動須更新受影響外掛版號，同步根目錄快照，並把清單與同批 ZIP 一起附在正式 Release。更新器以同一 Release 的清單為準；[格式與發布方式](./GitHub%20Plugin%20Updater/MANIFEST.md)。
+根目錄 [plugins.json](./plugins.json) 保存目前清單快照，含各支外掛的固定 ID、名稱、版號、內容 SHA-256 與下載用 ZIP SHA-256。`build_release.py` 固定 ZIP 時間戳、屬性與順序，輸出 28 個安裝包及 `dist/plugins.json`；內容相同不因重打包日期而改變 SHA。每次內容改動須更新受影響外掛版號，同步根目錄快照，並把清單與同批 ZIP 一起附在正式 Release。更新器以同一 Release 的清單為準；[格式與發布方式](./GitHub%20Plugin%20Updater/MANIFEST.md)。
 
 來源維護者請閱讀[來源庫建立與版本檢查指南](./GitHub%20Plugin%20Updater/SOURCE_GUIDE.md)，包含身分檔、JSON、發布順序、SHA／版號與勾選強制安裝流程。
 

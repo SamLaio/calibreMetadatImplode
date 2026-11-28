@@ -4,6 +4,29 @@
   "source": "github:samlaio/calibremetadatimplode",
   "plugins": [
     {
+      "name": "Virtual Library Builder",
+      "version": [
+        0,
+        1,
+        6
+      ],
+      "minimum_calibre_version": [
+        9,
+        19,
+        0
+      ],
+      "supported_platforms": [
+        "windows",
+        "osx",
+        "linux"
+      ],
+      "id": "samlaio.virtual-library-builder",
+      "asset": "VirtualLibraryBuilder.zip",
+      "size": 717137,
+      "sha256": "9193913b180250d3baec6323ee3388c4475608300e7bb8f90d46e3c51e00d9e1",
+      "package_sha256": "d5a8139e3efd9580d6be68a7a8cf06bbe1f0846dac3dcc25ce8f5e0af2278ac3"
+    },
+    {
       "name": "Tag Cloud",
       "version": [
         0,

@@ -14,6 +14,11 @@ import zipfile
 ROOT = Path(__file__).resolve().parent
 PROJECTS = [
     {
+        "name": "Virtual Library Builder",
+        "source": ROOT / "Virtual Library Builder" / "src",
+        "output": ROOT / "dist" / "VirtualLibraryBuilder.zip",
+    },
+    {
         "name": "Tag Cloud",
         "source": ROOT / "Tag Cloud" / "src",
         "output": ROOT / "dist" / "TagCloud.zip",
