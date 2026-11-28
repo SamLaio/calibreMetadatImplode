@@ -3,7 +3,7 @@ from html import escape
 from qt.core import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QLineEdit, QPushButton,
     QTableWidget, QTableWidgetItem, QHeaderView, QCheckBox, QTabWidget, QWidget,
-    QPlainTextEdit, Qt, QIcon, QPixmap, QAbstractItemView, QListWidget, QListWidgetItem, QStackedWidget,
+    QPlainTextEdit, Qt, QIcon, QPixmap, QMenu, QToolButton, QAbstractItemView, QListWidget, QListWidgetItem, QStackedWidget,
 )
 from calibre.gui2 import error_dialog, info_dialog, question_dialog
 from calibre.gui2.actions import InterfaceAction
@@ -15,17 +15,47 @@ class BuilderAction(InterfaceAction):
     name = 'Virtual Library Builder'
     action_spec = ('書庫建立器', None, '依條件或欄位值建立虛擬書庫', ())
     action_type = 'current'
+    popup_type = QToolButton.ToolButtonPopupMode.MenuButtonPopup
 
     def genesis(self):
         pixmap = QPixmap()
         pixmap.loadFromData(self.load_resources(['images/icon.png'])['images/icon.png'])
         self.qaction.setIcon(QIcon(pixmap))
         self.qaction.triggered.connect(self.show_builder)
+        self.menu = QMenu(self.gui)
+        self.menu.addAction(self.qaction.icon(), '開啟書庫建立器', self.show_builder)
+        self.filter_action = self.menu.addAction(QIcon.ic('search.png'), '條件篩選器', self.show_filter)
+        self.qaction.setMenu(self.menu)
 
     def show_builder(self):
         if self.gui.current_view() is not self.gui.library_view:
             return info_dialog(self.gui, '書庫建立器', '請先切回書庫。', show=True)
         BuilderDialog(self.gui).exec()
+
+
+    def show_filter(self):
+        if self.gui.current_view() is not self.gui.library_view:
+            return info_dialog(self.gui, '條件篩選器', '請先切回書庫。', show=True)
+        from calibre_plugins.virtual_library_builder.query_helper import QueryHelper
+        dialog = getattr(self, 'search_filter_dialog', None)
+        if dialog is not None and dialog.isVisible() and dialog.db is self.gui.current_db:
+            dialog.showNormal()
+            dialog.raise_()
+            dialog.activateWindow()
+            return
+        if dialog is not None:
+            dialog.close()
+            dialog.deleteLater()
+        self.search_filter_dialog = QueryHelper(gui=self.gui)
+        self.search_filter_dialog.show()
+        self.search_filter_dialog.raise_()
+        self.search_filter_dialog.activateWindow()
+
+    def shutting_down(self):
+        dialog = getattr(self, 'search_filter_dialog', None)
+        if dialog is not None:
+            dialog.close()
+        return True
 
 
 class BuilderDialog(QDialog):
@@ -37,7 +67,7 @@ class BuilderDialog(QDialog):
         self.rows = []
         self.editing = None
         self.loaded_search = None
-        self.setWindowTitle('書庫建立器 0.1.6')
+        self.setWindowTitle('書庫建立器 0.1.11')
         action = getattr(gui, 'iactions', {}).get('Virtual Library Builder')
         if action is not None:
             self.setWindowIcon(action.qaction.icon())

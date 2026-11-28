@@ -9,16 +9,17 @@
 | 項目 | 說明 |
 | --- | --- |
 | 專案來源 | [SamLaio/calibreMetadatImplode](https://github.com/SamLaio/calibreMetadatImplode)，本倉庫為整合與修訂來源；各外掛的原作者及授權保留於各自目錄。 |
-| 整合發行版號 | **[v1.3.39（2026-11-28）](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.39)**。這是整套發行附件的版號，與各外掛在 calibre 顯示的版號分開管理。 |
+| 整合發行版號 | **[v1.3.40（2026-11-28）](https://github.com/SamLaio/calibreMetadatImplode/releases/tag/v1.3.40)**。這是整套發行附件的版號，與各外掛在 calibre 顯示的版號分開管理。 |
 | 專案層修改 | 將外掛整理為各自的 `src/`，使用 `build_release.py` 統一輸出二十八個獨立安裝包到 `dist/`；排除隱藏檔、快取及 `.po` 翻譯來源。Columns Helper、CrossPoint Reader、Diaps Editing Toolbag、Extract ISBN、Generate Cover、Goodreads Sync、Hardcover Sync 、Manage Series 與 Shortcuts Helper 的翻譯在打包時分別編譯。 |
-| 本次變更 | 新增書庫建立器（Virtual Library Builder）0.1.6，支援原生虛擬書庫新增、修改、刪除、更名、排序、批次建立與進階條件；其餘 27 支外掛不變。 |
+| 本次變更 | 書庫建立器升級為 0.1.11，工具列下拉提供非模態條件篩選器，支援搜尋、清空條件、同次執行記憶與另存虛擬書庫；其餘 27 支外掛不變。 |
+
 
 
 ## 各外掛簡介、來源與版號
 
 各列表依名稱字母升序排列；修改摘要採相同分類與順序。
 
-2026-11-28 核對 28 支外掛的程式宣告、版號、內外層 README 與安裝包；本次新增書庫建立器 0.1.6，其餘 27 支沿用既有來源與版號。
+2026-11-28 核對 28 支外掛的程式宣告、版號、內外層 README 與安裝包；本次書庫建立器升級為 0.1.11，其餘 27 支沿用既有來源與版號。
 
 文件核對日期：**2026-11-28**。二十八支外掛的名稱、作者、版號、安裝包與本地說明已對照目前程式；上游採表列固定基準，歷次上游更新與整合紀錄見 [CHANGELOG](./CHANGELOG.md)。
 
@@ -38,7 +39,7 @@
 | [Tag Cloud](./Tag%20Cloud/README.md) | 側欄／浮動書目詞雲，支援欄位勾選、點選篩書、已選詞置前與自訂配色。 | 本倉庫自行開發，SamLiao & Codex；無獨立上游。 | **0.1.7**；新增浮動視窗與快捷鍵設定，保留依欄位修改／移除。 |
 | [Toolbar Manager](./Toolbar%20Manager/README.md) | 右鍵調整工具列按鈕，開啟外掛首頁、選項或移除外掛。 | 本倉庫自行開發；SamLiao & Codex。 | **1.0.0**。 |
 | [Traditional Chinese Supplement](./Traditional%20Chinese%20Supplement/README.md) | 補齊指定官方與第三方外掛視窗的正體中文顯示文字。 | 本倉庫自行開發；SamLiao & Codex，核對 calibre 9.18／9.19 與相關外掛介面。 | **1.2.1**；補齊主視窗資料夾／書本詳細資料選單，保留偏好設定、動態視窗、快捷鍵、範本與書本檢查翻譯，無額外工具列按鈕。 |
-| [書庫建立器（Virtual Library Builder）](./Virtual%20Library%20Builder/README.md) | 建立、修改及刪除原生虛擬書庫，支援進階條件、整庫預覽與批次建立。 | 本倉庫自行開發，SamLiao & Codex；無獨立上游。 | **0.1.6**；顯示名稱改為「書庫建立器」，採用左虛線、右彩色的兩層書架圖示。 |
+| [書庫建立器（Virtual Library Builder）](./Virtual%20Library%20Builder/README.md) | 建立、修改及刪除原生虛擬書庫，支援進階條件、整庫預覽與批次建立。 | 本倉庫自行開發，SamLiao & Codex；無獨立上游。 | **0.1.11**；工具列箭頭提供條件篩選器，直接套用原生搜尋列。 |
 ### 上游修訂外掛
 
 #### 版號慣例
@@ -115,6 +116,7 @@
 | 外掛 | 驗證範圍 |
 | --- | --- |
 | EpubSplit 3.12.0.2 | 實際安裝包初始化、圖示與完整版號測試通過；驗證二段／四段／六段顯示及四段／六段維護腳本修訂遞增。 |
+| 書庫建立器 0.1.11 | 43 項隔離資料庫／Qt 測試；原生工具列、非模態主書單操作、條件還原、重啟清空與名稱對話框另存書庫驗證。 |
 | Tag Cloud 0.1.7 | 5 項核心、21 項 Qt／資料庫、11 項書目寫回測試；浮窗切換、實際快捷鍵、原生快捷鍵設定及重開後視窗大小保存；實際主視窗通過修改／移除確認與其他值保留，重開隔離書庫驗證寫入持久保存。 |
 | Tag Cloud 0.1.5 | 5 項核心與 15 項 Qt／資料庫測試；隔離主視窗確認實際安裝包載入、側欄嵌入、標籤篩書與作者切換。 |
 | GitHub Plugin Updater | 0.3.2 通過 71 項測試及原生主視窗驗證；0.3.3 文字調整後通過 11 項核心與 3 項打包測試。涵蓋 SHA、來源綁定、Token、限流、自動備份及失敗回復。 |

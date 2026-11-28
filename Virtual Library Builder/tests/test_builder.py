@@ -437,6 +437,189 @@ class Tests(unittest.TestCase):
             parsed = core.editable_rows(core.row_expression([term], ['and']), self.dialog.metadata)
             self.assertEqual(parsed, [(field, op, value, 'and')])
 
+    def filter_fixture(self, search=''):
+        from calibre_plugins.virtual_library_builder.query_helper import QueryHelper
+        self.gui.search = SimpleNamespace(text=search)
+        self.gui.search.currentText = lambda: self.gui.search.text
+        self.gui.search.set_search_string = Mock(side_effect=lambda text: setattr(self.gui.search, 'text', text))
+        dialog = QueryHelper(gui=self.gui)
+        dialog.table.cellWidget(0, 2).setText('科幻')
+        return dialog
+
+    def test_search_filter_applies_without_writing_libraries(self):
+        dialog = self.filter_fixture('authors:"=作者甲"')
+        dialog.apply_expression()
+        self.assertEqual(len(self.db.new_api.search(self.gui.search.text)), 1)
+        self.gui.search.set_search_string.assert_called_once()
+        self.assertEqual(self.db.new_api.pref('virtual_libraries', {}), {})
+        dialog.close()
+
+    def test_search_filter_cancel_and_replace(self):
+        dialog = self.filter_fixture('tags:"=歷史"')
+        dialog.reject()
+        self.assertEqual(self.gui.search.text, 'tags:"=歷史"')
+        self.gui.search.set_search_string.assert_not_called()
+        dialog = self.filter_fixture('tags:"=歷史"')
+        dialog.join.setCurrentIndex(2)
+        dialog.apply_expression()
+        self.assertNotIn('歷史', self.gui.search.text)
+        self.assertEqual(len(self.db.new_api.search(self.gui.search.text)), 2)
+        dialog.close()
+
+    def test_search_filter_stale_search_and_library(self):
+        dialog = self.filter_fixture('tags:true')
+        self.gui.search.text = 'tags:false'
+        with patch('calibre_plugins.virtual_library_builder.query_helper.error_dialog') as error:
+            dialog.apply_expression()
+        error.assert_called_once()
+        self.gui.search.set_search_string.assert_not_called()
+        self.gui.current_db = None
+        with patch('calibre_plugins.virtual_library_builder.query_helper.error_dialog') as error:
+            dialog.apply_expression()
+        error.assert_called_once()
+        self.gui.search.set_search_string.assert_not_called()
+        dialog.close()
+
+    def test_filter_stays_open_and_reapplies_without_stacking(self):
+        d = self.filter_fixture('authors:"=作者甲"')
+        d.show()
+        d.apply_expression()
+        self.assertTrue(d.isVisible())
+        self.assertIn('科幻', self.gui.search.text)
+        d.table.cellWidget(0, 2).setText('歷史')
+        d.apply_expression()
+        self.assertTrue(d.isVisible())
+        self.assertNotIn('科幻', self.gui.search.text)
+        self.assertIn('歷史', self.gui.search.text)
+        self.assertEqual(self.gui.search.text.count('authors:'), 1)
+        d.close()
+
+    def test_filter_reopens_last_conditions_and_original_base(self):
+        from calibre_plugins.virtual_library_builder.query_helper import QueryHelper
+        d = self.filter_fixture('authors:"=作者甲"')
+        d.table.add_row()
+        d.table.cellWidget(1, 2).setText('歷史')
+        d.table.cellWidget(1, 3).setCurrentIndex(1)
+        d.join.setCurrentIndex(1)
+        d.apply_expression()
+        last = self.gui.search.text
+        d.close()
+        self.gui.search.set_search_string.reset_mock()
+        reopened = QueryHelper(gui=self.gui)
+        self.assertEqual(reopened.table.rowCount(), 2)
+        self.assertEqual(reopened.table.cellWidget(0, 2).text(), '科幻')
+        self.assertEqual(reopened.table.cellWidget(1, 3).currentData(), 'or')
+        self.assertEqual(reopened.join.currentData(), 'or')
+        self.gui.search.set_search_string.assert_not_called()
+        reopened.apply_expression()
+        self.assertEqual(self.gui.search.text, last)
+        reopened.close()
+
+    def test_filter_restores_draft_and_uses_changed_search_as_base(self):
+        from calibre_plugins.virtual_library_builder.query_helper import QueryHelper
+        d = self.filter_fixture('tags:true')
+        d.table.cellWidget(0, 2).setText('草稿')
+        d.reject()
+        self.gui.search.text = 'authors:true'
+        reopened = QueryHelper(gui=self.gui)
+        self.assertEqual(reopened.table.cellWidget(0, 2).text(), '草稿')
+        self.assertEqual(reopened.original_search, 'authors:true')
+        self.gui.search.set_search_string.assert_not_called()
+        reopened.close()
+
+    def test_filter_is_nonmodal_and_main_window_usable(self):
+        d = self.filter_fixture()
+        self.gui.show()
+        d.show()
+        self.app.processEvents()
+        self.assertFalse(d.isModal())
+        self.assertEqual(d.windowModality(), Qt.WindowModality.NonModal)
+        self.assertIsNone(self.app.activeModalWidget())
+        self.assertTrue(self.gui.isEnabled())
+        d.close()
+
+    def test_filter_new_session_ignores_persistent_legacy_state(self):
+        from calibre_plugins.virtual_library_builder.query_helper import QueryHelper
+        d = self.filter_fixture()
+        d.table.cellWidget(0, 2).setText('舊條件')
+        d.close()
+        self.db.new_api.set_pref('library_builder_filter_state', {'rows': [['tags', 'eq', '舊版永久條件', 'and']]})
+        del self.gui._library_builder_filter_states
+        reopened = QueryHelper(gui=self.gui)
+        self.assertEqual(reopened.table.rowCount(), 1)
+        self.assertEqual(reopened.table.cellWidget(0, 2).text(), '')
+        reopened.close()
+
+    def test_clear_conditions_restores_base_and_clears_reopened_rows(self):
+        from calibre_plugins.virtual_library_builder.query_helper import QueryHelper
+        d = self.filter_fixture('authors:true')
+        d.show()
+        d.apply_expression()
+        d.clear_button.click()
+        self.assertTrue(d.isVisible())
+        self.assertEqual(self.gui.search.text, 'authors:true')
+        self.assertEqual(d.table.rowCount(), 1)
+        self.assertEqual(d.table.cellWidget(0, 2).text(), '')
+        self.assertFalse(d.apply_button.isEnabled())
+        d.close()
+        reopened = QueryHelper(gui=self.gui)
+        self.assertEqual(reopened.table.cellWidget(0, 2).text(), '')
+        reopened.close()
+
+    def test_clear_conditions_preserves_external_search(self):
+        d = self.filter_fixture('authors:true')
+        d.apply_expression()
+        self.gui.search.text = 'title:"手動搜尋"'
+        self.gui.search.set_search_string.reset_mock()
+        d.clear_conditions()
+        self.gui.search.set_search_string.assert_not_called()
+        self.assertEqual(self.gui.search.text, 'title:"手動搜尋"')
+        self.assertEqual(d.original_search, 'title:"手動搜尋"')
+        d.close()
+
+    def test_create_library_from_filter_keeps_window_and_search(self):
+        d = self.filter_fixture('authors:"=作者甲"')
+        d.show()
+        with patch('calibre_plugins.virtual_library_builder.query_helper.QInputDialog.getText', return_value=('篩選書庫', True)):
+            d.create_library_button.click()
+        saved = self.db.new_api.pref('virtual_libraries', {})
+        self.assertEqual(len(self.db.new_api.search(saved['篩選書庫'])), 1)
+        self.assertEqual(self.gui.search.text, 'authors:"=作者甲"')
+        self.assertTrue(d.isVisible())
+        self.gui.virtual_libraries_changed.assert_called_once()
+        d.close()
+
+    def test_create_library_name_cancel_invalid_and_collision(self):
+        d = self.filter_fixture()
+        with patch('calibre_plugins.virtual_library_builder.query_helper.QInputDialog.getText', return_value=('', False)):
+            d.create_library()
+        self.assertEqual(self.db.new_api.pref('virtual_libraries', {}), {})
+        for name in ['', '*x', 'x' * 41]:
+            with patch('calibre_plugins.virtual_library_builder.query_helper.QInputDialog.getText', return_value=(name, True)), patch('calibre_plugins.virtual_library_builder.query_helper.error_dialog') as error:
+                d.create_library()
+            error.assert_called_once()
+        self.db.new_api.set_pref('virtual_libraries', {'既有': 'tags:true'})
+        with patch('calibre_plugins.virtual_library_builder.query_helper.QInputDialog.getText', return_value=('既有', True)), patch('calibre_plugins.virtual_library_builder.query_helper.error_dialog') as error:
+            d.create_library()
+        error.assert_called_once()
+        self.assertEqual(self.db.new_api.pref('virtual_libraries', {}), {'既有': 'tags:true'})
+        d.close()
+
+    def test_create_library_preserves_current_scope_and_rechecks(self):
+        d = self.filter_fixture()
+        self.db.data.set_base_restriction('authors:"=作者甲"')
+        with patch('calibre_plugins.virtual_library_builder.query_helper.QInputDialog.getText', return_value=('範圍書庫', True)):
+            d.create_library()
+        self.assertEqual(len(self.db.new_api.search(self.db.new_api.pref('virtual_libraries', {})['範圍書庫'])), 1)
+        def switch_scope(*args):
+            self.db.data.set_base_restriction('tags:false')
+            return ('不應建立', True)
+        with patch('calibre_plugins.virtual_library_builder.query_helper.QInputDialog.getText', side_effect=switch_scope), patch('calibre_plugins.virtual_library_builder.query_helper.error_dialog') as error:
+            d.create_library()
+        error.assert_called_once()
+        self.assertNotIn('不應建立', self.db.new_api.pref('virtual_libraries', {}))
+        d.close()
+
 
 if __name__ == '__main__':
     result = unittest.TextTestRunner().run(unittest.defaultTestLoader.loadTestsFromTestCase(Tests))

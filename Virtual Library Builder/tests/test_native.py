@@ -47,7 +47,82 @@ def verify():
         assert 'Virtual Library Builder' in gui.iactions
         assert gui.iactions['Virtual Library Builder'].qaction.text() == '書庫建立器'
         assert not gui.iactions['Virtual Library Builder'].qaction.icon().isNull()
+        action = gui.iactions['Virtual Library Builder']
+        assert 'Library Condition Filter' not in gui.iactions
+        assert action.popup_type == ui.QToolButton.ToolButtonPopupMode.MenuButtonPopup
+        assert '條件篩選器' in [a.text() for a in action.qaction.menu().actions()]
+        if not os.environ.get('VLB_RESTART'):
+            with patch.object(ui, 'BuilderDialog') as builder:
+                action.qaction.trigger()
+                builder.assert_called_once_with(gui)
+                builder.return_value.exec.assert_called_once()
+            with patch('calibre_plugins.virtual_library_builder.query_helper.QueryHelper') as helper:
+                action.filter_action.trigger()
+                helper.assert_called_once_with(gui=gui)
+                helper.return_value.show.assert_called_once()
+                helper.return_value.exec.assert_not_called()
+            action.search_filter_dialog = None
+            action.show_filter()
+            floating_filter = action.search_filter_dialog
+            app.processEvents()
+            assert floating_filter.isVisible() and not floating_filter.isModal()
+            assert app.activeModalWidget() is None
+            action.show_filter()
+            assert action.search_filter_dialog is floating_filter
+            # Selection in the main book view must remain usable while the filter is open.
+            gui.library_view.setCurrentIndex(gui.library_view.model().index(1, 0))
+            assert gui.library_view.currentIndex().row() == 1
+            floating_filter.close()
+            from calibre_plugins.virtual_library_builder.query_helper import QueryHelper
+            gui.search.set_search_string('authors:"=測試作者"')
+            gui.apply_virtual_library(None)
+            existing_libraries = dict(gui.current_db.new_api.pref('virtual_libraries', {}))
+            search_filter = QueryHelper(gui=gui)
+            search_filter.show()
+            search_filter.table.cellWidget(0, 2).setText('科幻')
+            search_filter.apply_expression()
+            app.processEvents()
+            assert gui.library_view.model().rowCount() == 2
+            assert 'authors:' in gui.search.currentText() and '科幻' in gui.search.currentText()
+            assert search_filter.isVisible()
+            applied = gui.search.currentText()
+            search_filter.close()
+            reopened_filter = QueryHelper(gui=gui)
+            assert reopened_filter.table.cellWidget(0, 2).text() == '科幻'
+            reopened_filter.apply_expression()
+            assert gui.search.currentText() == applied
+            reopened_filter.close()
+            assert gui.current_db.new_api.pref('virtual_libraries', {}) == existing_libraries
+            from qt.core import QInputDialog
+            def enter_library_name():
+                dialog = app.activeModalWidget()
+                assert isinstance(dialog, QInputDialog)
+                dialog.setTextValue('篩選另存測試')
+                dialog.accept()
+            QTimer.singleShot(25, enter_library_name)
+            search_filter.create_library_button.click()
+            assert '篩選另存測試' in gui.current_db.new_api.pref('virtual_libraries', {})
+            assert search_filter.isVisible()
+            assert len(gui.current_db.new_api.search(gui.current_db.new_api.pref('virtual_libraries', {})['篩選另存測試'])) == 2
+            gui._remove_vl('篩選另存測試', reapply=True)
+
+            gui.add_virtual_library(gui.current_db, '範圍測試', 'tags:"=科幻"')
+            gui.apply_virtual_library('範圍測試')
+            limited_filter = QueryHelper(gui=gui)
+            limited_filter.table.cellWidget(0, 2).setText('歷史')
+            limited_filter.join.setCurrentIndex(2)
+            limited_filter.apply_expression()
+            app.processEvents()
+            assert gui.current_db.data.get_base_restriction_name() == '範圍測試'
+            assert gui.library_view.model().rowCount() == 1
+            gui._remove_vl('範圍測試', reapply=True)
+            gui.search.set_search_string('')
         if os.environ.get('VLB_RESTART'):
+            from calibre_plugins.virtual_library_builder.query_helper import QueryHelper
+            fresh_filter = QueryHelper(gui=gui)
+            assert fresh_filter.table.rowCount() == 1
+            assert fresh_filter.table.cellWidget(0, 2).text() == ''
+            fresh_filter.close()
             saved = gui.current_db.new_api.pref('virtual_libraries', {})
             assert '刪除測試' not in saved
             assert '更名測試書庫' in saved
@@ -60,7 +135,7 @@ def verify():
             result = {'success': True, 'restart': True, 'order': expected_order}
         else:
             d = ui.BuilderDialog(gui)
-            assert d.windowTitle() == '書庫建立器 0.1.6'
+            assert d.windowTitle() == '書庫建立器 0.1.11'
             assert not d.windowIcon().isNull()
             gui.grab().save(str(root / 'dist' / 'library-builder-toolbar.png'))
             d.show()
@@ -165,7 +240,7 @@ def verify():
             remove.close()
             gui.virtual_library_menu_about_to_show()
             assert any(a.text() == '測試科幻書庫' for a in gui.virtual_library_menu.actions())
-            result = {'success': True, 'checks': ['package load', 'toolbar icon', 'condition preview', 'native VL creation', 'native switch', 'batch entire library', 'native menu', 'load existing', 'edit existing without duplicate', 'advanced expression edit', 'delete active VL without deleting books', 'rename active VL', 'native tab ordering', 'relative date helper', 'stable mode geometry']}
+            result = {'success': True, 'checks': ['package load', 'toolbar icon', 'condition preview', 'native VL creation', 'native switch', 'batch entire library', 'native menu', 'load existing', 'edit existing without duplicate', 'advanced expression edit', 'delete active VL without deleting books', 'rename active VL', 'native tab ordering', 'relative date helper', 'stable mode geometry', 'split toolbar action routing', 'native search filter', 'virtual library scope retained', 'filter stays open', 'filter restores conditions', 'non-modal filter', 'main view remains usable', 'single filter window', 'create library from filter', 'native name dialog']}
     except Exception:
         result = {'success': False, 'error': traceback.format_exc()}
     (profile / ('restart-result.json' if os.environ.get('VLB_RESTART') else 'result.json')).write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')
